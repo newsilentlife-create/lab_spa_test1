@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lab Spa — Натуральная косметика от Феи Природы</title>
+    <title>Lab Spa — Натуральная косметика от Феи Леса</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@200;300;400;500&display=swap');
 
@@ -15,18 +15,27 @@
         }
 
         :root {
-            --pink-light: #fce4ec;
-            --pink-mid: #f8bbd0;
-            --pink-deep: #e991b2;
-            --pink-accent: #d4698a;
-            --green-light: #e8f5e9;
-            --green-mid: #a5d6a7;
-            --green-deep: #6db36f;
-            --green-accent: #4a8c5c;
-            --cream: #fdf6f0;
-            --gold: #d4a574;
-            --text-dark: #3d2b2b;
-            --text-soft: #6b5252;
+            --forest-dark: #1a2e1a;
+            --forest-deep: #2d4a2d;
+            --forest-mid: #3d6b3d;
+            --forest-light: #5a8f5a;
+            --forest-glow: #7cb87c;
+            --moss: #4a6741;
+            --moss-light: #8fb88a;
+            --berry: #8b2252;
+            --berry-deep: #a02d6b;
+            --berry-light: #c75b9b;
+            --berry-glow: #e491bf;
+            --berry-soft: #f0c6db;
+            --gold-magic: #c9a84c;
+            --gold-light: #e8d18c;
+            --gold-glow: #f5e6b8;
+            --mushroom: #d4b896;
+            --cream-forest: #f5f0e8;
+            --mist: rgba(200, 220, 200, 0.15);
+            --midnight: #0d1a0d;
+            --text-light: #e8e0d4;
+            --text-muted: #a09880;
         }
 
         html {
@@ -35,8 +44,8 @@
 
         body {
             font-family: 'Montserrat', sans-serif;
-            background: var(--cream);
-            color: var(--text-dark);
+            background: var(--midnight);
+            color: var(--text-light);
             overflow-x: hidden;
         }
 
@@ -48,36 +57,35 @@
             pointer-events: none;
             z-index: 100000;
             transform: translate(-50%, -50%);
-            font-size: 26px;
-            filter: drop-shadow(0 0 8px rgba(212, 105, 138, 0.7));
+            font-size: 24px;
+            filter: drop-shadow(0 0 12px rgba(201, 168, 76, 0.8));
             transition: transform 0.1s ease;
         }
 
         .cursor-glow {
             position: fixed;
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(248,187,208,0.4) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(201,168,76,0.3) 0%, transparent 70%);
             pointer-events: none;
             z-index: 99999;
             transform: translate(-50%, -50%);
-            transition: width 0.3s, height 0.3s;
+            transition: width 0.3s, height 0.3s, background 0.3s;
         }
 
         .cursor-glow.hover {
-            width: 60px;
-            height: 60px;
-            background: radial-gradient(circle, rgba(165,214,167,0.5) 0%, rgba(248,187,208,0.3) 50%, transparent 70%);
+            width: 65px;
+            height: 65px;
+            background: radial-gradient(circle, rgba(124,184,124,0.4) 0%, rgba(201,168,76,0.2) 50%, transparent 70%);
         }
 
-        /* Магические частицы */
         .sparkle {
             position: fixed;
             pointer-events: none;
             z-index: 99998;
             font-size: 12px;
-            animation: sparkle-float 1.2s ease-out forwards;
+            animation: sparkle-float 1.4s ease-out forwards;
         }
 
         @keyframes sparkle-float {
@@ -90,13 +98,13 @@
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background: linear-gradient(135deg, var(--pink-light), var(--cream), var(--green-light));
+            background: radial-gradient(ellipse at center, var(--forest-dark) 0%, var(--midnight) 100%);
             z-index: 999999;
             display: flex;
             align-items: center;
             justify-content: center;
             flex-direction: column;
-            transition: opacity 0.8s ease, visibility 0.8s ease;
+            transition: opacity 1s ease, visibility 1s ease;
         }
 
         .preloader.hidden {
@@ -104,28 +112,76 @@
             visibility: hidden;
         }
 
-        .preloader-flower {
-            font-size: 60px;
-            animation: bloom 2s ease-in-out infinite;
+        .preloader-icon {
+            font-size: 70px;
+            animation: preloader-magic 2.5s ease-in-out infinite;
         }
 
-        @keyframes bloom {
-            0%, 100% { transform: scale(1) rotate(0deg); filter: hue-rotate(0deg); }
-            50% { transform: scale(1.2) rotate(180deg); filter: hue-rotate(30deg); }
+        @keyframes preloader-magic {
+            0%, 100% { transform: scale(1) rotate(0deg); filter: hue-rotate(0deg) drop-shadow(0 0 20px rgba(201,168,76,0.5)); }
+            33% { transform: scale(1.15) rotate(120deg); filter: hue-rotate(40deg) drop-shadow(0 0 30px rgba(124,184,124,0.6)); }
+            66% { transform: scale(1.05) rotate(240deg); filter: hue-rotate(-20deg) drop-shadow(0 0 25px rgba(139,34,82,0.5)); }
         }
 
         .preloader-text {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 1.4rem;
-            color: var(--pink-accent);
-            margin-top: 20px;
-            letter-spacing: 3px;
-            animation: pulse-text 1.5s ease-in-out infinite;
+            font-size: 1.6rem;
+            color: var(--gold-magic);
+            margin-top: 24px;
+            letter-spacing: 5px;
+            animation: pulse-text 2s ease-in-out infinite;
         }
 
         @keyframes pulse-text {
-            0%, 100% { opacity: 0.5; }
-            50% { opacity: 1; }
+            0%, 100% { opacity: 0.4; text-shadow: 0 0 10px rgba(201,168,76,0.3); }
+            50% { opacity: 1; text-shadow: 0 0 30px rgba(201,168,76,0.6); }
+        }
+
+        .preloader-subtitle {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            letter-spacing: 3px;
+            margin-top: 8px;
+            text-transform: uppercase;
+        }
+
+        /* ===== СВЕТЛЯЧКИ (фоновые частицы) ===== */
+        .fireflies {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .firefly {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: var(--gold-magic);
+            box-shadow: 0 0 10px var(--gold-magic), 0 0 20px rgba(201,168,76,0.3);
+            animation: firefly-move 15s ease-in-out infinite;
+        }
+
+        .firefly:nth-child(1) { top: 15%; left: 10%; animation-duration: 18s; animation-delay: 0s; }
+        .firefly:nth-child(2) { top: 45%; left: 80%; animation-duration: 22s; animation-delay: -3s; }
+        .firefly:nth-child(3) { top: 70%; left: 30%; animation-duration: 16s; animation-delay: -7s; }
+        .firefly:nth-child(4) { top: 25%; left: 60%; animation-duration: 20s; animation-delay: -5s; }
+        .firefly:nth-child(5) { top: 80%; left: 70%; animation-duration: 19s; animation-delay: -10s; }
+        .firefly:nth-child(6) { top: 55%; left: 15%; animation-duration: 24s; animation-delay: -2s; }
+        .firefly:nth-child(7) { top: 35%; left: 45%; animation-duration: 17s; animation-delay: -8s; }
+        .firefly:nth-child(8) { top: 90%; left: 55%; animation-duration: 21s; animation-delay: -12s; }
+
+        @keyframes firefly-move {
+            0% { transform: translate(0, 0); opacity: 0; }
+            10% { opacity: 1; }
+            40% { transform: translate(100px, -80px); opacity: 0.6; }
+            60% { opacity: 1; }
+            80% { transform: translate(-60px, -150px); opacity: 0.4; }
+            90% { opacity: 0; }
+            100% { transform: translate(30px, -50px); opacity: 0; }
         }
 
         /* ===== НАВИГАЦИЯ ===== */
@@ -134,7 +190,7 @@
             top: 0; left: 0;
             width: 100%;
             z-index: 10000;
-            padding: 20px 60px;
+            padding: 22px 60px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -143,34 +199,42 @@
         }
 
         .navbar.scrolled {
-            background: rgba(253, 246, 240, 0.9);
-            backdrop-filter: blur(20px);
+            background: rgba(13, 26, 13, 0.85);
+            backdrop-filter: blur(25px);
             padding: 14px 60px;
-            box-shadow: 0 2px 30px rgba(212, 105, 138, 0.1);
+            border-bottom: 1px solid rgba(201, 168, 76, 0.1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
         }
 
         .nav-logo {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 2rem;
+            font-size: 2.1rem;
             font-weight: 600;
-            background: linear-gradient(135deg, var(--pink-accent), var(--green-deep));
+            background: linear-gradient(135deg, var(--gold-magic), var(--forest-glow), var(--gold-light));
+            background-size: 200% 200%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-decoration: none;
             position: relative;
+            animation: logo-shimmer 4s ease-in-out infinite;
         }
 
-        .nav-logo .logo-sparkle {
+        @keyframes logo-shimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .nav-logo .logo-icon {
             position: absolute;
-            top: -5px;
-            right: -20px;
-            font-size: 14px;
-            animation: twinkle 2s ease-in-out infinite;
+            top: -8px;
+            right: -22px;
+            font-size: 13px;
+            animation: twinkle 3s ease-in-out infinite;
         }
 
         @keyframes twinkle {
-            0%, 100% { opacity: 0.3; transform: scale(0.8); }
-            50% { opacity: 1; transform: scale(1.2); }
+            0%, 100% { opacity: 0.2; transform: scale(0.7) rotate(0deg); }
+            50% { opacity: 1; transform: scale(1.2) rotate(180deg); }
         }
 
         .nav-links {
@@ -181,10 +245,10 @@
 
         .nav-links a {
             text-decoration: none;
-            color: var(--text-soft);
+            color: var(--text-muted);
             font-weight: 300;
-            font-size: 0.9rem;
-            letter-spacing: 2px;
+            font-size: 0.85rem;
+            letter-spacing: 2.5px;
             text-transform: uppercase;
             position: relative;
             transition: color 0.3s;
@@ -193,17 +257,18 @@
         .nav-links a::after {
             content: '';
             position: absolute;
-            bottom: -5px;
+            bottom: -6px;
             left: 0;
             width: 0;
-            height: 2px;
-            background: linear-gradient(90deg, var(--pink-deep), var(--green-mid));
+            height: 1.5px;
+            background: linear-gradient(90deg, var(--gold-magic), var(--forest-glow));
             transition: width 0.4s ease;
             border-radius: 2px;
+            box-shadow: 0 0 8px rgba(201,168,76,0.3);
         }
 
         .nav-links a:hover {
-            color: var(--pink-accent);
+            color: var(--gold-light);
         }
 
         .nav-links a:hover::after {
@@ -221,13 +286,13 @@
 
         .menu-toggle span {
             width: 28px;
-            height: 2px;
-            background: var(--pink-accent);
+            height: 1.5px;
+            background: var(--gold-magic);
             transition: all 0.3s;
             border-radius: 2px;
         }
 
-        /* ===== HERO СЕКЦИЯ ===== */
+        /* ===== HERO ===== */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -235,7 +300,11 @@
             justify-content: center;
             position: relative;
             overflow: hidden;
-            background: linear-gradient(160deg, var(--cream) 0%, var(--pink-light) 30%, var(--cream) 50%, var(--green-light) 80%, var(--cream) 100%);
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(45,74,45,0.6) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 30%, rgba(139,34,82,0.2) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 80%, rgba(201,168,76,0.1) 0%, transparent 50%),
+                linear-gradient(180deg, var(--midnight) 0%, var(--forest-dark) 40%, var(--midnight) 100%);
         }
 
         .hero-bg-elements {
@@ -243,38 +312,49 @@
             width: 100%;
             height: 100%;
             top: 0; left: 0;
-            overflow: hidden;
         }
 
         .floating-element {
             position: absolute;
-            font-size: 2rem;
-            opacity: 0.15;
-            animation: float-around 20s ease-in-out infinite;
+            opacity: 0.12;
+            animation: float-around 25s ease-in-out infinite;
+            filter: drop-shadow(0 0 10px rgba(124,184,124,0.3));
         }
 
-        .floating-element:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; font-size: 3rem; }
-        .floating-element:nth-child(2) { top: 20%; right: 15%; animation-delay: -3s; font-size: 2.5rem; }
-        .floating-element:nth-child(3) { bottom: 30%; left: 20%; animation-delay: -6s; }
-        .floating-element:nth-child(4) { top: 60%; right: 10%; animation-delay: -9s; font-size: 2.8rem; }
-        .floating-element:nth-child(5) { bottom: 15%; left: 50%; animation-delay: -12s; }
-        .floating-element:nth-child(6) { top: 40%; left: 5%; animation-delay: -4s; font-size: 1.8rem; }
-        .floating-element:nth-child(7) { bottom: 40%; right: 25%; animation-delay: -7s; font-size: 2.2rem; }
-        .floating-element:nth-child(8) { top: 75%; left: 35%; animation-delay: -10s; }
+        .floating-element:nth-child(1) { top: 8%; left: 8%; animation-delay: 0s; font-size: 3.5rem; }
+        .floating-element:nth-child(2) { top: 18%; right: 12%; animation-delay: -4s; font-size: 2.8rem; }
+        .floating-element:nth-child(3) { bottom: 25%; left: 18%; animation-delay: -8s; font-size: 2.2rem; }
+        .floating-element:nth-child(4) { top: 55%; right: 8%; animation-delay: -12s; font-size: 3rem; }
+        .floating-element:nth-child(5) { bottom: 12%; left: 45%; animation-delay: -6s; font-size: 2rem; }
+        .floating-element:nth-child(6) { top: 38%; left: 3%; animation-delay: -3s; font-size: 2.5rem; }
+        .floating-element:nth-child(7) { bottom: 35%; right: 20%; animation-delay: -9s; font-size: 1.8rem; }
+        .floating-element:nth-child(8) { top: 72%; left: 30%; animation-delay: -15s; font-size: 2.3rem; }
+        .floating-element:nth-child(9) { top: 5%; left: 55%; animation-delay: -11s; font-size: 2rem; }
+        .floating-element:nth-child(10) { bottom: 5%; right: 35%; animation-delay: -7s; font-size: 2.6rem; }
 
         @keyframes float-around {
             0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            25% { transform: translate(30px, -40px) rotate(90deg); }
-            50% { transform: translate(-20px, -80px) rotate(180deg); }
-            75% { transform: translate(40px, -30px) rotate(270deg); }
+            25% { transform: translate(40px, -50px) rotate(90deg); }
+            50% { transform: translate(-30px, -90px) rotate(180deg); }
+            75% { transform: translate(50px, -40px) rotate(270deg); }
         }
 
-        /* Шёлковые волны */
-        .silk-wave {
+        /* Туман */
+        .mist-layer {
             position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 100%;
+            width: 200%;
+            height: 100%;
+            top: 0;
+            left: -50%;
+            background:
+                radial-gradient(ellipse at 30% 70%, rgba(124,184,124,0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 40%, rgba(201,168,76,0.04) 0%, transparent 40%);
+            animation: mist-drift 20s ease-in-out infinite;
+        }
+
+        @keyframes mist-drift {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(10%); }
         }
 
         .hero-content {
@@ -284,29 +364,29 @@
         }
 
         .hero-fairy {
-            font-size: 5rem;
+            font-size: 5.5rem;
             display: block;
-            margin-bottom: 20px;
-            animation: fairy-entrance 2s ease-out;
-            filter: drop-shadow(0 0 20px rgba(248, 187, 208, 0.5));
+            margin-bottom: 24px;
+            animation: fairy-entrance 2.5s ease-out;
+            filter: drop-shadow(0 0 30px rgba(201,168,76,0.4)) drop-shadow(0 0 60px rgba(124,184,124,0.2));
         }
 
         @keyframes fairy-entrance {
-            0% { transform: translateY(-100px) scale(0); opacity: 0; }
-            50% { transform: translateY(10px) scale(1.1); }
-            100% { transform: translateY(0) scale(1); opacity: 1; }
+            0% { transform: translateY(-120px) scale(0) rotate(-180deg); opacity: 0; }
+            60% { transform: translateY(10px) scale(1.1) rotate(10deg); }
+            100% { transform: translateY(0) scale(1) rotate(0deg); opacity: 1; }
         }
 
         .hero-badge {
             display: inline-block;
-            padding: 8px 24px;
-            background: linear-gradient(135deg, rgba(248,187,208,0.3), rgba(165,214,167,0.3));
-            border: 1px solid rgba(212, 105, 138, 0.2);
+            padding: 10px 28px;
+            background: rgba(201, 168, 76, 0.1);
+            border: 1px solid rgba(201, 168, 76, 0.25);
             border-radius: 50px;
-            font-size: 0.8rem;
-            letter-spacing: 3px;
+            font-size: 0.75rem;
+            letter-spacing: 4px;
             text-transform: uppercase;
-            color: var(--pink-accent);
+            color: var(--gold-magic);
             margin-bottom: 30px;
             backdrop-filter: blur(10px);
             animation: fade-in-up 1s ease-out 0.5s both;
@@ -314,23 +394,30 @@
 
         .hero h1 {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 4.5rem;
+            font-size: 5rem;
             font-weight: 300;
             line-height: 1.1;
-            margin-bottom: 10px;
+            margin-bottom: 14px;
             animation: fade-in-up 1s ease-out 0.7s both;
+            text-shadow: 0 0 60px rgba(0,0,0,0.5);
         }
 
-        .hero h1 .highlight-pink {
-            background: linear-gradient(135deg, var(--pink-deep), var(--pink-accent));
+        .hero h1 .highlight-gold {
+            background: linear-gradient(135deg, var(--gold-magic), var(--gold-light), var(--gold-magic));
+            background-size: 200% 200%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             font-weight: 600;
-            position: relative;
+            animation: gold-shimmer 3s ease-in-out infinite;
         }
 
-        .hero h1 .highlight-green {
-            background: linear-gradient(135deg, var(--green-deep), var(--green-accent));
+        @keyframes gold-shimmer {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .hero h1 .highlight-forest {
+            background: linear-gradient(135deg, var(--forest-glow), var(--moss-light));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             font-weight: 600;
@@ -340,14 +427,14 @@
             font-family: 'Cormorant Garamond', serif;
             font-size: 1.5rem;
             font-style: italic;
-            color: var(--text-soft);
-            margin-bottom: 40px;
+            color: var(--text-muted);
+            margin-bottom: 45px;
             font-weight: 300;
             animation: fade-in-up 1s ease-out 0.9s both;
         }
 
         @keyframes fade-in-up {
-            from { opacity: 0; transform: translateY(40px); }
+            from { opacity: 0; transform: translateY(50px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -360,12 +447,12 @@
         }
 
         .btn-magic {
-            padding: 16px 40px;
+            padding: 17px 42px;
             border: none;
             border-radius: 50px;
             font-family: 'Montserrat', sans-serif;
-            font-size: 0.85rem;
-            letter-spacing: 2px;
+            font-size: 0.82rem;
+            letter-spacing: 2.5px;
             text-transform: uppercase;
             text-decoration: none;
             position: relative;
@@ -373,30 +460,33 @@
             transition: all 0.4s ease;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--pink-deep), var(--pink-accent));
-            color: white;
-            box-shadow: 0 8px 30px rgba(212, 105, 138, 0.3);
+            background: linear-gradient(135deg, var(--forest-mid), var(--forest-deep));
+            color: var(--gold-light);
+            box-shadow: 0 8px 30px rgba(45,74,45,0.4), 0 0 20px rgba(124,184,124,0.1);
+            border: 1px solid rgba(124,184,124,0.2);
         }
 
         .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(212, 105, 138, 0.4);
+            transform: translateY(-4px);
+            box-shadow: 0 15px 45px rgba(45,74,45,0.5), 0 0 35px rgba(124,184,124,0.2);
+            background: linear-gradient(135deg, var(--forest-light), var(--forest-mid));
         }
 
         .btn-secondary {
             background: transparent;
-            color: var(--green-deep);
-            border: 2px solid var(--green-mid);
+            color: var(--gold-magic);
+            border: 1.5px solid rgba(201,168,76,0.3);
         }
 
         .btn-secondary:hover {
-            background: var(--green-light);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(109, 179, 111, 0.2);
+            background: rgba(201,168,76,0.1);
+            border-color: var(--gold-magic);
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(201,168,76,0.15);
         }
 
         .btn-magic::before {
@@ -406,7 +496,7 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
             transform: rotate(45deg) translateX(-100%);
             transition: transform 0.6s;
         }
@@ -415,7 +505,7 @@
             transform: rotate(45deg) translateX(100%);
         }
 
-        /* Скролл-индикатор */
+        /* Скролл */
         .scroll-indicator {
             position: absolute;
             bottom: 40px;
@@ -425,20 +515,20 @@
             flex-direction: column;
             align-items: center;
             gap: 8px;
-            animation: fade-in-up 1s ease-out 1.5s both;
+            animation: fade-in-up 1s ease-out 1.8s both;
         }
 
         .scroll-indicator span {
-            font-size: 0.7rem;
-            letter-spacing: 3px;
+            font-size: 0.65rem;
+            letter-spacing: 4px;
             text-transform: uppercase;
-            color: var(--text-soft);
-            opacity: 0.6;
+            color: var(--text-muted);
+            opacity: 0.5;
         }
 
         .scroll-arrow {
-            width: 2px;
-            height: 30px;
+            width: 1.5px;
+            height: 35px;
             position: relative;
             overflow: hidden;
         }
@@ -448,8 +538,8 @@
             position: absolute;
             width: 100%;
             height: 100%;
-            background: linear-gradient(to bottom, var(--pink-deep), transparent);
-            animation: scroll-down 2s ease-in-out infinite;
+            background: linear-gradient(to bottom, var(--gold-magic), transparent);
+            animation: scroll-down 2.5s ease-in-out infinite;
         }
 
         @keyframes scroll-down {
@@ -457,58 +547,71 @@
             100% { transform: translateY(100%); }
         }
 
-        /* ===== СЕКЦИЯ "О НАС" ===== */
+        /* Волна */
+        .silk-wave {
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+        }
+
+        /* ===== СЕКЦИИ ===== */
         .section {
-            padding: 120px 60px;
+            padding: 130px 60px;
             position: relative;
+            z-index: 5;
         }
 
         .section-header {
             text-align: center;
-            margin-bottom: 80px;
+            margin-bottom: 90px;
         }
 
         .section-label {
-            font-size: 0.75rem;
-            letter-spacing: 4px;
+            font-size: 0.7rem;
+            letter-spacing: 5px;
             text-transform: uppercase;
-            color: var(--pink-accent);
+            color: var(--gold-magic);
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
-            margin-bottom: 16px;
+            gap: 14px;
+            margin-bottom: 18px;
         }
 
         .section-label::before,
         .section-label::after {
             content: '';
-            width: 40px;
+            width: 50px;
             height: 1px;
-            background: linear-gradient(90deg, transparent, var(--pink-mid));
+            background: linear-gradient(90deg, transparent, var(--gold-magic));
         }
 
         .section-label::after {
-            background: linear-gradient(90deg, var(--pink-mid), transparent);
+            background: linear-gradient(90deg, var(--gold-magic), transparent);
         }
 
         .section-title {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 3.2rem;
+            font-size: 3.4rem;
             font-weight: 300;
-            color: var(--text-dark);
+            color: var(--text-light);
             line-height: 1.2;
+            text-shadow: 0 0 40px rgba(0,0,0,0.3);
         }
 
-        /* About */
+        /* ===== О НАС ===== */
         .about {
-            background: linear-gradient(180deg, var(--cream) 0%, var(--green-light) 50%, var(--cream) 100%);
+            background:
+                radial-gradient(ellipse at 30% 50%, rgba(45,74,45,0.3) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 80%, rgba(139,34,82,0.1) 0%, transparent 50%),
+                linear-gradient(180deg, var(--midnight) 0%, var(--forest-dark) 50%, var(--midnight) 100%);
         }
 
         .about-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 80px;
+            gap: 90px;
             align-items: center;
             max-width: 1200px;
             margin: 0 auto;
@@ -520,131 +623,149 @@
 
         .about-image {
             width: 100%;
-            height: 600px;
+            height: 620px;
             border-radius: 200px 200px 100px 100px;
             overflow: hidden;
             position: relative;
-            box-shadow: 0 30px 60px rgba(109, 179, 111, 0.15);
+            box-shadow: 0 30px 80px rgba(0,0,0,0.4), 0 0 40px rgba(124,184,124,0.08);
+            border: 1px solid rgba(124,184,124,0.1);
         }
 
         .about-image-placeholder {
             width: 100%;
             height: 100%;
-            background: linear-gradient(160deg, var(--pink-light), var(--green-light), var(--pink-mid));
+            background: linear-gradient(160deg, var(--forest-deep), var(--forest-dark), var(--forest-mid));
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 8rem;
-            animation: gentle-shift 8s ease-in-out infinite;
-        }
-
-        @keyframes gentle-shift {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
+            font-size: 9rem;
+            filter: drop-shadow(0 0 40px rgba(201,168,76,0.3));
         }
 
         .about-image-decor {
             position: absolute;
-            font-size: 2rem;
-            animation: orbit 10s linear infinite;
+            font-size: 2.2rem;
+            animation: orbit 12s ease-in-out infinite;
+            filter: drop-shadow(0 0 10px rgba(201,168,76,0.3));
         }
 
-        .about-image-decor:nth-child(2) {
-            top: 5%; right: -10%;
-            animation-delay: 0s;
-        }
-
-        .about-image-decor:nth-child(3) {
-            bottom: 15%; left: -8%;
-            animation-delay: -3.3s;
-        }
-
-        .about-image-decor:nth-child(4) {
-            top: 40%; right: -15%;
-            animation-delay: -6.6s;
-        }
+        .about-image-decor:nth-child(2) { top: 3%; right: -12%; animation-delay: 0s; }
+        .about-image-decor:nth-child(3) { bottom: 12%; left: -10%; animation-delay: -4s; }
+        .about-image-decor:nth-child(4) { top: 45%; right: -16%; animation-delay: -8s; }
 
         @keyframes orbit {
-            0% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
-            100% { transform: translateY(0) rotate(360deg); }
+            0% { transform: translateY(0) rotate(0deg) scale(1); }
+            50% { transform: translateY(-25px) rotate(180deg) scale(1.1); }
+            100% { transform: translateY(0) rotate(360deg) scale(1); }
         }
 
         .about-text h3 {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 2.4rem;
+            font-size: 2.5rem;
             font-weight: 300;
-            margin-bottom: 24px;
+            margin-bottom: 26px;
             line-height: 1.3;
         }
 
         .about-text p {
             font-weight: 300;
-            line-height: 1.9;
-            color: var(--text-soft);
-            margin-bottom: 16px;
-            font-size: 1.02rem;
+            line-height: 2;
+            color: var(--text-muted);
+            margin-bottom: 18px;
+            font-size: 1rem;
         }
 
         .fairy-signature {
             display: flex;
             align-items: center;
-            gap: 16px;
-            margin-top: 30px;
-            padding: 20px 28px;
-            background: rgba(255,255,255,0.6);
+            gap: 18px;
+            margin-top: 35px;
+            padding: 22px 30px;
+            background: rgba(45,74,45,0.3);
             border-radius: 20px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(248, 187, 208, 0.2);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(124,184,124,0.15);
         }
 
         .fairy-avatar {
-            width: 56px;
-            height: 56px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
-            background: linear-gradient(135deg, var(--pink-mid), var(--green-mid));
+            background: linear-gradient(135deg, var(--forest-mid), var(--gold-magic));
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             flex-shrink: 0;
+            box-shadow: 0 0 20px rgba(201,168,76,0.2);
         }
 
         .fairy-info .fairy-name {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 1.2rem;
+            font-size: 1.25rem;
             font-weight: 600;
-            color: var(--text-dark);
+            color: var(--text-light);
         }
 
         .fairy-info .fairy-role {
-            font-size: 0.8rem;
-            color: var(--pink-accent);
+            font-size: 0.78rem;
+            color: var(--gold-magic);
+            letter-spacing: 1.5px;
+        }
+
+        .natural-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 16px;
+            background: rgba(124,184,124,0.15);
+            border: 1px solid rgba(124,184,124,0.2);
+            border-radius: 50px;
+            font-size: 0.72rem;
+            color: var(--forest-glow);
+            margin-top: 14px;
             letter-spacing: 1px;
+        }
+
+        .natural-badge .pulse-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--forest-glow);
+            box-shadow: 0 0 8px var(--forest-glow);
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(1.8); }
         }
 
         /* ===== ФИЛОСОФИЯ ===== */
         .philosophy {
-            background: var(--cream);
+            background:
+                radial-gradient(ellipse at 60% 30%, rgba(201,168,76,0.06) 0%, transparent 50%),
+                var(--midnight);
         }
 
         .philosophy-cards {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 35px;
+            gap: 30px;
             max-width: 1100px;
             margin: 0 auto;
         }
 
         .phil-card {
-            background: white;
-            border-radius: 30px;
-            padding: 50px 36px;
+            background: rgba(26, 46, 26, 0.6);
+            backdrop-filter: blur(15px);
+            border-radius: 28px;
+            padding: 50px 34px;
             text-align: center;
             position: relative;
             overflow: hidden;
             transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-            border: 1px solid rgba(248, 187, 208, 0.1);
+            border: 1px solid rgba(124,184,124,0.08);
         }
 
         .phil-card::before {
@@ -652,15 +773,26 @@
             position: absolute;
             top: 0; left: 0;
             width: 100%;
-            height: 4px;
-            background: linear-gradient(90deg, var(--pink-mid), var(--green-mid));
+            height: 3px;
+            background: linear-gradient(90deg, var(--forest-glow), var(--gold-magic), var(--berry-light));
             opacity: 0;
-            transition: opacity 0.4s;
+            transition: opacity 0.5s;
+        }
+
+        .phil-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 100%;
+            height: 50%;
+            background: radial-gradient(ellipse at center bottom, rgba(124,184,124,0.05) 0%, transparent 70%);
+            pointer-events: none;
         }
 
         .phil-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 25px 60px rgba(212, 105, 138, 0.12);
+            transform: translateY(-12px);
+            box-shadow: 0 25px 60px rgba(0,0,0,0.3), 0 0 30px rgba(124,184,124,0.05);
+            border-color: rgba(124,184,124,0.2);
         }
 
         .phil-card:hover::before {
@@ -668,50 +800,106 @@
         }
 
         .phil-icon {
-            font-size: 3rem;
-            margin-bottom: 24px;
+            font-size: 3.2rem;
+            margin-bottom: 26px;
             display: block;
+            filter: drop-shadow(0 0 15px rgba(201,168,76,0.3));
         }
 
         .phil-card h4 {
             font-family: 'Cormorant Garamond', serif;
             font-size: 1.5rem;
             margin-bottom: 14px;
-            color: var(--text-dark);
+            color: var(--text-light);
         }
 
         .phil-card p {
             font-weight: 300;
-            line-height: 1.8;
-            color: var(--text-soft);
-            font-size: 0.92rem;
+            line-height: 1.9;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* ===== БЕГУЩАЯ СТРОКА ===== */
+        .ingredients-marquee {
+            padding: 50px 0;
+            overflow: hidden;
+            background: linear-gradient(90deg,
+                var(--forest-dark),
+                rgba(45,74,45,0.8),
+                rgba(139,34,82,0.2),
+                rgba(45,74,45,0.8),
+                var(--forest-dark)
+            );
+            border-top: 1px solid rgba(124,184,124,0.1);
+            border-bottom: 1px solid rgba(124,184,124,0.1);
+        }
+
+        .marquee-track {
+            display: flex;
+            gap: 60px;
+            animation: marquee 35s linear infinite;
+            width: max-content;
+        }
+
+        .marquee-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        .marquee-item span {
+            font-size: 1.6rem;
+            filter: drop-shadow(0 0 8px rgba(201,168,76,0.3));
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
         }
 
         /* ===== ПРОДУКТЫ ===== */
         .products {
-            background: linear-gradient(180deg, var(--cream) 0%, var(--pink-light) 50%, var(--cream) 100%);
+            background:
+                radial-gradient(ellipse at 20% 30%, rgba(139,34,82,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 70%, rgba(45,74,45,0.3) 0%, transparent 50%),
+                linear-gradient(180deg, var(--midnight), var(--forest-dark), var(--midnight));
         }
 
         .products-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 35px;
+            gap: 30px;
             max-width: 1200px;
             margin: 0 auto;
         }
 
+        .products-grid-bottom {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            max-width: 790px;
+            margin: 30px auto 0;
+        }
+
         .product-card {
-            background: white;
-            border-radius: 30px;
+            background: rgba(26, 46, 26, 0.5);
+            backdrop-filter: blur(15px);
+            border-radius: 28px;
             overflow: hidden;
             transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
             position: relative;
-            border: 1px solid rgba(248, 187, 208, 0.08);
+            border: 1px solid rgba(124,184,124,0.08);
         }
 
         .product-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 25px 60px rgba(212, 105, 138, 0.12);
+            transform: translateY(-10px);
+            box-shadow: 0 30px 70px rgba(0,0,0,0.4), 0 0 25px rgba(124,184,124,0.06);
+            border-color: rgba(201,168,76,0.15);
         }
 
         .product-image {
@@ -726,53 +914,64 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 5rem;
-            transition: transform 0.6s ease;
+            font-size: 5.5rem;
+            transition: transform 0.7s ease;
         }
 
-        .product-card:nth-child(odd) .product-image-bg {
-            background: linear-gradient(160deg, var(--pink-light), #fce4ec, var(--pink-mid));
+        .product-card:nth-child(1) .product-image-bg {
+            background: linear-gradient(160deg, #1a3a1a, #2d5a2d, #1a4a2a);
+        }
+        .product-card:nth-child(2) .product-image-bg {
+            background: linear-gradient(160deg, #2a1a2a, #4a2a4a, #3a1a3a);
+        }
+        .product-card:nth-child(3) .product-image-bg {
+            background: linear-gradient(160deg, #2a2a1a, #4a4a2a, #3a3a1a);
         }
 
-        .product-card:nth-child(even) .product-image-bg {
-            background: linear-gradient(160deg, var(--green-light), #e8f5e9, var(--green-mid));
+        .product-card-alt:nth-child(1) .product-image-bg {
+            background: linear-gradient(160deg, #1a2a2a, #2a4a4a, #1a3a3a);
+        }
+        .product-card-alt:nth-child(2) .product-image-bg {
+            background: linear-gradient(160deg, #2a1a1a, #4a2a2a, #3a1a2a);
         }
 
         .product-card:hover .product-image-bg {
-            transform: scale(1.05);
+            transform: scale(1.08);
         }
 
         .product-tag {
             position: absolute;
-            top: 16px;
-            left: 16px;
-            padding: 6px 16px;
-            background: rgba(255,255,255,0.85);
-            backdrop-filter: blur(8px);
+            top: 18px;
+            left: 18px;
+            padding: 7px 18px;
+            background: rgba(13,26,13,0.8);
+            backdrop-filter: blur(10px);
             border-radius: 50px;
-            font-size: 0.7rem;
-            letter-spacing: 1.5px;
+            font-size: 0.68rem;
+            letter-spacing: 2px;
             text-transform: uppercase;
-            color: var(--green-accent);
-            font-weight: 500;
+            color: var(--gold-magic);
+            font-weight: 400;
+            border: 1px solid rgba(201,168,76,0.2);
         }
 
         .product-info {
-            padding: 30px;
+            padding: 32px;
         }
 
         .product-info h4 {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 1.5rem;
-            margin-bottom: 8px;
+            font-size: 1.55rem;
+            margin-bottom: 10px;
+            color: var(--text-light);
         }
 
         .product-info .product-desc {
             font-weight: 300;
-            color: var(--text-soft);
-            font-size: 0.9rem;
-            line-height: 1.7;
-            margin-bottom: 20px;
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            line-height: 1.8;
+            margin-bottom: 24px;
         }
 
         .product-bottom {
@@ -783,156 +982,45 @@
 
         .product-price {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 1.5rem;
-            color: var(--pink-accent);
+            font-size: 1.55rem;
+            color: var(--gold-magic);
             font-weight: 600;
+            text-shadow: 0 0 15px rgba(201,168,76,0.2);
         }
 
         .product-btn {
-            width: 44px;
-            height: 44px;
-            border: 2px solid var(--pink-mid);
+            width: 46px;
+            height: 46px;
+            border: 1.5px solid rgba(124,184,124,0.3);
             border-radius: 50%;
             background: none;
-            color: var(--pink-accent);
-            font-size: 1.2rem;
+            color: var(--forest-glow);
+            font-size: 1.3rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.3s;
+            transition: all 0.4s;
         }
 
         .product-btn:hover {
-            background: var(--pink-deep);
-            border-color: var(--pink-deep);
-            color: white;
+            background: var(--forest-mid);
+            border-color: var(--forest-glow);
+            color: var(--gold-light);
             transform: rotate(90deg);
+            box-shadow: 0 0 20px rgba(124,184,124,0.2);
         }
 
-        /* ===== ИНГРЕДИЕНТЫ (бегущая строка) ===== */
-        .ingredients-marquee {
-            padding: 40px 0;
-            overflow: hidden;
-            background: linear-gradient(90deg, var(--pink-light), var(--green-light), var(--pink-light));
-        }
-
-        .marquee-track {
-            display: flex;
-            gap: 50px;
-            animation: marquee 30s linear infinite;
-            width: max-content;
-        }
-
-        .marquee-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.3rem;
-            color: var(--text-soft);
-            white-space: nowrap;
-        }
-
-        .marquee-item span {
-            font-size: 1.5rem;
-        }
-
-        @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        /* ===== ОТЗЫВЫ ===== */
-        .testimonials {
-            background: var(--cream);
-        }
-
-        .testimonials-slider {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-        }
-
-        .testimonial-card {
-            background: white;
-            border-radius: 30px;
-            padding: 50px;
-            text-align: center;
-            box-shadow: 0 10px 40px rgba(212, 105, 138, 0.08);
-            display: none;
-            animation: fade-in 0.6s ease;
-        }
-
-        .testimonial-card.active {
-            display: block;
-        }
-
-        @keyframes fade-in {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .testimonial-quote {
-            font-size: 2.5rem;
-            color: var(--pink-mid);
-            margin-bottom: 16px;
-        }
-
-        .testimonial-text {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.4rem;
-            font-style: italic;
-            line-height: 1.7;
-            color: var(--text-dark);
-            margin-bottom: 30px;
-        }
-
-        .testimonial-author {
-            font-size: 0.85rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: var(--text-soft);
-        }
-
-        .testimonial-stars {
-            color: var(--gold);
-            font-size: 1rem;
-            margin-bottom: 10px;
-        }
-
-        .testimonial-dots {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 30px;
-        }
-
-        .testimonial-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: var(--pink-mid);
-            border: none;
-            opacity: 0.3;
-            transition: all 0.3s;
-        }
-
-        .testimonial-dot.active {
-            opacity: 1;
-            width: 30px;
-            border-radius: 5px;
-            background: linear-gradient(90deg, var(--pink-deep), var(--green-mid));
-        }
-
-        /* ===== РИТУАЛ (процесс) ===== */
+        /* ===== РИТУАЛ ===== */
         .ritual {
-            background: linear-gradient(180deg, var(--cream), var(--green-light), var(--cream));
+            background:
+                radial-gradient(ellipse at 50% 50%, rgba(45,74,45,0.2) 0%, transparent 60%),
+                linear-gradient(180deg, var(--midnight), var(--forest-dark), var(--midnight));
         }
 
         .ritual-steps {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 15px;
             max-width: 1100px;
             margin: 0 auto;
             flex-wrap: wrap;
@@ -942,19 +1030,19 @@
             flex: 1;
             min-width: 200px;
             text-align: center;
-            padding: 40px 20px;
+            padding: 45px 18px;
             position: relative;
         }
 
         .ritual-step::after {
-            content: '✦';
+            content: '⟡';
             position: absolute;
-            right: -10px;
+            right: -8px;
             top: 50%;
             transform: translateY(-50%);
-            color: var(--pink-mid);
-            font-size: 1rem;
-            opacity: 0.5;
+            color: var(--gold-magic);
+            font-size: 0.8rem;
+            opacity: 0.3;
         }
 
         .ritual-step:last-child::after {
@@ -962,47 +1050,140 @@
         }
 
         .step-number {
-            width: 70px;
-            height: 70px;
+            width: 80px;
+            height: 80px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 20px;
-            font-size: 2rem;
+            margin: 0 auto 22px;
+            font-size: 2.2rem;
             transition: all 0.5s ease;
+            border: 1px solid rgba(124,184,124,0.15);
         }
 
-        .ritual-step:nth-child(1) .step-number { background: linear-gradient(135deg, var(--pink-light), var(--pink-mid)); }
-        .ritual-step:nth-child(2) .step-number { background: linear-gradient(135deg, var(--green-light), var(--green-mid)); }
-        .ritual-step:nth-child(3) .step-number { background: linear-gradient(135deg, var(--pink-mid), var(--pink-deep)); }
-        .ritual-step:nth-child(4) .step-number { background: linear-gradient(135deg, var(--green-mid), var(--green-deep)); }
+        .ritual-step:nth-child(1) .step-number { background: linear-gradient(135deg, rgba(45,74,45,0.5), rgba(61,107,61,0.3)); }
+        .ritual-step:nth-child(2) .step-number { background: linear-gradient(135deg, rgba(139,34,82,0.3), rgba(160,45,107,0.2)); }
+        .ritual-step:nth-child(3) .step-number { background: linear-gradient(135deg, rgba(201,168,76,0.2), rgba(201,168,76,0.1)); }
+        .ritual-step:nth-child(4) .step-number { background: linear-gradient(135deg, rgba(90,143,90,0.3), rgba(124,184,124,0.2)); }
 
         .ritual-step:hover .step-number {
-            transform: scale(1.15) rotate(10deg);
-            box-shadow: 0 10px 30px rgba(212, 105, 138, 0.2);
+            transform: scale(1.2) rotate(15deg);
+            box-shadow: 0 10px 35px rgba(0,0,0,0.3), 0 0 20px rgba(201,168,76,0.1);
         }
 
         .ritual-step h4 {
             font-family: 'Cormorant Garamond', serif;
             font-size: 1.3rem;
             margin-bottom: 10px;
+            color: var(--text-light);
         }
 
         .ritual-step p {
             font-weight: 300;
-            font-size: 0.88rem;
-            color: var(--text-soft);
-            line-height: 1.7;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        /* ===== ОТЗЫВЫ ===== */
+        .testimonials {
+            background:
+                radial-gradient(ellipse at 70% 50%, rgba(139,34,82,0.1) 0%, transparent 50%),
+                var(--midnight);
+        }
+
+        .testimonials-slider {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .testimonial-card {
+            background: rgba(26, 46, 26, 0.5);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(124,184,124,0.1);
+            border-radius: 30px;
+            padding: 55px;
+            text-align: center;
+            display: none;
+            animation: fade-in 0.7s ease;
+        }
+
+        .testimonial-card.active {
+            display: block;
+        }
+
+        @keyframes fade-in {
+            from { opacity: 0; transform: translateY(25px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .testimonial-quote {
+            font-size: 3rem;
+            color: var(--gold-magic);
+            margin-bottom: 16px;
+            filter: drop-shadow(0 0 15px rgba(201,168,76,0.3));
+        }
+
+        .testimonial-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.45rem;
+            font-style: italic;
+            line-height: 1.8;
+            color: var(--text-light);
+            margin-bottom: 30px;
+        }
+
+        .testimonial-author {
+            font-size: 0.82rem;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        .testimonial-stars {
+            color: var(--gold-magic);
+            font-size: 1rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(201,168,76,0.3);
+        }
+
+        .testimonial-dots {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 35px;
+        }
+
+        .testimonial-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--forest-mid);
+            border: none;
+            opacity: 0.3;
+            transition: all 0.3s;
+        }
+
+        .testimonial-dot.active {
+            opacity: 1;
+            width: 32px;
+            border-radius: 5px;
+            background: linear-gradient(90deg, var(--gold-magic), var(--forest-glow));
+            box-shadow: 0 0 12px rgba(201,168,76,0.3);
         }
 
         /* ===== CTA ===== */
         .cta-section {
-            padding: 120px 60px;
+            padding: 130px 60px;
             text-align: center;
             position: relative;
             overflow: hidden;
-            background: linear-gradient(135deg, var(--pink-light) 0%, var(--cream) 40%, var(--green-light) 100%);
+            background:
+                radial-gradient(ellipse at 30% 50%, rgba(45,74,45,0.4) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 50%, rgba(139,34,82,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(201,168,76,0.05) 0%, transparent 40%),
+                linear-gradient(180deg, var(--midnight), var(--forest-dark), var(--midnight));
         }
 
         .cta-section::before {
@@ -1012,14 +1193,15 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle at 30% 50%, rgba(248,187,208,0.15) 0%, transparent 50%),
-                        radial-gradient(circle at 70% 50%, rgba(165,214,167,0.15) 0%, transparent 50%);
-            animation: cta-glow 8s ease-in-out infinite;
+            background:
+                radial-gradient(circle at 30% 50%, rgba(124,184,124,0.05) 0%, transparent 40%),
+                radial-gradient(circle at 70% 50%, rgba(201,168,76,0.05) 0%, transparent 40%);
+            animation: cta-glow 12s ease-in-out infinite;
         }
 
         @keyframes cta-glow {
             0%, 100% { transform: rotate(0deg) scale(1); }
-            50% { transform: rotate(180deg) scale(1.1); }
+            50% { transform: rotate(180deg) scale(1.15); }
         }
 
         .cta-content {
@@ -1028,146 +1210,155 @@
         }
 
         .cta-emoji {
-            font-size: 4rem;
+            font-size: 4.5rem;
             display: block;
-            margin-bottom: 24px;
+            margin-bottom: 28px;
+            filter: drop-shadow(0 0 25px rgba(201,168,76,0.3));
         }
 
         .cta-section h2 {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 3rem;
+            font-size: 3.2rem;
             font-weight: 300;
-            margin-bottom: 16px;
+            margin-bottom: 18px;
         }
 
         .cta-section p {
             font-weight: 300;
-            color: var(--text-soft);
-            margin-bottom: 40px;
-            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 45px;
+            font-size: 1.05rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
         }
 
-        /* Email */
         .cta-form {
             display: flex;
             gap: 12px;
             justify-content: center;
-            max-width: 500px;
+            max-width: 520px;
             margin: 0 auto;
             flex-wrap: wrap;
         }
 
         .cta-input {
             flex: 1;
-            min-width: 250px;
-            padding: 16px 28px;
-            border: 2px solid rgba(248, 187, 208, 0.3);
+            min-width: 260px;
+            padding: 17px 30px;
+            border: 1.5px solid rgba(124,184,124,0.2);
             border-radius: 50px;
-            background: rgba(255,255,255,0.7);
-            backdrop-filter: blur(10px);
+            background: rgba(26,46,26,0.5);
+            backdrop-filter: blur(15px);
             font-family: 'Montserrat', sans-serif;
-            font-size: 0.9rem;
-            color: var(--text-dark);
+            font-size: 0.88rem;
+            color: var(--text-light);
             outline: none;
-            transition: border-color 0.3s;
+            transition: border-color 0.3s, box-shadow 0.3s;
         }
 
         .cta-input:focus {
-            border-color: var(--pink-deep);
+            border-color: var(--gold-magic);
+            box-shadow: 0 0 20px rgba(201,168,76,0.15);
         }
 
         .cta-input::placeholder {
-            color: var(--text-soft);
-            opacity: 0.6;
+            color: var(--text-muted);
+            opacity: 0.5;
         }
 
         /* ===== FOOTER ===== */
         footer {
-            background: linear-gradient(135deg, #3d2b2b, #2d1f2f);
-            color: rgba(255,255,255,0.7);
-            padding: 80px 60px 30px;
+            background: linear-gradient(180deg, var(--midnight), #080f08);
+            color: rgba(255,255,255,0.5);
+            padding: 90px 60px 35px;
+            border-top: 1px solid rgba(124,184,124,0.08);
         }
 
         .footer-top {
             display: grid;
             grid-template-columns: 2fr 1fr 1fr 1fr;
             gap: 60px;
-            margin-bottom: 60px;
+            margin-bottom: 65px;
         }
 
         .footer-brand h3 {
             font-family: 'Cormorant Garamond', serif;
             font-size: 2rem;
-            color: white;
-            margin-bottom: 16px;
+            background: linear-gradient(135deg, var(--gold-magic), var(--forest-glow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 18px;
         }
 
         .footer-brand p {
-            line-height: 1.8;
+            line-height: 1.9;
             font-weight: 300;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
         }
 
         .footer-col h4 {
             font-family: 'Cormorant Garamond', serif;
-            color: white;
+            color: var(--text-light);
             font-size: 1.15rem;
-            margin-bottom: 20px;
+            margin-bottom: 22px;
         }
 
         .footer-col a {
             display: block;
-            color: rgba(255,255,255,0.5);
+            color: rgba(255,255,255,0.35);
             text-decoration: none;
             font-weight: 300;
-            font-size: 0.88rem;
-            margin-bottom: 12px;
+            font-size: 0.85rem;
+            margin-bottom: 13px;
             transition: color 0.3s;
         }
 
         .footer-col a:hover {
-            color: var(--pink-mid);
+            color: var(--gold-magic);
         }
 
         .footer-bottom {
-            border-top: 1px solid rgba(255,255,255,0.08);
+            border-top: 1px solid rgba(255,255,255,0.05);
             padding-top: 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             font-weight: 300;
         }
 
         .footer-socials {
             display: flex;
-            gap: 16px;
+            gap: 14px;
         }
 
         .footer-socials a {
-            width: 40px;
-            height: 40px;
+            width: 42px;
+            height: 42px;
             border-radius: 50%;
-            border: 1px solid rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.1);
             display: flex;
             align-items: center;
             justify-content: center;
             text-decoration: none;
-            font-size: 1rem;
+            font-size: 1.05rem;
             transition: all 0.3s;
         }
 
         .footer-socials a:hover {
-            background: var(--pink-deep);
-            border-color: var(--pink-deep);
-            transform: translateY(-3px);
+            background: var(--forest-mid);
+            border-color: var(--forest-glow);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3), 0 0 15px rgba(124,184,124,0.1);
         }
 
-        /* ===== REVEAL АНИМАЦИИ ===== */
+        /* ===== REVEAL ===== */
         .reveal {
             opacity: 0;
             transform: translateY(60px);
-            transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+            transition: all 0.9s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
         .reveal.visible {
@@ -1179,11 +1370,12 @@
         .reveal-delay-2 { transition-delay: 0.2s; }
         .reveal-delay-3 { transition-delay: 0.3s; }
         .reveal-delay-4 { transition-delay: 0.4s; }
+        .reveal-delay-5 { transition-delay: 0.5s; }
 
-        /* ===== MEDIA QUERIES ===== */
+        /* ===== MEDIA ===== */
         @media (max-width: 1024px) {
-            .hero h1 { font-size: 3.5rem; }
-            .section { padding: 80px 40px; }
+            .hero h1 { font-size: 3.8rem; }
+            .section { padding: 90px 40px; }
             .about-grid { gap: 50px; }
             .footer-top { grid-template-columns: 1fr 1fr; }
         }
@@ -1200,17 +1392,16 @@
                 top: 100%;
                 left: 0;
                 width: 100%;
-                background: rgba(253, 246, 240, 0.97);
-                backdrop-filter: blur(20px);
+                background: rgba(13, 26, 13, 0.95);
+                backdrop-filter: blur(25px);
                 padding: 30px;
                 gap: 24px;
-                box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+                border-bottom: 1px solid rgba(124,184,124,0.1);
             }
 
-            .hero { min-height: 100vh; }
-            .hero h1 { font-size: 2.5rem; }
-            .hero-fairy { font-size: 3.5rem; }
-            .hero-subtitle { font-size: 1.2rem; }
+            .hero h1 { font-size: 2.6rem; }
+            .hero-fairy { font-size: 4rem; }
+            .hero-subtitle { font-size: 1.1rem; }
             .section { padding: 70px 24px; }
             .section-title { font-size: 2.2rem; }
 
@@ -1218,7 +1409,8 @@
             .about-image { height: 400px; }
 
             .philosophy-cards,
-            .products-grid { grid-template-columns: 1fr; max-width: 450px; }
+            .products-grid,
+            .products-grid-bottom { grid-template-columns: 1fr; max-width: 450px; }
 
             .ritual-steps { flex-direction: column; align-items: center; }
             .ritual-step::after { display: none; }
@@ -1227,36 +1419,12 @@
             .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
 
             .cta-section { padding: 80px 24px; }
-            .cta-section h2 { font-size: 2rem; }
+            .cta-section h2 { font-size: 2.2rem; }
 
-            .cursor-wand, .cursor-glow { display: none; }
+            .cursor-wand, .cursor-glow, .fireflies { display: none; }
             * { cursor: auto; }
-        }
 
-        /* ===== Пульсирующий бейдж ===== */
-        .natural-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 5px 14px;
-            background: rgba(165, 214, 167, 0.2);
-            border-radius: 50px;
-            font-size: 0.75rem;
-            color: var(--green-accent);
-            margin-top: 10px;
-        }
-
-        .natural-badge .pulse-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--green-deep);
-            animation: pulse-dot 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse-dot {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(1.5); }
+            .testimonial-card { padding: 35px 25px; }
         }
     </style>
 </head>
@@ -1264,19 +1432,32 @@
 
     <!-- ПРЕЛОАДЕР -->
     <div class="preloader" id="preloader">
-        <div class="preloader-flower">🌸</div>
+        <div class="preloader-icon">🌿</div>
         <div class="preloader-text">Lab Spa</div>
+        <div class="preloader-subtitle">магия леса загружается...</div>
     </div>
 
-    <!-- МАГИЧЕСКИЙ КУРСОР -->
-    <div class="cursor-wand" id="cursorWand">✨</div>
+    <!-- СВЕТЛЯЧКИ -->
+    <div class="fireflies">
+        <div class="firefly"></div>
+        <div class="firefly"></div>
+        <div class="firefly"></div>
+        <div class="firefly"></div>
+        <div class="firefly"></div>
+        <div class="firefly"></div>
+        <div class="firefly"></div>
+        <div class="firefly"></div>
+    </div>
+
+    <!-- КУРСОР -->
+    <div class="cursor-wand" id="cursorWand">🪄</div>
     <div class="cursor-glow" id="cursorGlow"></div>
 
     <!-- НАВИГАЦИЯ -->
     <nav class="navbar" id="navbar">
         <a href="#" class="nav-logo">
             Lab Spa
-            <span class="logo-sparkle">✦</span>
+            <span class="logo-icon">✦</span>
         </a>
         <ul class="nav-links" id="navLinks">
             <li><a href="#about">О нас</a></li>
@@ -1293,46 +1474,49 @@
     <!-- HERO -->
     <section class="hero" id="hero">
         <div class="hero-bg-elements">
+            <div class="mist-layer"></div>
             <div class="floating-element">🌿</div>
-            <div class="floating-element">🌸</div>
-            <div class="floating-element">🦋</div>
-            <div class="floating-element">🌺</div>
-            <div class="floating-element">✨</div>
             <div class="floating-element">🍃</div>
-            <div class="floating-element">💮</div>
-            <div class="floating-element">🌷</div>
+            <div class="floating-element">🌲</div>
+            <div class="floating-element">🍄</div>
+            <div class="floating-element">🦋</div>
+            <div class="floating-element">🌙</div>
+            <div class="floating-element">🌸</div>
+            <div class="floating-element">🪻</div>
+            <div class="floating-element">🫧</div>
+            <div class="floating-element">🌾</div>
         </div>
 
         <div class="hero-content">
             <span class="hero-fairy">🧚‍♀️</span>
-            <div class="hero-badge">✦ 100% натуральная косметика ✦</div>
+            <div class="hero-badge">✦ натуральная лесная косметика ✦</div>
             <h1>
-                <span class="highlight-pink">Магия</span> природы<br>
-                в каждой <span class="highlight-green">капле</span>
+                <span class="highlight-gold">Магия</span> леса<br>
+                в каждом <span class="highlight-forest">прикосновении</span>
             </h1>
-            <p class="hero-subtitle">Бархатный уход, созданный с любовью феи натуральной красоты</p>
+            <p class="hero-subtitle">Бархатный уход из сердца леса — создано руками феи природы</p>
             <div class="hero-buttons">
-                <a href="#products" class="btn-magic btn-primary">🌿 Открыть магию</a>
-                <a href="#about" class="btn-magic btn-secondary">Узнать историю</a>
+                <a href="#products" class="btn-magic btn-primary">🌿 Войти в лес</a>
+                <a href="#about" class="btn-magic btn-secondary">✦ История феи</a>
             </div>
         </div>
 
         <div class="scroll-indicator">
-            <span>Листайте вниз</span>
+            <span>Глубже в лес</span>
             <div class="scroll-arrow"></div>
         </div>
 
         <svg class="silk-wave" viewBox="0 0 1440 120" preserveAspectRatio="none">
-            <path d="M0,60 C360,120 720,0 1080,60 C1260,90 1380,80 1440,60 L1440,120 L0,120 Z" fill="#fdf6f0" opacity="0.6"/>
-            <path d="M0,80 C400,20 800,100 1200,40 C1350,20 1400,50 1440,80 L1440,120 L0,120 Z" fill="#fdf6f0"/>
+            <path d="M0,60 C360,120 720,0 1080,60 C1260,90 1380,80 1440,60 L1440,120 L0,120 Z" fill="#0d1a0d" opacity="0.5"/>
+            <path d="M0,80 C400,20 800,100 1200,40 C1350,20 1400,50 1440,80 L1440,120 L0,120 Z" fill="#0d1a0d"/>
         </svg>
     </section>
 
     <!-- О НАС -->
     <section class="section about" id="about">
         <div class="section-header reveal">
-            <div class="section-label">✦ Наша история ✦</div>
-            <h2 class="section-title">Рождённая в саду природы</h2>
+            <div class="section-label">✦ история ✦</div>
+            <h2 class="section-title">Фея из сердца леса</h2>
         </div>
 
         <div class="about-grid">
@@ -1340,27 +1524,28 @@
                 <div class="about-image">
                     <div class="about-image-placeholder">🧚‍♀️</div>
                 </div>
-                <span class="about-image-decor">🌸</span>
-                <span class="about-image-decor">🌿</span>
+                <span class="about-image-decor">🌙</span>
+                <span class="about-image-decor">🍃</span>
                 <span class="about-image-decor">🦋</span>
             </div>
 
             <div class="about-text reveal reveal-delay-2">
-                <h3>Она — словно феечка, что превращает дары природы в <span class="highlight-pink">бархатное</span> волшебство</h3>
-                <p>Lab Spa — это не просто косметика. Это магия, рождённая в руках мастера, который знает каждый лепесток, каждый корешок, каждую каплю росы.</p>
-                <p>Каждое средство создаётся вручную с трепетной заботой. Никакой химии — только то, что подарила сама природа. Шёлковые текстуры, нежнейшие ароматы, видимый результат.</p>
+                <h3>Она собирает травы на рассвете и варит эликсиры при свете <span class="highlight-gold">луны</span></h3>
+                <p>Lab Spa — это не фабрика. Это лесная мастерская, где каждый продукт рождается из живых растений, собранных в экологически чистых уголках природы.</p>
+                <p>Основательница — настоящая фея натуральной косметики. Она знает язык трав, силу коры и тайны лесных ягод. Каждый рецепт — результат многолетнего опыта и безграничной любви к природе.</p>
+                <p>Никакой синтетики. Никаких компромиссов. Только то, что лес дарит добровольно.</p>
 
                 <div class="fairy-signature">
                     <div class="fairy-avatar">🧚‍♀️</div>
                     <div class="fairy-info">
                         <div class="fairy-name">Основательница Lab Spa</div>
-                        <div class="fairy-role">Фея натуральной красоты ✨</div>
+                        <div class="fairy-role">Фея лесной косметики ✦</div>
                     </div>
                 </div>
 
                 <div class="natural-badge">
                     <span class="pulse-dot"></span>
-                    Все ингредиенты — живые и натуральные
+                    Каждый ингредиент — дар живого леса
                 </div>
             </div>
         </div>
@@ -1369,74 +1554,74 @@
     <!-- ФИЛОСОФИЯ -->
     <section class="section philosophy" id="philosophy">
         <div class="section-header reveal">
-            <div class="section-label">✦ Философия ✦</div>
-            <h2 class="section-title">Три кита нашей магии</h2>
+            <div class="section-label">✦ философия ✦</div>
+            <h2 class="section-title">Три заклинания нашей магии</h2>
         </div>
 
         <div class="philosophy-cards">
             <div class="phil-card reveal reveal-delay-1">
-                <span class="phil-icon">🌱</span>
-                <h4>100% натуральность</h4>
-                <p>Каждый ингредиент бережно отобран из природной кладовой. Без парабенов, силиконов и синтетики. Только чистая сила растений.</p>
+                <span class="phil-icon">🌲</span>
+                <h4>Сила леса</h4>
+                <p>Каждый ингредиент собран в экологически чистых лесах. Кора, мхи, ягоды, травы — природная аптека в каждой баночке.</p>
             </div>
             <div class="phil-card reveal reveal-delay-2">
                 <span class="phil-icon">🤲</span>
-                <h4>Ручное создание</h4>
-                <p>Каждая баночка — маленькое произведение искусства, созданное вручную с вниманием к мельчайшим деталям и безграничной любовью.</p>
+                <h4>Ручное колдовство</h4>
+                <p>Каждое средство создаётся вручную небольшими партиями. Никакого конвейера — только внимание, забота и лесное волшебство.</p>
             </div>
             <div class="phil-card reveal reveal-delay-3">
-                <span class="phil-icon">🌍</span>
-                <h4>Eco-осознанность</h4>
-                <p>Перерабатываемая упаковка, этичное производство и уважение к планете. Красота не должна вредить миру вокруг нас.</p>
+                <span class="phil-icon">🌙</span>
+                <h4>Лунные ритуалы</h4>
+                <p>Мы следуем циклам природы. Сбор трав на рассвете, приготовление при свете луны. Гармония с миром — основа красоты.</p>
             </div>
         </div>
     </section>
 
-    <!-- БЕГУЩАЯ СТРОКА ИНГРЕДИЕНТОВ -->
+    <!-- БЕГУЩАЯ СТРОКА -->
     <div class="ingredients-marquee">
         <div class="marquee-track">
-            <div class="marquee-item"><span>🌹</span> Масло розы</div>
-            <div class="marquee-item"><span>🥥</span> Кокосовое молоко</div>
-            <div class="marquee-item"><span>🍯</span> Мёд акации</div>
-            <div class="marquee-item"><span>🌿</span> Алоэ вера</div>
-            <div class="marquee-item"><span>🫐</span> Экстракт черники</div>
-            <div class="marquee-item"><span>🌸</span> Масло ши</div>
-            <div class="marquee-item"><span>🍵</span> Зелёный чай</div>
-            <div class="marquee-item"><span>🌻</span> Масло жожоба</div>
-            <div class="marquee-item"><span>🪻</span> Лаванда</div>
-            <div class="marquee-item"><span>🍊</span> Витамин С</div>
-            <!-- Дубль для бесшовности -->
-            <div class="marquee-item"><span>🌹</span> Масло розы</div>
-            <div class="marquee-item"><span>🥥</span> Кокосовое молоко</div>
-            <div class="marquee-item"><span>🍯</span> Мёд акации</div>
-            <div class="marquee-item"><span>🌿</span> Алоэ вера</div>
-            <div class="marquee-item"><span>🫐</span> Экстракт черники</div>
-            <div class="marquee-item"><span>🌸</span> Масло ши</div>
-            <div class="marquee-item"><span>🍵</span> Зелёный чай</div>
-            <div class="marquee-item"><span>🌻</span> Масло жожоба</div>
-            <div class="marquee-item"><span>🪻</span> Лаванда</div>
-            <div class="marquee-item"><span>🍊</span> Витамин С</div>
+            <div class="marquee-item"><span>🌲</span> Хвойный экстракт</div>
+            <div class="marquee-item"><span>🍄</span> Берёзовый гриб</div>
+            <div class="marquee-item"><span>🫐</span> Лесные ягоды</div>
+            <div class="marquee-item"><span>🌿</span> Мята и мелисса</div>
+            <div class="marquee-item"><span>🍯</span> Дикий мёд</div>
+            <div class="marquee-item"><span>🌸</span> Масло шиповника</div>
+            <div class="marquee-item"><span>🪵</span> Кора дуба</div>
+            <div class="marquee-item"><span>🌾</span> Овсяное молочко</div>
+            <div class="marquee-item"><span>🪻</span> Лаванда горная</div>
+            <div class="marquee-item"><span>🧊</span> Ледниковая вода</div>
+            <div class="marquee-item"><span>🌲</span> Хвойный экстракт</div>
+            <div class="marquee-item"><span>🍄</span> Берёзовый гриб</div>
+            <div class="marquee-item"><span>🫐</span> Лесные ягоды</div>
+            <div class="marquee-item"><span>🌿</span> Мята и мелисса</div>
+            <div class="marquee-item"><span>🍯</span> Дикий мёд</div>
+            <div class="marquee-item"><span>🌸</span> Масло шиповника</div>
+            <div class="marquee-item"><span>🪵</span> Кора дуба</div>
+            <div class="marquee-item"><span>🌾</span> Овсяное молочко</div>
+            <div class="marquee-item"><span>🪻</span> Лаванда горная</div>
+            <div class="marquee-item"><span>🧊</span> Ледниковая вода</div>
         </div>
     </div>
 
     <!-- ПРОДУКТЫ -->
     <section class="section products" id="products">
         <div class="section-header reveal">
-            <div class="section-label">✦ Коллекция ✦</div>
-            <h2 class="section-title">Шёлковая коллекция Lab Spa</h2>
+            <div class="section-label">✦ коллекция ✦</div>
+            <h2 class="section-title">Дары лесной мастерской</h2>
         </div>
 
+        <!-- Первый ряд: 3 продукта -->
         <div class="products-grid">
             <div class="product-card reveal reveal-delay-1">
                 <div class="product-image">
-                    <div class="product-image-bg">🧴</div>
-                    <span class="product-tag">🌿 бестселлер</span>
+                    <div class="product-image-bg">🧼</div>
+                    <span class="product-tag">🌲 хит леса</span>
                 </div>
                 <div class="product-info">
-                    <h4>Бархатный крем для лица</h4>
-                    <p class="product-desc">Лёгкая шёлковая текстура с маслом розы и гиалуроновой кислотой. Мгновенное увлажнение на 24 часа.</p>
+                    <h4>Твёрдый шампунь</h4>
+                    <p class="product-desc">Хвойный экстракт и берёзовый дёготь. Укрепляет корни, придаёт блеск. Без пластиковой упаковки — чистая экология.</p>
                     <div class="product-bottom">
-                        <span class="product-price">2 490 ₽</span>
+                        <span class="product-price">1 290 ₽</span>
                         <button class="product-btn">+</button>
                     </div>
                 </div>
@@ -1445,58 +1630,13 @@
             <div class="product-card reveal reveal-delay-2">
                 <div class="product-image">
                     <div class="product-image-bg">🫧</div>
-                    <span class="product-tag">🌸 новинка</span>
-                </div>
-                <div class="product-info">
-                    <h4>Пенка-мусс для умывания</h4>
-                    <p class="product-desc">Воздушная пенка на основе кокосового молока и зелёного чая. Очищает, не стягивая кожу.</p>
-                    <div class="product-bottom">
-                        <span class="product-price">1 890 ₽</span>
-                        <button class="product-btn">+</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="product-card reveal reveal-delay-3">
-                <div class="product-image">
-                    <div class="product-image-bg">💧</div>
-                    <span class="product-tag">✨ магический</span>
-                </div>
-                <div class="product-info">
-                    <h4>Сыворотка «Капля росы»</h4>
-                    <p class="product-desc">Концентрированный эликсир с витамином С и экстрактом черники. Сияние и молодость кожи.</p>
-                    <div class="product-bottom">
-                        <span class="product-price">3 290 ₽</span>
-                        <button class="product-btn">+</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="product-card reveal reveal-delay-1">
-                <div class="product-image">
-                    <div class="product-image-bg">🧈</div>
                     <span class="product-tag">🤲 ручная работа</span>
                 </div>
                 <div class="product-info">
-                    <h4>Масло для тела «Шёлк»</h4>
-                    <p class="product-desc">Тающая текстура из масла ши и жожоба. Бархатная кожа после первого применения.</p>
+                    <h4>Массажное мыло</h4>
+                    <p class="product-desc">Овсяное молочко и масло ши с вкраплениями лесных трав. Нежный массажный эффект при каждом использовании.</p>
                     <div class="product-bottom">
-                        <span class="product-price">2 190 ₽</span>
-                        <button class="product-btn">+</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="product-card reveal reveal-delay-2">
-                <div class="product-image">
-                    <div class="product-image-bg">🫖</div>
-                    <span class="product-tag">🍯 медовый</span>
-                </div>
-                <div class="product-info">
-                    <h4>Маска «Мёд и лаванда»</h4>
-                    <p class="product-desc">Питательная маска с мёдом акации и маслом лаванды. Глубокое восстановление за 15 минут.</p>
-                    <div class="product-bottom">
-                        <span class="product-price">1 990 ₽</span>
+                        <span class="product-price">890 ₽</span>
                         <button class="product-btn">+</button>
                     </div>
                 </div>
@@ -1504,14 +1644,47 @@
 
             <div class="product-card reveal reveal-delay-3">
                 <div class="product-image">
-                    <div class="product-image-bg">💐</div>
-                    <span class="product-tag">🎁 подарочный</span>
+                    <div class="product-image-bg">🫙</div>
+                    <span class="product-tag">✨ бархатный</span>
                 </div>
                 <div class="product-info">
-                    <h4>Набор «Фея красоты»</h4>
-                    <p class="product-desc">Идеальный подарок: крем, сыворотка и масло в волшебной подарочной упаковке.</p>
+                    <h4>Скраб для тела</h4>
+                    <p class="product-desc">Молотый кофе, дикий мёд и кора дуба. Бархатное обновление кожи с ароматом утреннего леса после дождя.</p>
                     <div class="product-bottom">
-                        <span class="product-price">5 990 ₽</span>
+                        <span class="product-price">1 590 ₽</span>
+                        <button class="product-btn">+</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Второй ряд: 2 продукта (центрированы) -->
+        <div class="products-grid-bottom">
+            <div class="product-card product-card-alt reveal reveal-delay-4">
+                <div class="product-image">
+                    <div class="product-image-bg" style="background: linear-gradient(160deg, #1a2a2a, #2a4a4a, #1a3a3a);">🧴</div>
+                    <span class="product-tag">🌿 нежнейший</span>
+                </div>
+                <div class="product-info">
+                    <h4>Крем для рук</h4>
+                    <p class="product-desc">Масло шиповника и ледниковая вода. Мгновенно впитывается, оставляя шёлковый защитный барьер на весь день.</p>
+                    <div class="product-bottom">
+                        <span class="product-price">990 ₽</span>
+                        <button class="product-btn">+</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card product-card-alt reveal reveal-delay-5">
+                <div class="product-image">
+                    <div class="product-image-bg" style="background: linear-gradient(160deg, #2a1a2a, #3a2a3a, #2a1a2a);">💎</div>
+                    <span class="product-tag">🌙 лунный эликсир</span>
+                </div>
+                <div class="product-info">
+                    <h4>Крем для лица</h4>
+                    <p class="product-desc">Лесные ягоды, гиалуроновая кислота и лавандовое масло. Глубокое питание, сияние и молодость кожи.</p>
+                    <div class="product-bottom">
+                        <span class="product-price">2 490 ₽</span>
                         <button class="product-btn">+</button>
                     </div>
                 </div>
@@ -1522,30 +1695,30 @@
     <!-- РИТУАЛ -->
     <section class="section ritual" id="ritual">
         <div class="section-header reveal">
-            <div class="section-label">✦ Ритуал красоты ✦</div>
-            <h2 class="section-title">Ваш ежедневный ритуал</h2>
+            <div class="section-label">✦ ритуал ✦</div>
+            <h2 class="section-title">Ваш лесной ритуал красоты</h2>
         </div>
 
         <div class="ritual-steps">
             <div class="ritual-step reveal reveal-delay-1">
                 <div class="step-number">🫧</div>
                 <h4>Очищение</h4>
-                <p>Нежная пенка-мусс уберёт всё лишнее, сохранив естественный баланс кожи</p>
+                <p>Массажное мыло мягко очищает и пробуждает кожу ароматом леса</p>
             </div>
             <div class="ritual-step reveal reveal-delay-2">
-                <div class="step-number">💧</div>
-                <h4>Сыворотка</h4>
-                <p>Концентрат активных компонентов проникает в глубокие слои кожи</p>
+                <div class="step-number">🫙</div>
+                <h4>Обновление</h4>
+                <p>Скраб бережно убирает всё лишнее, открывая свежую бархатную кожу</p>
             </div>
             <div class="ritual-step reveal reveal-delay-3">
-                <div class="step-number">🌸</div>
-                <h4>Увлажнение</h4>
-                <p>Бархатный крем запечатывает влагу и создаёт защитный барьер</p>
+                <div class="step-number">🧴</div>
+                <h4>Питание</h4>
+                <p>Крем для лица и рук запечатывает влагу и наполняет кожу силой леса</p>
             </div>
             <div class="ritual-step reveal reveal-delay-4">
                 <div class="step-number">✨</div>
                 <h4>Сияние</h4>
-                <p>Наслаждайтесь шёлковой, сияющей кожей весь день</p>
+                <p>Наслаждайтесь бархатной кожей с магическим лесным сиянием</p>
             </div>
         </div>
     </section>
@@ -1553,27 +1726,27 @@
     <!-- ОТЗЫВЫ -->
     <section class="section testimonials" id="testimonials">
         <div class="section-header reveal">
-            <div class="section-label">✦ Отзывы ✦</div>
-            <h2 class="section-title">Слова наших фей</h2>
+            <div class="section-label">✦ отзывы ✦</div>
+            <h2 class="section-title">Голоса из зачарованного леса</h2>
         </div>
 
         <div class="testimonials-slider reveal">
             <div class="testimonial-card active">
                 <div class="testimonial-quote">❝</div>
                 <div class="testimonial-stars">★★★★★</div>
-                <p class="testimonial-text">Впервые мне не нужно читать состав с лупой — здесь всё натуральное и понятное. Крем для лица — это чистый бархат, кожа словно светится изнутри!</p>
+                <p class="testimonial-text">Твёрдый шампунь — это открытие года! Волосы стали густыми и блестящими, а запах хвои держится весь день. Плюс никакого пластика!</p>
                 <div class="testimonial-author">— Анастасия, 28 лет</div>
             </div>
             <div class="testimonial-card">
                 <div class="testimonial-quote">❝</div>
                 <div class="testimonial-stars">★★★★★</div>
-                <p class="testimonial-text">Сыворотка «Капля росы» — это настоящая магия. Через неделю мой муж спросил, что за процедуру я сделала. А это просто Lab Spa!</p>
+                <p class="testimonial-text">Скраб с мёдом и корой дуба — это что-то невероятное. Кожа после него как шёлк, а аромат... словно гуляешь по утреннему лесу.</p>
                 <div class="testimonial-author">— Мария, 34 года</div>
             </div>
             <div class="testimonial-card">
                 <div class="testimonial-quote">❝</div>
                 <div class="testimonial-stars">★★★★★</div>
-                <p class="testimonial-text">Подарила набор «Фея красоты» маме — она была в полном восторге. Теперь заказываем на всю семью. Аромат волшебный!</p>
+                <p class="testimonial-text">Крем для рук не снимаю с тумбочки. Впитывается мгновенно, руки мягкие весь день. А массажное мыло — отдельный ритуал наслаждения!</p>
                 <div class="testimonial-author">— Екатерина, 26 лет</div>
             </div>
 
@@ -1588,12 +1761,12 @@
     <!-- CTA -->
     <section class="cta-section" id="contact">
         <div class="cta-content reveal">
-            <span class="cta-emoji">💌</span>
-            <h2>Впустите магию в свою жизнь</h2>
-            <p>Подпишитесь и получите 15% скидку на первый заказ + секретный ритуал красоты от нашей феи</p>
+            <span class="cta-emoji">🌙</span>
+            <h2>Впустите лес в свою жизнь</h2>
+            <p>Подпишитесь и получите 15% скидку на первый заказ + тайный лесной ритуал красоты от нашей феи</p>
             <form class="cta-form" onsubmit="handleSubmit(event)">
-                <input type="email" class="cta-input" placeholder="Ваш e-mail для волшебства..." required>
-                <button type="submit" class="btn-magic btn-primary">✨ Хочу магию</button>
+                <input type="email" class="cta-input" placeholder="Ваш e-mail для лесной магии..." required>
+                <button type="submit" class="btn-magic btn-primary">🌿 Войти в лес</button>
             </form>
         </div>
     </section>
@@ -1603,34 +1776,35 @@
         <div class="footer-top">
             <div class="footer-brand">
                 <h3>🧚‍♀️ Lab Spa</h3>
-                <p>Натуральная косметика, созданная с любовью и магией природы. Каждый продукт — маленькое волшебство для вашей кожи.</p>
+                <p>Натуральная лесная косметика, созданная руками феи природы. Каждый продукт — дар леса для вашей кожи.</p>
             </div>
             <div class="footer-col">
                 <h4>Каталог</h4>
-                <a href="#">Уход за лицом</a>
-                <a href="#">Уход за телом</a>
-                <a href="#">Сыворотки</a>
-                <a href="#">Подарочные наборы</a>
+                <a href="#">Твёрдый шампунь</a>
+                <a href="#">Массажное мыло</a>
+                <a href="#">Скраб для тела</a>
+                <a href="#">Крем для рук</a>
+                <a href="#">Крем для лица</a>
             </div>
             <div class="footer-col">
                 <h4>Информация</h4>
                 <a href="#">О нас</a>
                 <a href="#">Ингредиенты</a>
                 <a href="#">Доставка</a>
-                <a href="#">Контакты</a>
+                <a href="#">Возврат</a>
             </div>
             <div class="footer-col">
                 <h4>Контакты</h4>
                 <a href="#">hello@labspa.ru</a>
                 <a href="#">+7 (999) 123-45-67</a>
-                <a href="#">Москва, Россия</a>
+                <a href="#">Где-то в лесу 🌲</a>
             </div>
         </div>
 
         <div class="footer-bottom">
-            <span>© 2025 Lab Spa. Вся магия защищена ✨</span>
+            <span>© 2025 Lab Spa. Вся магия леса защищена ✦</span>
             <div class="footer-socials">
-                <a href="#">🌸</a>
+                <a href="#">🌿</a>
                 <a href="#">📷</a>
                 <a href="#">💬</a>
             </div>
@@ -1642,7 +1816,7 @@
         window.addEventListener('load', () => {
             setTimeout(() => {
                 document.getElementById('preloader').classList.add('hidden');
-            }, 2000);
+            }, 2500);
         });
 
         // ===== МАГИЧЕСКИЙ КУРСОР =====
@@ -1653,18 +1827,15 @@
         document.addEventListener('mousemove', (e) => {
             cursorWand.style.left = e.clientX + 'px';
             cursorWand.style.top = e.clientY + 'px';
-
             cursorGlow.style.left = e.clientX + 'px';
             cursorGlow.style.top = e.clientY + 'px';
 
-            // Создаем частицы при движении (с ограничением)
             sparkleCount++;
-            if (sparkleCount % 4 === 0) {
+            if (sparkleCount % 5 === 0) {
                 createSparkle(e.clientX, e.clientY);
             }
         });
 
-        // Hover эффект на интерактивных элементах
         document.querySelectorAll('a, button, .product-card, .phil-card').forEach(el => {
             el.addEventListener('mouseenter', () => cursorGlow.classList.add('hover'));
             el.addEventListener('mouseleave', () => cursorGlow.classList.remove('hover'));
@@ -1674,47 +1845,47 @@
             const sparkle = document.createElement('div');
             sparkle.className = 'sparkle';
 
-            const emojis = ['✦', '✧', '⋆', '˚', '✨', '·', '°'];
+            const emojis = ['✦', '✧', '⋆', '˚', '·', '°', '✨'];
             sparkle.textContent = emojis[Math.floor(Math.random() * emojis.length)];
 
-            const tx = (Math.random() - 0.5) * 80;
-            const ty = -(Math.random() * 60 + 20);
+            const tx = (Math.random() - 0.5) * 90;
+            const ty = -(Math.random() * 70 + 20);
             sparkle.style.left = x + 'px';
             sparkle.style.top = y + 'px';
             sparkle.style.setProperty('--tx', tx + 'px');
             sparkle.style.setProperty('--ty', ty + 'px');
-            sparkle.style.color = Math.random() > 0.5 ? '#f8bbd0' : '#a5d6a7';
+
+            const colors = ['#c9a84c', '#7cb87c', '#e491bf', '#e8d18c', '#8fb88a'];
+            sparkle.style.color = colors[Math.floor(Math.random() * colors.length)];
 
             document.body.appendChild(sparkle);
-            setTimeout(() => sparkle.remove(), 1200);
+            setTimeout(() => sparkle.remove(), 1400);
         }
 
-        // Магические искры при клике
         document.addEventListener('click', (e) => {
-            for (let i = 0; i < 12; i++) {
-                setTimeout(() => createSparkle(e.clientX, e.clientY), i * 30);
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => createSparkle(e.clientX, e.clientY), i * 25);
             }
         });
 
         // ===== НАВИГАЦИЯ =====
         const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
-            navbar.classList.toggle('scrolled', window.scrollY > 50);
+            navbar.classList.toggle('scrolled', window.scrollY > 60);
         });
 
         function toggleMenu() {
             document.getElementById('navLinks').classList.toggle('open');
         }
 
-        // Закрытие меню при клике на ссылку
         document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => {
                 document.getElementById('navLinks').classList.remove('open');
             });
         });
 
-        // ===== REVEAL АНИМАЦИИ =====
-        const observerOptions = { threshold: 0.15, rootMargin: '0px 0px -50px 0px' };
+        // ===== REVEAL =====
+        const observerOptions = { threshold: 0.12, rootMargin: '0px 0px -60px 0px' };
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -1725,7 +1896,7 @@
 
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        // ===== СЛАЙДЕР ОТЗЫВОВ =====
+        // ===== ОТЗЫВЫ =====
         let currentTestimonial = 0;
         const testimonials = document.querySelectorAll('.testimonial-card');
         const dots = document.querySelectorAll('.testimonial-dot');
@@ -1738,33 +1909,32 @@
             currentTestimonial = index;
         }
 
-        // Автопереключение
         setInterval(() => {
             showTestimonial((currentTestimonial + 1) % testimonials.length);
-        }, 5000);
+        }, 5500);
 
         // ===== ФОРМА =====
         function handleSubmit(e) {
             e.preventDefault();
             const input = e.target.querySelector('input');
             const btn = e.target.querySelector('button');
-            btn.textContent = '✅ Магия отправлена!';
-            btn.style.background = 'linear-gradient(135deg, #6db36f, #4a8c5c)';
+            btn.innerHTML = '✅ Лес принял вас!';
+            btn.style.background = 'linear-gradient(135deg, #2d4a2d, #3d6b3d)';
             input.value = '';
 
             setTimeout(() => {
-                btn.textContent = '✨ Хочу магию';
+                btn.innerHTML = '🌿 Войти в лес';
                 btn.style.background = '';
-            }, 3000);
+            }, 3500);
         }
 
-        // ===== ПАРАЛЛАКС ДЛЯ HERO ЭЛЕМЕНТОВ =====
+        // ===== ПАРАЛЛАКС =====
         window.addEventListener('scroll', () => {
             const scrolled = window.scrollY;
             const heroContent = document.querySelector('.hero-content');
             if (heroContent && scrolled < window.innerHeight) {
-                heroContent.style.transform = `translateY(${scrolled * 0.3}px)`;
-                heroContent.style.opacity = 1 - (scrolled / (window.innerHeight * 0.8));
+                heroContent.style.transform = `translateY(${scrolled * 0.35}px)`;
+                heroContent.style.opacity = 1 - (scrolled / (window.innerHeight * 0.75));
             }
         });
     </script>
