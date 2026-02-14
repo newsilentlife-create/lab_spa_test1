@@ -3,1941 +3,598 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lab Spa — Натуральная косметика от Феи Леса</title>
+    <title>Lab Spa — Натуральная косметика | Виктория Богуш</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@200;300;400;500&display=swap');
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            cursor: none;
-        }
-
-        :root {
-            --forest-dark: #1a2e1a;
-            --forest-deep: #2d4a2d;
-            --forest-mid: #3d6b3d;
-            --forest-light: #5a8f5a;
-            --forest-glow: #7cb87c;
-            --moss: #4a6741;
-            --moss-light: #8fb88a;
-            --berry: #8b2252;
-            --berry-deep: #a02d6b;
-            --berry-light: #c75b9b;
-            --berry-glow: #e491bf;
-            --berry-soft: #f0c6db;
-            --gold-magic: #c9a84c;
-            --gold-light: #e8d18c;
-            --gold-glow: #f5e6b8;
-            --mushroom: #d4b896;
-            --cream-forest: #f5f0e8;
-            --mist: rgba(200, 220, 200, 0.15);
-            --midnight: #0d1a0d;
-            --text-light: #e8e0d4;
-            --text-muted: #a09880;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background: var(--midnight);
-            color: var(--text-light);
-            overflow-x: hidden;
-        }
-
-        /* ===== МАГИЧЕСКИЙ КУРСОР ===== */
-        .cursor-wand {
-            position: fixed;
-            width: 28px;
-            height: 28px;
-            pointer-events: none;
-            z-index: 100000;
-            transform: translate(-50%, -50%);
-            font-size: 24px;
-            filter: drop-shadow(0 0 12px rgba(201, 168, 76, 0.8));
-            transition: transform 0.1s ease;
-        }
-
-        .cursor-glow {
-            position: fixed;
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(201,168,76,0.3) 0%, transparent 70%);
-            pointer-events: none;
-            z-index: 99999;
-            transform: translate(-50%, -50%);
-            transition: width 0.3s, height 0.3s, background 0.3s;
-        }
-
-        .cursor-glow.hover {
-            width: 65px;
-            height: 65px;
-            background: radial-gradient(circle, rgba(124,184,124,0.4) 0%, rgba(201,168,76,0.2) 50%, transparent 70%);
-        }
-
-        .sparkle {
-            position: fixed;
-            pointer-events: none;
-            z-index: 99998;
-            font-size: 12px;
-            animation: sparkle-float 1.4s ease-out forwards;
-        }
-
-        @keyframes sparkle-float {
-            0% { opacity: 1; transform: translate(0, 0) scale(1) rotate(0deg); }
-            100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(0) rotate(360deg); }
-        }
-
-        /* ===== ПРЕЛОАДЕР ===== */
-        .preloader {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: radial-gradient(ellipse at center, var(--forest-dark) 0%, var(--midnight) 100%);
-            z-index: 999999;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            transition: opacity 1s ease, visibility 1s ease;
-        }
-
-        .preloader.hidden {
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .preloader-icon {
-            font-size: 70px;
-            animation: preloader-magic 2.5s ease-in-out infinite;
-        }
-
-        @keyframes preloader-magic {
-            0%, 100% { transform: scale(1) rotate(0deg); filter: hue-rotate(0deg) drop-shadow(0 0 20px rgba(201,168,76,0.5)); }
-            33% { transform: scale(1.15) rotate(120deg); filter: hue-rotate(40deg) drop-shadow(0 0 30px rgba(124,184,124,0.6)); }
-            66% { transform: scale(1.05) rotate(240deg); filter: hue-rotate(-20deg) drop-shadow(0 0 25px rgba(139,34,82,0.5)); }
-        }
-
-        .preloader-text {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.6rem;
-            color: var(--gold-magic);
-            margin-top: 24px;
-            letter-spacing: 5px;
-            animation: pulse-text 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse-text {
-            0%, 100% { opacity: 0.4; text-shadow: 0 0 10px rgba(201,168,76,0.3); }
-            50% { opacity: 1; text-shadow: 0 0 30px rgba(201,168,76,0.6); }
-        }
-
-        .preloader-subtitle {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            letter-spacing: 3px;
-            margin-top: 8px;
-            text-transform: uppercase;
-        }
-
-        /* ===== СВЕТЛЯЧКИ (фоновые частицы) ===== */
-        .fireflies {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 1;
-            overflow: hidden;
-        }
-
-        .firefly {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            border-radius: 50%;
-            background: var(--gold-magic);
-            box-shadow: 0 0 10px var(--gold-magic), 0 0 20px rgba(201,168,76,0.3);
-            animation: firefly-move 15s ease-in-out infinite;
-        }
-
-        .firefly:nth-child(1) { top: 15%; left: 10%; animation-duration: 18s; animation-delay: 0s; }
-        .firefly:nth-child(2) { top: 45%; left: 80%; animation-duration: 22s; animation-delay: -3s; }
-        .firefly:nth-child(3) { top: 70%; left: 30%; animation-duration: 16s; animation-delay: -7s; }
-        .firefly:nth-child(4) { top: 25%; left: 60%; animation-duration: 20s; animation-delay: -5s; }
-        .firefly:nth-child(5) { top: 80%; left: 70%; animation-duration: 19s; animation-delay: -10s; }
-        .firefly:nth-child(6) { top: 55%; left: 15%; animation-duration: 24s; animation-delay: -2s; }
-        .firefly:nth-child(7) { top: 35%; left: 45%; animation-duration: 17s; animation-delay: -8s; }
-        .firefly:nth-child(8) { top: 90%; left: 55%; animation-duration: 21s; animation-delay: -12s; }
-
-        @keyframes firefly-move {
-            0% { transform: translate(0, 0); opacity: 0; }
-            10% { opacity: 1; }
-            40% { transform: translate(100px, -80px); opacity: 0.6; }
-            60% { opacity: 1; }
-            80% { transform: translate(-60px, -150px); opacity: 0.4; }
-            90% { opacity: 0; }
-            100% { transform: translate(30px, -50px); opacity: 0; }
-        }
-
-        /* ===== НАВИГАЦИЯ ===== */
-        .navbar {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%;
-            z-index: 10000;
-            padding: 22px 60px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.5s ease;
-            background: transparent;
-        }
-
-        .navbar.scrolled {
-            background: rgba(13, 26, 13, 0.85);
-            backdrop-filter: blur(25px);
-            padding: 14px 60px;
-            border-bottom: 1px solid rgba(201, 168, 76, 0.1);
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .nav-logo {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 2.1rem;
-            font-weight: 600;
-            background: linear-gradient(135deg, var(--gold-magic), var(--forest-glow), var(--gold-light));
-            background-size: 200% 200%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-decoration: none;
-            position: relative;
-            animation: logo-shimmer 4s ease-in-out infinite;
-        }
-
-        @keyframes logo-shimmer {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-
-        .nav-logo .logo-icon {
-            position: absolute;
-            top: -8px;
-            right: -22px;
-            font-size: 13px;
-            animation: twinkle 3s ease-in-out infinite;
-        }
-
-        @keyframes twinkle {
-            0%, 100% { opacity: 0.2; transform: scale(0.7) rotate(0deg); }
-            50% { opacity: 1; transform: scale(1.2) rotate(180deg); }
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 40px;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: var(--text-muted);
-            font-weight: 300;
-            font-size: 0.85rem;
-            letter-spacing: 2.5px;
-            text-transform: uppercase;
-            position: relative;
-            transition: color 0.3s;
-        }
-
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: -6px;
-            left: 0;
-            width: 0;
-            height: 1.5px;
-            background: linear-gradient(90deg, var(--gold-magic), var(--forest-glow));
-            transition: width 0.4s ease;
-            border-radius: 2px;
-            box-shadow: 0 0 8px rgba(201,168,76,0.3);
-        }
-
-        .nav-links a:hover {
-            color: var(--gold-light);
-        }
-
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-
-        .menu-toggle {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            background: none;
-            border: none;
-            padding: 5px;
-        }
-
-        .menu-toggle span {
-            width: 28px;
-            height: 1.5px;
-            background: var(--gold-magic);
-            transition: all 0.3s;
-            border-radius: 2px;
-        }
-
-        /* ===== HERO ===== */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow: hidden;
-            background:
-                radial-gradient(ellipse at 20% 50%, rgba(45,74,45,0.6) 0%, transparent 60%),
-                radial-gradient(ellipse at 80% 30%, rgba(139,34,82,0.2) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 80%, rgba(201,168,76,0.1) 0%, transparent 50%),
-                linear-gradient(180deg, var(--midnight) 0%, var(--forest-dark) 40%, var(--midnight) 100%);
-        }
-
-        .hero-bg-elements {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0; left: 0;
-        }
-
-        .floating-element {
-            position: absolute;
-            opacity: 0.12;
-            animation: float-around 25s ease-in-out infinite;
-            filter: drop-shadow(0 0 10px rgba(124,184,124,0.3));
-        }
-
-        .floating-element:nth-child(1) { top: 8%; left: 8%; animation-delay: 0s; font-size: 3.5rem; }
-        .floating-element:nth-child(2) { top: 18%; right: 12%; animation-delay: -4s; font-size: 2.8rem; }
-        .floating-element:nth-child(3) { bottom: 25%; left: 18%; animation-delay: -8s; font-size: 2.2rem; }
-        .floating-element:nth-child(4) { top: 55%; right: 8%; animation-delay: -12s; font-size: 3rem; }
-        .floating-element:nth-child(5) { bottom: 12%; left: 45%; animation-delay: -6s; font-size: 2rem; }
-        .floating-element:nth-child(6) { top: 38%; left: 3%; animation-delay: -3s; font-size: 2.5rem; }
-        .floating-element:nth-child(7) { bottom: 35%; right: 20%; animation-delay: -9s; font-size: 1.8rem; }
-        .floating-element:nth-child(8) { top: 72%; left: 30%; animation-delay: -15s; font-size: 2.3rem; }
-        .floating-element:nth-child(9) { top: 5%; left: 55%; animation-delay: -11s; font-size: 2rem; }
-        .floating-element:nth-child(10) { bottom: 5%; right: 35%; animation-delay: -7s; font-size: 2.6rem; }
-
-        @keyframes float-around {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            25% { transform: translate(40px, -50px) rotate(90deg); }
-            50% { transform: translate(-30px, -90px) rotate(180deg); }
-            75% { transform: translate(50px, -40px) rotate(270deg); }
-        }
-
-        /* Туман */
-        .mist-layer {
-            position: absolute;
-            width: 200%;
-            height: 100%;
-            top: 0;
-            left: -50%;
-            background:
-                radial-gradient(ellipse at 30% 70%, rgba(124,184,124,0.06) 0%, transparent 50%),
-                radial-gradient(ellipse at 70% 40%, rgba(201,168,76,0.04) 0%, transparent 40%);
-            animation: mist-drift 20s ease-in-out infinite;
-        }
-
-        @keyframes mist-drift {
-            0%, 100% { transform: translateX(0); }
-            50% { transform: translateX(10%); }
-        }
-
-        .hero-content {
-            text-align: center;
-            z-index: 10;
-            padding: 0 20px;
-        }
-
-        .hero-fairy {
-            font-size: 5.5rem;
-            display: block;
-            margin-bottom: 24px;
-            animation: fairy-entrance 2.5s ease-out;
-            filter: drop-shadow(0 0 30px rgba(201,168,76,0.4)) drop-shadow(0 0 60px rgba(124,184,124,0.2));
-        }
-
-        @keyframes fairy-entrance {
-            0% { transform: translateY(-120px) scale(0) rotate(-180deg); opacity: 0; }
-            60% { transform: translateY(10px) scale(1.1) rotate(10deg); }
-            100% { transform: translateY(0) scale(1) rotate(0deg); opacity: 1; }
-        }
-
-        .hero-badge {
-            display: inline-block;
-            padding: 10px 28px;
-            background: rgba(201, 168, 76, 0.1);
-            border: 1px solid rgba(201, 168, 76, 0.25);
-            border-radius: 50px;
-            font-size: 0.75rem;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            color: var(--gold-magic);
-            margin-bottom: 30px;
-            backdrop-filter: blur(10px);
-            animation: fade-in-up 1s ease-out 0.5s both;
-        }
-
-        .hero h1 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 5rem;
-            font-weight: 300;
-            line-height: 1.1;
-            margin-bottom: 14px;
-            animation: fade-in-up 1s ease-out 0.7s both;
-            text-shadow: 0 0 60px rgba(0,0,0,0.5);
-        }
-
-        .hero h1 .highlight-gold {
-            background: linear-gradient(135deg, var(--gold-magic), var(--gold-light), var(--gold-magic));
-            background-size: 200% 200%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 600;
-            animation: gold-shimmer 3s ease-in-out infinite;
-        }
-
-        @keyframes gold-shimmer {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-
-        .hero h1 .highlight-forest {
-            background: linear-gradient(135deg, var(--forest-glow), var(--moss-light));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 600;
-        }
-
-        .hero-subtitle {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.5rem;
-            font-style: italic;
-            color: var(--text-muted);
-            margin-bottom: 45px;
-            font-weight: 300;
-            animation: fade-in-up 1s ease-out 0.9s both;
-        }
-
-        @keyframes fade-in-up {
-            from { opacity: 0; transform: translateY(50px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
-            animation: fade-in-up 1s ease-out 1.1s both;
-        }
-
-        .btn-magic {
-            padding: 17px 42px;
-            border: none;
-            border-radius: 50px;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.82rem;
-            letter-spacing: 2.5px;
-            text-transform: uppercase;
-            text-decoration: none;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.4s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--forest-mid), var(--forest-deep));
-            color: var(--gold-light);
-            box-shadow: 0 8px 30px rgba(45,74,45,0.4), 0 0 20px rgba(124,184,124,0.1);
-            border: 1px solid rgba(124,184,124,0.2);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 15px 45px rgba(45,74,45,0.5), 0 0 35px rgba(124,184,124,0.2);
-            background: linear-gradient(135deg, var(--forest-light), var(--forest-mid));
-        }
-
-        .btn-secondary {
-            background: transparent;
-            color: var(--gold-magic);
-            border: 1.5px solid rgba(201,168,76,0.3);
-        }
-
-        .btn-secondary:hover {
-            background: rgba(201,168,76,0.1);
-            border-color: var(--gold-magic);
-            transform: translateY(-4px);
-            box-shadow: 0 10px 30px rgba(201,168,76,0.15);
-        }
-
-        .btn-magic::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
-            transform: rotate(45deg) translateX(-100%);
-            transition: transform 0.6s;
-        }
-
-        .btn-magic:hover::before {
-            transform: rotate(45deg) translateX(100%);
-        }
-
-        /* Скролл */
-        .scroll-indicator {
-            position: absolute;
-            bottom: 40px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            animation: fade-in-up 1s ease-out 1.8s both;
-        }
-
-        .scroll-indicator span {
-            font-size: 0.65rem;
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            color: var(--text-muted);
-            opacity: 0.5;
-        }
-
-        .scroll-arrow {
-            width: 1.5px;
-            height: 35px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .scroll-arrow::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, var(--gold-magic), transparent);
-            animation: scroll-down 2.5s ease-in-out infinite;
-        }
-
-        @keyframes scroll-down {
-            0% { transform: translateY(-100%); }
-            100% { transform: translateY(100%); }
-        }
-
-        /* Волна */
-        .silk-wave {
-            position: absolute;
-            bottom: -2px;
-            left: 0;
-            width: 100%;
-        }
-
-        /* ===== СЕКЦИИ ===== */
-        .section {
-            padding: 130px 60px;
-            position: relative;
-            z-index: 5;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 90px;
-        }
-
-        .section-label {
-            font-size: 0.7rem;
-            letter-spacing: 5px;
-            text-transform: uppercase;
-            color: var(--gold-magic);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 14px;
-            margin-bottom: 18px;
-        }
-
-        .section-label::before,
-        .section-label::after {
-            content: '';
-            width: 50px;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--gold-magic));
-        }
-
-        .section-label::after {
-            background: linear-gradient(90deg, var(--gold-magic), transparent);
-        }
-
-        .section-title {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 3.4rem;
-            font-weight: 300;
-            color: var(--text-light);
-            line-height: 1.2;
-            text-shadow: 0 0 40px rgba(0,0,0,0.3);
-        }
-
-        /* ===== О НАС ===== */
-        .about {
-            background:
-                radial-gradient(ellipse at 30% 50%, rgba(45,74,45,0.3) 0%, transparent 60%),
-                radial-gradient(ellipse at 80% 80%, rgba(139,34,82,0.1) 0%, transparent 50%),
-                linear-gradient(180deg, var(--midnight) 0%, var(--forest-dark) 50%, var(--midnight) 100%);
-        }
-
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 90px;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .about-image-wrapper {
-            position: relative;
-        }
-
-        .about-image {
-            width: 100%;
-            height: 620px;
-            border-radius: 200px 200px 100px 100px;
-            overflow: hidden;
-            position: relative;
-            box-shadow: 0 30px 80px rgba(0,0,0,0.4), 0 0 40px rgba(124,184,124,0.08);
-            border: 1px solid rgba(124,184,124,0.1);
-        }
-
-        .about-image-placeholder {
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(160deg, var(--forest-deep), var(--forest-dark), var(--forest-mid));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 9rem;
-            filter: drop-shadow(0 0 40px rgba(201,168,76,0.3));
-        }
-
-        .about-image-decor {
-            position: absolute;
-            font-size: 2.2rem;
-            animation: orbit 12s ease-in-out infinite;
-            filter: drop-shadow(0 0 10px rgba(201,168,76,0.3));
-        }
-
-        .about-image-decor:nth-child(2) { top: 3%; right: -12%; animation-delay: 0s; }
-        .about-image-decor:nth-child(3) { bottom: 12%; left: -10%; animation-delay: -4s; }
-        .about-image-decor:nth-child(4) { top: 45%; right: -16%; animation-delay: -8s; }
-
-        @keyframes orbit {
-            0% { transform: translateY(0) rotate(0deg) scale(1); }
-            50% { transform: translateY(-25px) rotate(180deg) scale(1.1); }
-            100% { transform: translateY(0) rotate(360deg) scale(1); }
-        }
-
-        .about-text h3 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 2.5rem;
-            font-weight: 300;
-            margin-bottom: 26px;
-            line-height: 1.3;
-        }
-
-        .about-text p {
-            font-weight: 300;
-            line-height: 2;
-            color: var(--text-muted);
-            margin-bottom: 18px;
-            font-size: 1rem;
-        }
-
-        .fairy-signature {
-            display: flex;
-            align-items: center;
-            gap: 18px;
-            margin-top: 35px;
-            padding: 22px 30px;
-            background: rgba(45,74,45,0.3);
-            border-radius: 20px;
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(124,184,124,0.15);
-        }
-
-        .fairy-avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--forest-mid), var(--gold-magic));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-            flex-shrink: 0;
-            box-shadow: 0 0 20px rgba(201,168,76,0.2);
-        }
-
-        .fairy-info .fairy-name {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--text-light);
-        }
-
-        .fairy-info .fairy-role {
-            font-size: 0.78rem;
-            color: var(--gold-magic);
-            letter-spacing: 1.5px;
-        }
-
-        .natural-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 6px 16px;
-            background: rgba(124,184,124,0.15);
-            border: 1px solid rgba(124,184,124,0.2);
-            border-radius: 50px;
-            font-size: 0.72rem;
-            color: var(--forest-glow);
-            margin-top: 14px;
-            letter-spacing: 1px;
-        }
-
-        .natural-badge .pulse-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            background: var(--forest-glow);
-            box-shadow: 0 0 8px var(--forest-glow);
-            animation: pulse-dot 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse-dot {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.4; transform: scale(1.8); }
-        }
-
-        /* ===== ФИЛОСОФИЯ ===== */
-        .philosophy {
-            background:
-                radial-gradient(ellipse at 60% 30%, rgba(201,168,76,0.06) 0%, transparent 50%),
-                var(--midnight);
-        }
-
-        .philosophy-cards {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            max-width: 1100px;
-            margin: 0 auto;
-        }
-
-        .phil-card {
-            background: rgba(26, 46, 26, 0.6);
-            backdrop-filter: blur(15px);
-            border-radius: 28px;
-            padding: 50px 34px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-            border: 1px solid rgba(124,184,124,0.08);
-        }
-
-        .phil-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, var(--forest-glow), var(--gold-magic), var(--berry-light));
-            opacity: 0;
-            transition: opacity 0.5s;
-        }
-
-        .phil-card::after {
-            content: '';
-            position: absolute;
-            bottom: 0; left: 0;
-            width: 100%;
-            height: 50%;
-            background: radial-gradient(ellipse at center bottom, rgba(124,184,124,0.05) 0%, transparent 70%);
-            pointer-events: none;
-        }
-
-        .phil-card:hover {
-            transform: translateY(-12px);
-            box-shadow: 0 25px 60px rgba(0,0,0,0.3), 0 0 30px rgba(124,184,124,0.05);
-            border-color: rgba(124,184,124,0.2);
-        }
-
-        .phil-card:hover::before {
-            opacity: 1;
-        }
-
-        .phil-icon {
-            font-size: 3.2rem;
-            margin-bottom: 26px;
-            display: block;
-            filter: drop-shadow(0 0 15px rgba(201,168,76,0.3));
-        }
-
-        .phil-card h4 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.5rem;
-            margin-bottom: 14px;
-            color: var(--text-light);
-        }
-
-        .phil-card p {
-            font-weight: 300;
-            line-height: 1.9;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        /* ===== БЕГУЩАЯ СТРОКА ===== */
-        .ingredients-marquee {
-            padding: 50px 0;
-            overflow: hidden;
-            background: linear-gradient(90deg,
-                var(--forest-dark),
-                rgba(45,74,45,0.8),
-                rgba(139,34,82,0.2),
-                rgba(45,74,45,0.8),
-                var(--forest-dark)
-            );
-            border-top: 1px solid rgba(124,184,124,0.1);
-            border-bottom: 1px solid rgba(124,184,124,0.1);
-        }
-
-        .marquee-track {
-            display: flex;
-            gap: 60px;
-            animation: marquee 35s linear infinite;
-            width: max-content;
-        }
-
-        .marquee-item {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.3rem;
-            color: var(--text-muted);
-            white-space: nowrap;
-        }
-
-        .marquee-item span {
-            font-size: 1.6rem;
-            filter: drop-shadow(0 0 8px rgba(201,168,76,0.3));
-        }
-
-        @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        /* ===== ПРОДУКТЫ ===== */
-        .products {
-            background:
-                radial-gradient(ellipse at 20% 30%, rgba(139,34,82,0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 70%, rgba(45,74,45,0.3) 0%, transparent 50%),
-                linear-gradient(180deg, var(--midnight), var(--forest-dark), var(--midnight));
-        }
-
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .products-grid-bottom {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 30px;
-            max-width: 790px;
-            margin: 30px auto 0;
-        }
-
-        .product-card {
-            background: rgba(26, 46, 26, 0.5);
-            backdrop-filter: blur(15px);
-            border-radius: 28px;
-            overflow: hidden;
-            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-            position: relative;
-            border: 1px solid rgba(124,184,124,0.08);
-        }
-
-        .product-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 30px 70px rgba(0,0,0,0.4), 0 0 25px rgba(124,184,124,0.06);
-            border-color: rgba(201,168,76,0.15);
-        }
-
-        .product-image {
-            height: 300px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .product-image-bg {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 5.5rem;
-            transition: transform 0.7s ease;
-        }
-
-        .product-card:nth-child(1) .product-image-bg {
-            background: linear-gradient(160deg, #1a3a1a, #2d5a2d, #1a4a2a);
-        }
-        .product-card:nth-child(2) .product-image-bg {
-            background: linear-gradient(160deg, #2a1a2a, #4a2a4a, #3a1a3a);
-        }
-        .product-card:nth-child(3) .product-image-bg {
-            background: linear-gradient(160deg, #2a2a1a, #4a4a2a, #3a3a1a);
-        }
-
-        .product-card-alt:nth-child(1) .product-image-bg {
-            background: linear-gradient(160deg, #1a2a2a, #2a4a4a, #1a3a3a);
-        }
-        .product-card-alt:nth-child(2) .product-image-bg {
-            background: linear-gradient(160deg, #2a1a1a, #4a2a2a, #3a1a2a);
-        }
-
-        .product-card:hover .product-image-bg {
-            transform: scale(1.08);
-        }
-
-        .product-tag {
-            position: absolute;
-            top: 18px;
-            left: 18px;
-            padding: 7px 18px;
-            background: rgba(13,26,13,0.8);
-            backdrop-filter: blur(10px);
-            border-radius: 50px;
-            font-size: 0.68rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: var(--gold-magic);
-            font-weight: 400;
-            border: 1px solid rgba(201,168,76,0.2);
-        }
-
-        .product-info {
-            padding: 32px;
-        }
-
-        .product-info h4 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.55rem;
-            margin-bottom: 10px;
-            color: var(--text-light);
-        }
-
-        .product-info .product-desc {
-            font-weight: 300;
-            color: var(--text-muted);
-            font-size: 0.88rem;
-            line-height: 1.8;
-            margin-bottom: 24px;
-        }
-
-        .product-bottom {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .product-price {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.55rem;
-            color: var(--gold-magic);
-            font-weight: 600;
-            text-shadow: 0 0 15px rgba(201,168,76,0.2);
-        }
-
-        .product-btn {
-            width: 46px;
-            height: 46px;
-            border: 1.5px solid rgba(124,184,124,0.3);
-            border-radius: 50%;
-            background: none;
-            color: var(--forest-glow);
-            font-size: 1.3rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.4s;
-        }
-
-        .product-btn:hover {
-            background: var(--forest-mid);
-            border-color: var(--forest-glow);
-            color: var(--gold-light);
-            transform: rotate(90deg);
-            box-shadow: 0 0 20px rgba(124,184,124,0.2);
-        }
-
-        /* ===== РИТУАЛ ===== */
-        .ritual {
-            background:
-                radial-gradient(ellipse at 50% 50%, rgba(45,74,45,0.2) 0%, transparent 60%),
-                linear-gradient(180deg, var(--midnight), var(--forest-dark), var(--midnight));
-        }
-
-        .ritual-steps {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            max-width: 1100px;
-            margin: 0 auto;
-            flex-wrap: wrap;
-        }
-
-        .ritual-step {
-            flex: 1;
-            min-width: 200px;
-            text-align: center;
-            padding: 45px 18px;
-            position: relative;
-        }
-
-        .ritual-step::after {
-            content: '⟡';
-            position: absolute;
-            right: -8px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--gold-magic);
-            font-size: 0.8rem;
-            opacity: 0.3;
-        }
-
-        .ritual-step:last-child::after {
-            display: none;
-        }
-
-        .step-number {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 22px;
-            font-size: 2.2rem;
-            transition: all 0.5s ease;
-            border: 1px solid rgba(124,184,124,0.15);
-        }
-
-        .ritual-step:nth-child(1) .step-number { background: linear-gradient(135deg, rgba(45,74,45,0.5), rgba(61,107,61,0.3)); }
-        .ritual-step:nth-child(2) .step-number { background: linear-gradient(135deg, rgba(139,34,82,0.3), rgba(160,45,107,0.2)); }
-        .ritual-step:nth-child(3) .step-number { background: linear-gradient(135deg, rgba(201,168,76,0.2), rgba(201,168,76,0.1)); }
-        .ritual-step:nth-child(4) .step-number { background: linear-gradient(135deg, rgba(90,143,90,0.3), rgba(124,184,124,0.2)); }
-
-        .ritual-step:hover .step-number {
-            transform: scale(1.2) rotate(15deg);
-            box-shadow: 0 10px 35px rgba(0,0,0,0.3), 0 0 20px rgba(201,168,76,0.1);
-        }
-
-        .ritual-step h4 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.3rem;
-            margin-bottom: 10px;
-            color: var(--text-light);
-        }
-
-        .ritual-step p {
-            font-weight: 300;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            line-height: 1.8;
-        }
-
-        /* ===== ОТЗЫВЫ ===== */
-        .testimonials {
-            background:
-                radial-gradient(ellipse at 70% 50%, rgba(139,34,82,0.1) 0%, transparent 50%),
-                var(--midnight);
-        }
-
-        .testimonials-slider {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .testimonial-card {
-            background: rgba(26, 46, 26, 0.5);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(124,184,124,0.1);
-            border-radius: 30px;
-            padding: 55px;
-            text-align: center;
-            display: none;
-            animation: fade-in 0.7s ease;
-        }
-
-        .testimonial-card.active {
-            display: block;
-        }
-
-        @keyframes fade-in {
-            from { opacity: 0; transform: translateY(25px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .testimonial-quote {
-            font-size: 3rem;
-            color: var(--gold-magic);
-            margin-bottom: 16px;
-            filter: drop-shadow(0 0 15px rgba(201,168,76,0.3));
-        }
-
-        .testimonial-text {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 1.45rem;
-            font-style: italic;
-            line-height: 1.8;
-            color: var(--text-light);
-            margin-bottom: 30px;
-        }
-
-        .testimonial-author {
-            font-size: 0.82rem;
-            letter-spacing: 2.5px;
-            text-transform: uppercase;
-            color: var(--text-muted);
-        }
-
-        .testimonial-stars {
-            color: var(--gold-magic);
-            font-size: 1rem;
-            margin-bottom: 10px;
-            text-shadow: 0 0 10px rgba(201,168,76,0.3);
-        }
-
-        .testimonial-dots {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 35px;
-        }
-
-        .testimonial-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: var(--forest-mid);
-            border: none;
-            opacity: 0.3;
-            transition: all 0.3s;
-        }
-
-        .testimonial-dot.active {
-            opacity: 1;
-            width: 32px;
-            border-radius: 5px;
-            background: linear-gradient(90deg, var(--gold-magic), var(--forest-glow));
-            box-shadow: 0 0 12px rgba(201,168,76,0.3);
-        }
-
-        /* ===== CTA ===== */
-        .cta-section {
-            padding: 130px 60px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            background:
-                radial-gradient(ellipse at 30% 50%, rgba(45,74,45,0.4) 0%, transparent 50%),
-                radial-gradient(ellipse at 70% 50%, rgba(139,34,82,0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 50%, rgba(201,168,76,0.05) 0%, transparent 40%),
-                linear-gradient(180deg, var(--midnight), var(--forest-dark), var(--midnight));
-        }
-
-        .cta-section::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background:
-                radial-gradient(circle at 30% 50%, rgba(124,184,124,0.05) 0%, transparent 40%),
-                radial-gradient(circle at 70% 50%, rgba(201,168,76,0.05) 0%, transparent 40%);
-            animation: cta-glow 12s ease-in-out infinite;
-        }
-
-        @keyframes cta-glow {
-            0%, 100% { transform: rotate(0deg) scale(1); }
-            50% { transform: rotate(180deg) scale(1.15); }
-        }
-
-        .cta-content {
-            position: relative;
-            z-index: 2;
-        }
-
-        .cta-emoji {
-            font-size: 4.5rem;
-            display: block;
-            margin-bottom: 28px;
-            filter: drop-shadow(0 0 25px rgba(201,168,76,0.3));
-        }
-
-        .cta-section h2 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 3.2rem;
-            font-weight: 300;
-            margin-bottom: 18px;
-        }
-
-        .cta-section p {
-            font-weight: 300;
-            color: var(--text-muted);
-            margin-bottom: 45px;
-            font-size: 1.05rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            line-height: 1.8;
-        }
-
-        .cta-form {
-            display: flex;
-            gap: 12px;
-            justify-content: center;
-            max-width: 520px;
-            margin: 0 auto;
-            flex-wrap: wrap;
-        }
-
-        .cta-input {
-            flex: 1;
-            min-width: 260px;
-            padding: 17px 30px;
-            border: 1.5px solid rgba(124,184,124,0.2);
-            border-radius: 50px;
-            background: rgba(26,46,26,0.5);
-            backdrop-filter: blur(15px);
-            font-family: 'Montserrat', sans-serif;
-            font-size: 0.88rem;
-            color: var(--text-light);
-            outline: none;
-            transition: border-color 0.3s, box-shadow 0.3s;
-        }
-
-        .cta-input:focus {
-            border-color: var(--gold-magic);
-            box-shadow: 0 0 20px rgba(201,168,76,0.15);
-        }
-
-        .cta-input::placeholder {
-            color: var(--text-muted);
-            opacity: 0.5;
-        }
-
-        /* ===== FOOTER ===== */
-        footer {
-            background: linear-gradient(180deg, var(--midnight), #080f08);
-            color: rgba(255,255,255,0.5);
-            padding: 90px 60px 35px;
-            border-top: 1px solid rgba(124,184,124,0.08);
-        }
-
-        .footer-top {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
-            gap: 60px;
-            margin-bottom: 65px;
-        }
-
-        .footer-brand h3 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 2rem;
-            background: linear-gradient(135deg, var(--gold-magic), var(--forest-glow));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 18px;
-        }
-
-        .footer-brand p {
-            line-height: 1.9;
-            font-weight: 300;
-            font-size: 0.88rem;
-        }
-
-        .footer-col h4 {
-            font-family: 'Cormorant Garamond', serif;
-            color: var(--text-light);
-            font-size: 1.15rem;
-            margin-bottom: 22px;
-        }
-
-        .footer-col a {
-            display: block;
-            color: rgba(255,255,255,0.35);
-            text-decoration: none;
-            font-weight: 300;
-            font-size: 0.85rem;
-            margin-bottom: 13px;
-            transition: color 0.3s;
-        }
-
-        .footer-col a:hover {
-            color: var(--gold-magic);
-        }
-
-        .footer-bottom {
-            border-top: 1px solid rgba(255,255,255,0.05);
-            padding-top: 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 0.78rem;
-            font-weight: 300;
-        }
-
-        .footer-socials {
-            display: flex;
-            gap: 14px;
-        }
-
-        .footer-socials a {
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            border: 1px solid rgba(255,255,255,0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            font-size: 1.05rem;
-            transition: all 0.3s;
-        }
-
-        .footer-socials a:hover {
-            background: var(--forest-mid);
-            border-color: var(--forest-glow);
-            transform: translateY(-4px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.3), 0 0 15px rgba(124,184,124,0.1);
-        }
-
-        /* ===== REVEAL ===== */
-        .reveal {
-            opacity: 0;
-            transform: translateY(60px);
-            transition: all 0.9s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-
-        .reveal.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .reveal-delay-1 { transition-delay: 0.1s; }
-        .reveal-delay-2 { transition-delay: 0.2s; }
-        .reveal-delay-3 { transition-delay: 0.3s; }
-        .reveal-delay-4 { transition-delay: 0.4s; }
-        .reveal-delay-5 { transition-delay: 0.5s; }
-
-        /* ===== MEDIA ===== */
-        @media (max-width: 1024px) {
-            .hero h1 { font-size: 3.8rem; }
-            .section { padding: 90px 40px; }
-            .about-grid { gap: 50px; }
-            .footer-top { grid-template-columns: 1fr 1fr; }
-        }
-
-        @media (max-width: 768px) {
-            .navbar { padding: 16px 24px; }
-            .nav-links { display: none; }
-            .menu-toggle { display: flex; }
-
-            .nav-links.open {
-                display: flex;
-                flex-direction: column;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background: rgba(13, 26, 13, 0.95);
-                backdrop-filter: blur(25px);
-                padding: 30px;
-                gap: 24px;
-                border-bottom: 1px solid rgba(124,184,124,0.1);
-            }
-
-            .hero h1 { font-size: 2.6rem; }
-            .hero-fairy { font-size: 4rem; }
-            .hero-subtitle { font-size: 1.1rem; }
-            .section { padding: 70px 24px; }
-            .section-title { font-size: 2.2rem; }
-
-            .about-grid { grid-template-columns: 1fr; gap: 40px; }
-            .about-image { height: 400px; }
-
-            .philosophy-cards,
-            .products-grid,
-            .products-grid-bottom { grid-template-columns: 1fr; max-width: 450px; }
-
-            .ritual-steps { flex-direction: column; align-items: center; }
-            .ritual-step::after { display: none; }
-
-            .footer-top { grid-template-columns: 1fr; gap: 30px; }
-            .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
-
-            .cta-section { padding: 80px 24px; }
-            .cta-section h2 { font-size: 2.2rem; }
-
-            .cursor-wand, .cursor-glow, .fireflies { display: none; }
-            * { cursor: auto; }
-
-            .testimonial-card { padding: 35px 25px; }
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Montserrat:wght@200;300;400;500&display=swap');
+        *{margin:0;padding:0;box-sizing:border-box;cursor:none}
+        :root{--fd:#1a2e1a;--fm:#3d6b3d;--fg:#7cb87c;--ml:#8fb88a;--bl:#c75b9b;--gm:#c9a84c;--gl:#e8d18c;--mn:#0d1a0d;--tl:#e8e0d4;--tm:#a09880;--bd:#a02d6b}
+        html{scroll-behavior:smooth}
+        body{font-family:'Montserrat',sans-serif;background:var(--mn);color:var(--tl);overflow-x:hidden}
+
+        .cursor-wand{position:fixed;width:28px;height:28px;pointer-events:none;z-index:100000;transform:translate(-50%,-50%);font-size:24px;filter:drop-shadow(0 0 12px rgba(201,168,76,.8))}
+        .cursor-glow{position:fixed;width:44px;height:44px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,.3)0%,transparent 70%);pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:.3s}
+        .cursor-glow.hover{width:65px;height:65px;background:radial-gradient(circle,rgba(124,184,124,.4)0%,rgba(201,168,76,.2)50%,transparent 70%)}
+        .sparkle{position:fixed;pointer-events:none;z-index:99998;font-size:12px;animation:sp 1.4s ease-out forwards}
+        @keyframes sp{0%{opacity:1;transform:translate(0,0)scale(1)rotate(0)}100%{opacity:0;transform:translate(var(--tx),var(--ty))scale(0)rotate(360deg)}}
+
+        /* PRELOADER */
+        .preloader{position:fixed;inset:0;z-index:999999;display:flex;align-items:center;justify-content:center;flex-direction:column;transition:opacity 1.5s,visibility 1.5s;overflow:hidden}
+        .preloader.hidden{opacity:0;visibility:hidden;pointer-events:none}
+        .pre-bg{position:absolute;inset:0}
+        .pre-bg-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 2s;filter:brightness(.25)saturate(1.2)}
+        .pre-bg-img.active{opacity:1}
+        .pre-bg-ov{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 60%,rgba(26,46,26,.2)0%,rgba(13,26,13,.75)100%);z-index:1}
+        .pre-nature{position:absolute;z-index:2;opacity:.12;animation:nf 20s ease-in-out infinite}
+        .pre-nature:nth-child(1){top:8%;left:4%;font-size:2.5rem}
+        .pre-nature:nth-child(2){top:18%;right:6%;font-size:2rem;animation-delay:-4s}
+        .pre-nature:nth-child(3){bottom:18%;left:8%;font-size:1.8rem;animation-delay:-8s}
+        .pre-nature:nth-child(4){bottom:28%;right:10%;font-size:2.2rem;animation-delay:-6s}
+        .pre-nature:nth-child(5){top:45%;left:2%;font-size:1.5rem;animation-delay:-10s}
+        @keyframes nf{0%,100%{transform:translate(0,0)rotate(0)}25%{transform:translate(20px,-30px)rotate(45deg)}50%{transform:translate(-15px,-50px)rotate(90deg)}75%{transform:translate(25px,-20px)rotate(135deg)}}
+        .pre-fairy{position:relative;z-index:10;margin-bottom:35px}
+        .pre-fairy-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,.1)0%,rgba(124,184,124,.06)35%,rgba(199,91,155,.04)60%,transparent 75%);animation:fg 3s ease-in-out infinite;z-index:-1}
+        @keyframes fg{0%,100%{transform:translate(-50%,-50%)scale(1);opacity:.5}50%{transform:translate(-50%,-50%)scale(1.15);opacity:1}}
+        .pre-fairy-frame{position:relative;width:280px;height:280px;display:flex;align-items:center;justify-content:center}
+        .pre-fairy-img{width:240px;height:240px;border-radius:50%;object-fit:cover;object-position:center 20%;border:3px solid rgba(201,168,76,.2);box-shadow:0 0 50px rgba(201,168,76,.2),0 0 100px rgba(124,184,124,.1);animation:ffloat 3s ease-in-out infinite;position:relative;z-index:2}
+        @keyframes ffloat{0%,100%{transform:translateY(0);box-shadow:0 0 50px rgba(201,168,76,.2),0 0 100px rgba(124,184,124,.1)}50%{transform:translateY(-10px);box-shadow:0 0 70px rgba(201,168,76,.3),0 0 120px rgba(124,184,124,.15),0 25px 50px rgba(0,0,0,.3)}}
+        .pre-ring{position:absolute;border-radius:50%;border:1px solid rgba(201,168,76,.06);animation:rsp linear infinite}
+        .pre-ring:nth-child(1){width:270px;height:270px;top:5px;left:5px;animation-duration:15s}
+        .pre-ring:nth-child(2){width:300px;height:300px;top:-10px;left:-10px;animation-duration:20s;animation-direction:reverse;border-color:rgba(124,184,124,.05)}
+        .pre-ring:nth-child(3){width:330px;height:330px;top:-25px;left:-25px;animation-duration:25s;border-color:rgba(199,91,155,.04)}
+        .pre-ring .rdot{position:absolute;width:5px;height:5px;border-radius:50%;top:-2.5px;left:50%}
+        .pre-ring:nth-child(1) .rdot{background:var(--gm);box-shadow:0 0 8px var(--gm)}
+        .pre-ring:nth-child(2) .rdot{background:var(--fg);box-shadow:0 0 8px var(--fg)}
+        .pre-ring:nth-child(3) .rdot{background:var(--bl);box-shadow:0 0 8px var(--bl)}
+        @keyframes rsp{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+        .pre-sparkle{position:absolute;z-index:3;animation:psp 3s ease-in-out infinite}
+        .pre-sparkle:nth-child(4){top:15%;right:10%;font-size:14px;color:var(--gm)}
+        .pre-sparkle:nth-child(5){bottom:20%;left:8%;font-size:12px;animation-delay:-.8s;color:var(--fg)}
+        .pre-sparkle:nth-child(6){top:30%;left:5%;font-size:10px;animation-delay:-1.6s;color:var(--gl)}
+        .pre-sparkle:nth-child(7){bottom:10%;right:15%;font-size:13px;animation-delay:-2.4s;color:var(--bl)}
+        .pre-sparkle:nth-child(8){top:5%;left:30%;font-size:11px;animation-delay:-.4s;color:var(--gm)}
+        @keyframes psp{0%,100%{opacity:.2;transform:scale(.7)}50%{opacity:1;transform:scale(1.2)}}
+        .pre-text{font-family:'Cormorant Garamond',serif;font-size:2.2rem;color:var(--gm);letter-spacing:8px;z-index:10;position:relative;animation:pt 2.5s ease-in-out infinite}
+        @keyframes pt{0%,100%{opacity:.4;text-shadow:0 0 10px rgba(201,168,76,.3)}50%{opacity:1;text-shadow:0 0 40px rgba(201,168,76,.5)}}
+        .pre-sub{font-size:.72rem;color:var(--tm);letter-spacing:3px;margin-top:10px;text-transform:uppercase;z-index:10;position:relative}
+        .pre-bar{width:220px;height:2px;background:rgba(201,168,76,.08);border-radius:2px;margin-top:22px;z-index:10;position:relative;overflow:hidden}
+        .pre-bar-fill{height:100%;background:linear-gradient(90deg,var(--gm),var(--fg),var(--bl));border-radius:2px;animation:bf 3.5s ease-in-out forwards}
+        @keyframes bf{0%{width:0}100%{width:100%}}
+
+        /* FIREFLIES */
+        .fireflies{position:fixed;inset:0;pointer-events:none;z-index:1}
+        .fly{position:absolute;width:4px;height:4px;border-radius:50%;background:var(--gm);box-shadow:0 0 10px var(--gm);animation:flym 15s ease-in-out infinite}
+        .fly:nth-child(1){top:15%;left:10%;animation-duration:18s}
+        .fly:nth-child(2){top:45%;left:80%;animation-duration:22s;animation-delay:-3s}
+        .fly:nth-child(3){top:70%;left:30%;animation-duration:16s;animation-delay:-7s}
+        .fly:nth-child(4){top:25%;left:60%;animation-duration:20s;animation-delay:-5s}
+        .fly:nth-child(5){top:80%;left:70%;animation-duration:19s;animation-delay:-10s}
+        .fly:nth-child(6){top:55%;left:15%;animation-duration:24s;animation-delay:-2s}
+        @keyframes flym{0%{transform:translate(0,0);opacity:0}10%{opacity:1}50%{transform:translate(-40px,-120px)}90%{opacity:0}100%{transform:translate(20px,-40px);opacity:0}}
+
+        /* NAVBAR */
+        .navbar{position:fixed;top:0;left:0;width:100%;z-index:10000;padding:14px 40px;display:flex;justify-content:space-between;align-items:center;transition:.5s;background:rgba(13,26,13,.9);backdrop-filter:blur(25px);border-bottom:1px solid rgba(201,168,76,.04)}
+        .navbar.scrolled{padding:10px 40px;box-shadow:0 4px 30px rgba(0,0,0,.3)}
+        .nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:600;background:linear-gradient(135deg,var(--gm),var(--fg),var(--gl));background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none;animation:lsh 4s ease-in-out infinite}
+        @keyframes lsh{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+        .nav-links{display:flex;list-style:none;gap:24px}
+        .nav-links a{text-decoration:none;color:var(--tm);font-weight:300;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;position:relative;transition:.3s;padding:5px 0}
+        .nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1.5px;background:linear-gradient(90deg,var(--gm),var(--fg));transition:.4s}
+        .nav-links a:hover{color:var(--gl)}
+        .nav-links a:hover::after,.nav-links a.active::after{width:100%}
+        .nav-links a.active{color:var(--gm)}
+        .nav-right{display:flex;align-items:center;gap:12px}
+        .nav-cart{position:relative;background:none;border:1.5px solid rgba(201,168,76,.18);border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;font-size:1rem;transition:.3s;color:var(--gm)}
+        .nav-cart:hover{background:rgba(201,168,76,.08);border-color:var(--gm)}
+        .cbdg{position:absolute;top:-3px;right:-3px;background:var(--bd);color:#fff;font-size:.52rem;width:15px;height:15px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:500;transition:.3s}
+        .cbdg.bump{animation:bmp .4s ease}
+        @keyframes bmp{50%{transform:scale(1.5)}}
+        .nav-social{color:var(--tm);text-decoration:none;font-size:1.05rem;transition:.3s;display:flex;align-items:center}
+        .nav-social:hover{color:var(--bl);transform:scale(1.1)}
+        .upill{display:none;align-items:center;gap:5px;padding:3px 10px;background:rgba(45,74,45,.3);border:1px solid rgba(124,184,124,.08);border-radius:50px;font-size:.62rem;color:var(--fg)}
+        .upill.show{display:flex}
+        .upill .ud{width:5px;height:5px;border-radius:50%;background:var(--fg);box-shadow:0 0 6px var(--fg)}
+        .menu-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;padding:5px}
+        .menu-toggle span{width:24px;height:1.5px;background:var(--gm);border-radius:2px}
+
+        /* PAGES */
+        .page{min-height:100vh;position:relative;display:none;flex-direction:column}
+        .page.active{display:flex}
+        .sbg{position:absolute;inset:0;z-index:0}
+        .sbg img{width:100%;height:100%;object-fit:cover;filter:brightness(.2)saturate(1.2)}
+        .sbg-ov{position:absolute;inset:0;z-index:1}
+        .sc{position:relative;z-index:5;width:100%;max-width:1400px;margin:0 auto;padding:90px 40px}
+        .sh{text-align:center;margin-bottom:50px}
+        .sl{font-size:.66rem;letter-spacing:5px;text-transform:uppercase;color:var(--gm);display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:12px}
+        .sl::before,.sl::after{content:'';width:40px;height:1px;background:linear-gradient(90deg,transparent,rgba(201,168,76,.4))}
+        .sl::after{background:linear-gradient(90deg,rgba(201,168,76,.4),transparent)}
+        .stitle{font-family:'Cormorant Garamond',serif;font-size:2.6rem;font-weight:300;line-height:1.2}
+
+        /* HOME */
+        .hov{background:radial-gradient(ellipse at 20% 50%,rgba(45,74,45,.6)0%,transparent 60%),radial-gradient(ellipse at 80% 30%,rgba(139,34,82,.12)0%,transparent 50%),linear-gradient(180deg,rgba(13,26,13,.35),rgba(13,26,13,.15)50%,rgba(13,26,13,.7))}
+        .hc{display:flex;align-items:center;justify-content:center;min-height:100vh;text-align:center;position:relative;z-index:5}
+        .hi{max-width:800px;padding:0 20px}
+        .he{width:90px;height:90px;margin:0 auto 18px;border-radius:50%;overflow:hidden;border:2px solid rgba(201,168,76,.15);box-shadow:0 0 30px rgba(201,168,76,.15);animation:ei 2s ease-out}
+        .he img{width:100%;height:100%;object-fit:cover}
+        @keyframes ei{0%{transform:scale(0)rotate(-180deg);opacity:0}60%{transform:scale(1.1)rotate(10deg)}100%{transform:scale(1)rotate(0);opacity:1}}
+        .hbd{display:inline-block;padding:7px 20px;background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.12);border-radius:50px;font-size:.62rem;letter-spacing:3px;text-transform:uppercase;color:var(--gm);margin-bottom:20px;animation:fiu 1s ease-out .5s both}
+        .home-title{font-family:'Cormorant Garamond',serif;font-size:3.5rem;font-weight:300;line-height:1.1;margin-bottom:14px;animation:fiu 1s ease-out .7s both;text-shadow:0 4px 30px rgba(0,0,0,.5)}
+        .home-title .hg{background:linear-gradient(135deg,var(--gm),var(--gl),var(--gm));background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:700;animation:gs 3s ease-in-out infinite}
+        @keyframes gs{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+        .home-title .hf{background:linear-gradient(135deg,var(--fg),var(--ml));-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:600}
+        .hsub{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-style:italic;color:var(--tm);margin-bottom:6px;animation:fiu 1s ease-out .9s both}
+        .hdetail{font-size:.72rem;color:var(--tm);margin-bottom:8px;animation:fiu 1s ease-out 1s both;line-height:1.7;font-weight:300}
+        .hdetail strong{color:var(--fg)}
+        .hlux{font-size:.58rem;letter-spacing:4px;text-transform:uppercase;color:var(--bl);margin-bottom:28px;animation:fiu 1s ease-out 1.1s both;display:flex;align-items:center;justify-content:center;gap:10px}
+        .hlux::before,.hlux::after{content:'';width:22px;height:1px;background:var(--bl);opacity:.4}
+        @keyframes fiu{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+        .hbtns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;animation:fiu 1s ease-out 1.2s both}
+        .hp{position:absolute;width:100%;height:100%;z-index:2;top:0;left:0}
+        .mp{position:absolute;border-radius:50%;animation:pr 8s ease-in-out infinite}
+        .mp.g{background:radial-gradient(circle,var(--gm),transparent);box-shadow:0 0 10px var(--gm)}
+        .mp.gr{background:radial-gradient(circle,var(--fg),transparent);box-shadow:0 0 10px var(--fg)}
+        .mp.pk{background:radial-gradient(circle,var(--bl),transparent);box-shadow:0 0 10px var(--bl)}
+        .mp:nth-child(1){width:5px;height:5px;left:8%;bottom:0;animation-duration:9s}
+        .mp:nth-child(2){width:4px;height:4px;left:22%;bottom:0;animation-delay:-2s;animation-duration:7s}
+        .mp:nth-child(3){width:6px;height:6px;left:40%;bottom:0;animation-delay:-4s;animation-duration:10s}
+        .mp:nth-child(4){width:5px;height:5px;left:58%;bottom:0;animation-delay:-1s;animation-duration:8s}
+        .mp:nth-child(5){width:6px;height:6px;left:72%;bottom:0;animation-delay:-5s;animation-duration:11s}
+        .mp:nth-child(6){width:4px;height:4px;left:88%;bottom:0;animation-delay:-3s;animation-duration:7.5s}
+        @keyframes pr{0%{transform:translateY(0)scale(0);opacity:0}10%{opacity:1;transform:translateY(-10vh)scale(1)}90%{opacity:0}100%{transform:translateY(-100vh)scale(.3);opacity:0}}
+
+        .btn{padding:12px 30px;border:none;border-radius:50px;font-family:'Montserrat',sans-serif;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none;position:relative;overflow:hidden;transition:.4s;display:inline-flex;align-items:center;gap:7px}
+        .btn-p{background:linear-gradient(135deg,var(--fm),#2d4a2d);color:var(--gl);box-shadow:0 8px 22px rgba(45,74,45,.4);border:1px solid rgba(124,184,124,.15)}
+        .btn-p:hover{transform:translateY(-3px);box-shadow:0 12px 35px rgba(45,74,45,.5)}
+        .btn-s{background:transparent;color:var(--gm);border:1.5px solid rgba(201,168,76,.18)}
+        .btn-s:hover{background:rgba(201,168,76,.06);border-color:var(--gm);transform:translateY(-3px)}
+        .btn-ig{background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);color:#fff;box-shadow:0 6px 18px rgba(131,58,180,.3)}
+        .btn-ig:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(131,58,180,.4)}
+        .btn-tg{background:linear-gradient(135deg,#0088cc,#00b4d8);color:#fff;box-shadow:0 6px 18px rgba(0,136,204,.3)}
+        .btn-tg:hover{transform:translateY(-3px)}
+        .btn::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:linear-gradient(45deg,transparent,rgba(255,255,255,.07),transparent);transform:rotate(45deg)translateX(-100%);transition:.6s}
+        .btn:hover::before{transform:rotate(45deg)translateX(100%)}
+
+        /* PRODUCTS */
+        .pov{background:radial-gradient(ellipse at 20% 30%,rgba(139,34,82,.06)0%,transparent 50%),radial-gradient(ellipse at 80% 70%,rgba(45,74,45,.15)0%,transparent 50%),linear-gradient(180deg,rgba(13,26,13,.4),rgba(13,26,13,.2)50%,rgba(13,26,13,.65))}
+        .pgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+        .pc{background:rgba(26,46,26,.5);backdrop-filter:blur(12px);border-radius:18px;overflow:hidden;transition:.5s cubic-bezier(.23,1,.32,1);border:1px solid rgba(124,184,124,.05)}
+        .pc:hover{transform:translateY(-6px);box-shadow:0 20px 45px rgba(0,0,0,.4);border-color:rgba(201,168,76,.1)}
+        .pimg{height:200px;position:relative;overflow:hidden;background:#0a140a}
+        .pimg img{width:100%;height:100%;object-fit:cover;transition:.7s}
+        .pc:hover .pimg img{transform:scale(1.05)}
+        .ptag{position:absolute;top:8px;left:8px;padding:3px 9px;background:rgba(13,26,13,.85);backdrop-filter:blur(8px);border-radius:50px;font-size:.55rem;letter-spacing:1px;text-transform:uppercase;color:var(--gm);border:1px solid rgba(201,168,76,.08);z-index:2}
+        .pi{padding:16px}
+        .pi h4{font-family:'Cormorant Garamond',serif;font-size:1.1rem;margin-bottom:3px}
+        .pi .pvol{font-size:.68rem;color:var(--tm);margin-bottom:10px;font-weight:300}
+        .pb{display:flex;justify-content:space-between;align-items:center}
+        .pp{font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--gm);font-weight:600}
+        .pp .cu{font-size:.72rem;font-weight:400}
+        .ab{padding:6px 12px;border:1.5px solid rgba(124,184,124,.2);border-radius:50px;background:none;color:var(--fg);font-family:'Montserrat',sans-serif;font-size:.6rem;letter-spacing:1px;text-transform:uppercase;transition:.4s}
+        .ab:hover{background:var(--fm);border-color:var(--fg);color:var(--gl)}
+        .ab.added{background:var(--fm);border-color:var(--fg);color:var(--gl)}
+
+        /* Variant selector */
+        .pvars{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+        .pvar{padding:4px 10px;border:1px solid rgba(124,184,124,.15);border-radius:50px;font-size:.58rem;color:var(--tm);background:none;transition:.3s;font-family:'Montserrat',sans-serif}
+        .pvar.active{border-color:var(--gm);color:var(--gm);background:rgba(201,168,76,.08)}
+        .pvar:hover{border-color:var(--gm);color:var(--gl)}
+
+        /* ABOUT */
+        .aov{background:radial-gradient(ellipse at 30% 50%,rgba(45,74,45,.18)0%,transparent 60%),linear-gradient(180deg,rgba(13,26,13,.4),rgba(13,26,13,.2)50%,rgba(13,26,13,.65))}
+        .about-hero{display:flex;align-items:center;gap:60px;max-width:1000px;margin:0 auto}
+        .about-photo{width:300px;height:380px;border-radius:140px 140px 70px 70px;overflow:hidden;flex-shrink:0;border:2px solid rgba(201,168,76,.1);box-shadow:0 20px 50px rgba(0,0,0,.3)}
+        .about-photo img{width:100%;height:100%;object-fit:cover}
+        .about-info h3{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:300;margin-bottom:14px;line-height:1.3}
+        .about-info p{font-weight:300;line-height:1.85;color:var(--tm);margin-bottom:10px;font-size:.85rem}
+        .about-info .atag{display:inline-flex;align-items:center;gap:5px;padding:5px 14px;background:rgba(124,184,124,.1);border:1px solid rgba(124,184,124,.1);border-radius:50px;font-size:.65rem;color:var(--fg);margin-top:6px;margin-right:6px}
+        .about-info .atag .adot{width:5px;height:5px;border-radius:50%;background:var(--fg);box-shadow:0 0 6px var(--fg)}
+        .about-btns{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap}
+
+        /* REVIEWS */
+        .rov{background:radial-gradient(ellipse at 50% 50%,rgba(201,168,76,.03)0%,transparent 50%),linear-gradient(180deg,rgba(13,26,13,.4),rgba(13,26,13,.2)50%,rgba(13,26,13,.65))}
+        .rgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+        .rc{background:rgba(26,46,26,.5);backdrop-filter:blur(12px);border:1px solid rgba(124,184,124,.05);border-radius:18px;padding:28px 20px;text-align:center;transition:.5s}
+        .rc:hover{transform:translateY(-5px);border-color:rgba(201,168,76,.08);box-shadow:0 16px 38px rgba(0,0,0,.3)}
+        .rav{width:48px;height:48px;border-radius:50%;overflow:hidden;margin:0 auto 10px;border:2px solid rgba(201,168,76,.08)}
+        .rav img{width:100%;height:100%;object-fit:cover}
+        .rs{color:var(--gm);font-size:.78rem;margin-bottom:8px}
+        .rt{font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;line-height:1.65;margin-bottom:12px}
+        .ra{font-size:.62rem;letter-spacing:2px;text-transform:uppercase;color:var(--tm)}
+
+        /* CONTACT */
+        .cont-ov{background:radial-gradient(ellipse at 40% 50%,rgba(45,74,45,.2)0%,transparent 60%),linear-gradient(180deg,rgba(13,26,13,.4),rgba(13,26,13,.2)50%,rgba(13,26,13,.65))}
+        .cc{text-align:center;max-width:500px;margin:0 auto}
+        .cc .cem{font-size:3rem;display:block;margin-bottom:14px;filter:drop-shadow(0 0 14px rgba(201,168,76,.3))}
+        .cc p{font-weight:300;color:var(--tm);margin-bottom:22px;font-size:.85rem;line-height:1.8}
+        .cl{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+        /* CART */
+        .cov{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(5px);z-index:99990;opacity:0;visibility:hidden;transition:.4s}
+        .cov.open{opacity:1;visibility:visible}
+        .cpn{position:fixed;top:0;right:-480px;width:400px;height:100%;background:linear-gradient(180deg,#0f200f,#0d1a0d);z-index:99991;transition:right .5s cubic-bezier(.23,1,.32,1);display:flex;flex-direction:column;border-left:1px solid rgba(124,184,124,.05)}
+        .cpn.open{right:0}
+        .cart-hd{padding:18px 20px;border-bottom:1px solid rgba(124,184,124,.04);display:flex;justify-content:space-between;align-items:center}
+        .cart-hd h3{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--gm)}
+        .cart-close{background:none;border:none;color:var(--tm);font-size:1.2rem;transition:.3s;padding:4px}
+        .cart-close:hover{color:var(--tl)}
+        .cart-items{flex:1;overflow-y:auto;padding:12px 20px}
+        .cart-items::-webkit-scrollbar{width:3px}
+        .cart-items::-webkit-scrollbar-thumb{background:rgba(201,168,76,.1);border-radius:2px}
+        .ci{display:flex;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid rgba(124,184,124,.03);animation:fiu .3s ease}
+        .ci-img{width:46px;height:46px;border-radius:10px;overflow:hidden;flex-shrink:0;border:1px solid rgba(124,184,124,.04)}
+        .ci-img img{width:100%;height:100%;object-fit:cover}
+        .ci-info{flex:1}
+        .ci-info h4{font-family:'Cormorant Garamond',serif;font-size:.88rem;margin-bottom:1px}
+        .ci-info .ci-price{color:var(--gm);font-size:.7rem}
+        .ci-qty{display:flex;align-items:center;gap:6px}
+        .qb{width:22px;height:22px;border-radius:50%;border:1px solid rgba(124,184,124,.12);background:none;color:var(--fg);font-size:.72rem;display:flex;align-items:center;justify-content:center;transition:.3s}
+        .qb:hover{background:var(--fm);border-color:var(--fg)}
+        .qn{font-size:.75rem;min-width:14px;text-align:center}
+        .ci-rm{background:none;border:none;color:var(--tm);font-size:.68rem;transition:.3s;padding:3px}
+        .ci-rm:hover{color:#e74c3c}
+        .cart-empty{text-align:center;padding:40px 14px;color:var(--tm)}
+        .cart-empty .ce-icon{font-size:2rem;margin-bottom:10px;display:block;opacity:.3}
+        .cart-ft{padding:14px 20px;border-top:1px solid rgba(124,184,124,.04);background:rgba(13,26,13,.5)}
+        .cart-total{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+        .cart-total-label{font-size:.7rem;color:var(--tm);text-transform:uppercase;letter-spacing:2px}
+        .cart-total-price{font-family:'Cormorant Garamond',serif;font-size:1.35rem;color:var(--gm);font-weight:600}
+        .cart-checkout{width:100%;padding:12px;border:none;border-radius:50px;background:linear-gradient(135deg,var(--fm),#2d4a2d);color:var(--gl);font-family:'Montserrat',sans-serif;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;transition:.4s;box-shadow:0 6px 18px rgba(45,74,45,.4);border:1px solid rgba(124,184,124,.1)}
+        .cart-checkout:hover{transform:translateY(-2px)}
+
+        /* AUTH */
+        .auth-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(10px);z-index:99995;display:none;align-items:center;justify-content:center}
+        .auth-overlay.open{display:flex}
+        .auth-card{background:linear-gradient(135deg,#0f200f,#1a2e1a);border:1px solid rgba(201,168,76,.08);border-radius:22px;padding:32px 28px;max-width:380px;width:90%;text-align:center;animation:fiu .5s ease}
+        .auth-card h2{font-family:'Cormorant Garamond',serif;font-size:1.4rem;margin-bottom:4px;color:var(--gm)}
+        .auth-card .auth-sub{color:var(--tm);font-size:.75rem;margin-bottom:18px;font-weight:300}
+        .auth-tabs{display:flex;margin-bottom:16px;border-radius:50px;overflow:hidden;border:1px solid rgba(124,184,124,.08)}
+        .auth-tab{flex:1;padding:8px;background:none;border:none;color:var(--tm);font-family:'Montserrat',sans-serif;font-size:.64rem;letter-spacing:1px;text-transform:uppercase;transition:.3s}
+        .auth-tab.active{background:var(--fm);color:var(--gl)}
+        .auth-form{display:flex;flex-direction:column;gap:10px}
+        .auth-inp{padding:10px 14px;border:1.5px solid rgba(124,184,124,.08);border-radius:50px;background:rgba(26,46,26,.5);font-family:'Montserrat',sans-serif;font-size:.78rem;color:var(--tl);outline:none;transition:.3s}
+        .auth-inp:focus{border-color:var(--gm)}
+        .auth-inp::placeholder{color:var(--tm);opacity:.5}
+        .auth-submit{padding:10px;border-radius:50px;border:none;background:linear-gradient(135deg,var(--fm),#2d4a2d);color:var(--gl);font-family:'Montserrat',sans-serif;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;transition:.4s;border:1px solid rgba(124,184,124,.1)}
+        .auth-submit:hover{transform:translateY(-2px)}
+        .auth-ig-btn{padding:10px;border-radius:50px;border:none;background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);color:#fff;font-family:'Montserrat',sans-serif;font-size:.72rem;letter-spacing:1.5px;text-transform:uppercase;transition:.4s;display:flex;align-items:center;justify-content:center;gap:6px}
+        .auth-ig-btn:hover{transform:translateY(-2px)}
+        .auth-status{font-size:.66rem;margin-top:6px;display:none;padding:6px;border-radius:10px}
+        .auth-status.show{display:block}
+        .auth-status.ok{color:var(--fg);background:rgba(124,184,124,.08)}
+        .auth-status.err{color:#e74c3c;background:rgba(231,76,60,.08)}
+        .auth-close{background:none;border:none;color:var(--tm);font-size:.66rem;margin-top:10px;text-decoration:underline;transition:.3s}
+        .auth-close:hover{color:var(--tl)}
+        .code-step{display:none}
+        .code-step.show{display:flex;flex-direction:column;gap:8px}
+        .code-inputs{display:flex;gap:6px;justify-content:center}
+        .code-inp{width:40px;height:46px;border-radius:10px;border:1.5px solid rgba(124,184,124,.1);background:rgba(26,46,26,.5);font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--gm);text-align:center;outline:none;transition:.3s}
+        .code-inp:focus{border-color:var(--gm);box-shadow:0 0 10px rgba(201,168,76,.12)}
+        .code-timer{font-size:.64rem;color:var(--tm)}
+        .code-resend{background:none;border:none;color:var(--gm);font-size:.64rem;text-decoration:underline;transition:.3s}
+        .code-resend:disabled{opacity:.4;color:var(--tm)}
+
+        /* ORDER */
+        .order-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(10px);z-index:99996;display:none;align-items:center;justify-content:center}
+        .order-overlay.open{display:flex}
+        .order-card{background:linear-gradient(135deg,#0f200f,#1a2e1a);border:1px solid rgba(201,168,76,.08);border-radius:22px;padding:32px 28px;max-width:420px;width:90%;text-align:center;animation:fiu .5s ease}
+        .order-card .order-icon{font-size:2.5rem;margin-bottom:10px;display:block}
+        .order-card h2{font-family:'Cormorant Garamond',serif;font-size:1.4rem;margin-bottom:4px;color:var(--fg)}
+        .order-num{font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:700;color:var(--gm);margin:10px 0;padding:6px 18px;background:rgba(201,168,76,.04);border:1px solid rgba(201,168,76,.08);border-radius:10px;display:inline-block;letter-spacing:3px}
+        .order-card p{color:var(--tm);font-weight:300;line-height:1.7;font-size:.78rem;margin-bottom:14px}
+        .order-ig{display:inline-flex;align-items:center;gap:6px;padding:10px 22px;border-radius:50px;background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);color:#fff;text-decoration:none;font-size:.68rem;letter-spacing:2px;text-transform:uppercase;transition:.4s;margin-bottom:6px}
+        .order-ig:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(131,58,180,.4)}
+        .order-close{display:block;background:none;border:none;color:var(--tm);font-size:.66rem;margin-top:8px;text-decoration:underline;transition:.3s}
+        .order-close:hover{color:var(--tl)}
+
+        /* FOOTER */
+        .footer{background:linear-gradient(180deg,var(--mn),#080f08);padding:40px 40px 20px;border-top:1px solid rgba(124,184,124,.04)}
+        .ft-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:35px;margin-bottom:30px}
+        .ft-brand h3{font-family:'Cormorant Garamond',serif;font-size:1.3rem;background:linear-gradient(135deg,var(--gm),var(--fg));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
+        .ft-brand p{line-height:1.7;font-weight:300;font-size:.7rem;color:rgba(255,255,255,.22)}
+        .ft-col h4{font-family:'Cormorant Garamond',serif;color:var(--tl);font-size:.88rem;margin-bottom:10px}
+        .ft-col a{display:block;color:rgba(255,255,255,.2);text-decoration:none;font-weight:300;font-size:.7rem;margin-bottom:6px;transition:.3s}
+        .ft-col a:hover{color:var(--gm)}
+        .ft-bottom{border-top:1px solid rgba(255,255,255,.03);padding-top:16px;display:flex;justify-content:space-between;align-items:center;font-size:.62rem;color:rgba(255,255,255,.15)}
+        .ft-soc{display:flex;gap:8px}
+        .ft-soc a{width:30px;height:30px;border-radius:50%;border:1px solid rgba(255,255,255,.04);display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:.82rem;transition:.3s}
+        .ft-soc a:hover{background:var(--fm);border-color:var(--fg);transform:translateY(-3px)}
+
+        .reveal{opacity:0;transform:translateY(40px);transition:.8s cubic-bezier(.23,1,.32,1)}
+        .reveal.visible{opacity:1;transform:translateY(0)}
+        .rd1{transition-delay:.05s}.rd2{transition-delay:.1s}.rd3{transition-delay:.15s}.rd4{transition-delay:.2s}
+
+        @media(max-width:1024px){.home-title{font-size:2.8rem}.sc{padding:70px 25px}.ft-grid{grid-template-columns:1fr 1fr}.pgrid{grid-template-columns:repeat(3,1fr)}}
+        @media(max-width:768px){.navbar{padding:10px 14px}.nav-links{display:none}.menu-toggle{display:flex}
+        .nav-links.open{display:flex;flex-direction:column;position:absolute;top:100%;left:0;width:100%;background:rgba(13,26,13,.95);backdrop-filter:blur(25px);padding:18px;gap:14px;border-bottom:1px solid rgba(124,184,124,.04)}
+        .home-title{font-size:1.9rem}.he{width:60px;height:60px}.sc{padding:45px 14px}.stitle{font-size:1.7rem}
+        .about-hero{flex-direction:column;gap:30px;text-align:center}.about-photo{width:200px;height:250px;margin:0 auto}
+        .pgrid{grid-template-columns:repeat(2,1fr);gap:12px}.rgrid{grid-template-columns:1fr;max-width:380px;margin-left:auto;margin-right:auto}
+        .ft-grid{grid-template-columns:1fr;gap:16px}.ft-bottom{flex-direction:column;gap:8px;text-align:center}
+        .cpn{width:100%;right:-100%}
+        .cursor-wand,.cursor-glow,.fireflies{display:none}*{cursor:auto}
+        .pre-fairy-img{width:180px;height:180px}.pre-fairy-frame{width:220px;height:220px}
+        }
+        @media(max-width:480px){.pgrid{grid-template-columns:1fr;max-width:320px;margin-left:auto;margin-right:auto}}
     </style>
 </head>
 <body>
 
-    <!-- ПРЕЛОАДЕР -->
-    <div class="preloader" id="preloader">
-        <div class="preloader-icon">🌿</div>
-        <div class="preloader-text">Lab Spa</div>
-        <div class="preloader-subtitle">магия леса загружается...</div>
+<!-- PRELOADER -->
+<div class="preloader" id="preloader">
+    <div class="pre-bg">
+        <img class="pre-bg-img active" src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1920&q=80" alt="">
+        <img class="pre-bg-img" src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1920&q=80" alt="">
+        <img class="pre-bg-img" src="https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=1920&q=80" alt="">
+        <img class="pre-bg-img" src="https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?w=1920&q=80" alt="">
+        <div class="pre-bg-ov"></div>
     </div>
-
-    <!-- СВЕТЛЯЧКИ -->
-    <div class="fireflies">
-        <div class="firefly"></div>
-        <div class="firefly"></div>
-        <div class="firefly"></div>
-        <div class="firefly"></div>
-        <div class="firefly"></div>
-        <div class="firefly"></div>
-        <div class="firefly"></div>
-        <div class="firefly"></div>
-    </div>
-
-    <!-- КУРСОР -->
-    <div class="cursor-wand" id="cursorWand">🪄</div>
-    <div class="cursor-glow" id="cursorGlow"></div>
-
-    <!-- НАВИГАЦИЯ -->
-    <nav class="navbar" id="navbar">
-        <a href="#" class="nav-logo">
-            Lab Spa
-            <span class="logo-icon">✦</span>
-        </a>
-        <ul class="nav-links" id="navLinks">
-            <li><a href="#about">О нас</a></li>
-            <li><a href="#philosophy">Философия</a></li>
-            <li><a href="#products">Продукты</a></li>
-            <li><a href="#ritual">Ритуалы</a></li>
-            <li><a href="#contact">Контакты</a></li>
-        </ul>
-        <button class="menu-toggle" id="menuToggle" onclick="toggleMenu()">
-            <span></span><span></span><span></span>
-        </button>
-    </nav>
-
-    <!-- HERO -->
-    <section class="hero" id="hero">
-        <div class="hero-bg-elements">
-            <div class="mist-layer"></div>
-            <div class="floating-element">🌿</div>
-            <div class="floating-element">🍃</div>
-            <div class="floating-element">🌲</div>
-            <div class="floating-element">🍄</div>
-            <div class="floating-element">🦋</div>
-            <div class="floating-element">🌙</div>
-            <div class="floating-element">🌸</div>
-            <div class="floating-element">🪻</div>
-            <div class="floating-element">🫧</div>
-            <div class="floating-element">🌾</div>
-        </div>
-
-        <div class="hero-content">
-            <span class="hero-fairy">🧚‍♀️</span>
-            <div class="hero-badge">✦ натуральная лесная косметика ✦</div>
-            <h1>
-                <span class="highlight-gold">Магия</span> леса<br>
-                в каждом <span class="highlight-forest">прикосновении</span>
-            </h1>
-            <p class="hero-subtitle">Бархатный уход из сердца леса — создано руками феи природы</p>
-            <div class="hero-buttons">
-                <a href="#products" class="btn-magic btn-primary">🌿 Войти в лес</a>
-                <a href="#about" class="btn-magic btn-secondary">✦ История феи</a>
-            </div>
-        </div>
-
-        <div class="scroll-indicator">
-            <span>Глубже в лес</span>
-            <div class="scroll-arrow"></div>
-        </div>
-
-        <svg class="silk-wave" viewBox="0 0 1440 120" preserveAspectRatio="none">
-            <path d="M0,60 C360,120 720,0 1080,60 C1260,90 1380,80 1440,60 L1440,120 L0,120 Z" fill="#0d1a0d" opacity="0.5"/>
-            <path d="M0,80 C400,20 800,100 1200,40 C1350,20 1400,50 1440,80 L1440,120 L0,120 Z" fill="#0d1a0d"/>
-        </svg>
-    </section>
-
-    <!-- О НАС -->
-    <section class="section about" id="about">
-        <div class="section-header reveal">
-            <div class="section-label">✦ история ✦</div>
-            <h2 class="section-title">Фея из сердца леса</h2>
-        </div>
-
-        <div class="about-grid">
-            <div class="about-image-wrapper reveal">
-                <div class="about-image">
-                    <div class="about-image-placeholder">🧚‍♀️</div>
-                </div>
-                <span class="about-image-decor">🌙</span>
-                <span class="about-image-decor">🍃</span>
-                <span class="about-image-decor">🦋</span>
-            </div>
-
-            <div class="about-text reveal reveal-delay-2">
-                <h3>Она собирает травы на рассвете и варит эликсиры при свете <span class="highlight-gold">луны</span></h3>
-                <p>Lab Spa — это не фабрика. Это лесная мастерская, где каждый продукт рождается из живых растений, собранных в экологически чистых уголках природы.</p>
-                <p>Основательница — настоящая фея натуральной косметики. Она знает язык трав, силу коры и тайны лесных ягод. Каждый рецепт — результат многолетнего опыта и безграничной любви к природе.</p>
-                <p>Никакой синтетики. Никаких компромиссов. Только то, что лес дарит добровольно.</p>
-
-                <div class="fairy-signature">
-                    <div class="fairy-avatar">🧚‍♀️</div>
-                    <div class="fairy-info">
-                        <div class="fairy-name">Основательница Lab Spa</div>
-                        <div class="fairy-role">Фея лесной косметики ✦</div>
-                    </div>
-                </div>
-
-                <div class="natural-badge">
-                    <span class="pulse-dot"></span>
-                    Каждый ингредиент — дар живого леса
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ФИЛОСОФИЯ -->
-    <section class="section philosophy" id="philosophy">
-        <div class="section-header reveal">
-            <div class="section-label">✦ философия ✦</div>
-            <h2 class="section-title">Три заклинания нашей магии</h2>
-        </div>
-
-        <div class="philosophy-cards">
-            <div class="phil-card reveal reveal-delay-1">
-                <span class="phil-icon">🌲</span>
-                <h4>Сила леса</h4>
-                <p>Каждый ингредиент собран в экологически чистых лесах. Кора, мхи, ягоды, травы — природная аптека в каждой баночке.</p>
-            </div>
-            <div class="phil-card reveal reveal-delay-2">
-                <span class="phil-icon">🤲</span>
-                <h4>Ручное колдовство</h4>
-                <p>Каждое средство создаётся вручную небольшими партиями. Никакого конвейера — только внимание, забота и лесное волшебство.</p>
-            </div>
-            <div class="phil-card reveal reveal-delay-3">
-                <span class="phil-icon">🌙</span>
-                <h4>Лунные ритуалы</h4>
-                <p>Мы следуем циклам природы. Сбор трав на рассвете, приготовление при свете луны. Гармония с миром — основа красоты.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- БЕГУЩАЯ СТРОКА -->
-    <div class="ingredients-marquee">
-        <div class="marquee-track">
-            <div class="marquee-item"><span>🌲</span> Хвойный экстракт</div>
-            <div class="marquee-item"><span>🍄</span> Берёзовый гриб</div>
-            <div class="marquee-item"><span>🫐</span> Лесные ягоды</div>
-            <div class="marquee-item"><span>🌿</span> Мята и мелисса</div>
-            <div class="marquee-item"><span>🍯</span> Дикий мёд</div>
-            <div class="marquee-item"><span>🌸</span> Масло шиповника</div>
-            <div class="marquee-item"><span>🪵</span> Кора дуба</div>
-            <div class="marquee-item"><span>🌾</span> Овсяное молочко</div>
-            <div class="marquee-item"><span>🪻</span> Лаванда горная</div>
-            <div class="marquee-item"><span>🧊</span> Ледниковая вода</div>
-            <div class="marquee-item"><span>🌲</span> Хвойный экстракт</div>
-            <div class="marquee-item"><span>🍄</span> Берёзовый гриб</div>
-            <div class="marquee-item"><span>🫐</span> Лесные ягоды</div>
-            <div class="marquee-item"><span>🌿</span> Мята и мелисса</div>
-            <div class="marquee-item"><span>🍯</span> Дикий мёд</div>
-            <div class="marquee-item"><span>🌸</span> Масло шиповника</div>
-            <div class="marquee-item"><span>🪵</span> Кора дуба</div>
-            <div class="marquee-item"><span>🌾</span> Овсяное молочко</div>
-            <div class="marquee-item"><span>🪻</span> Лаванда горная</div>
-            <div class="marquee-item"><span>🧊</span> Ледниковая вода</div>
+    <div class="pre-nature">🌿</div><div class="pre-nature">🦋</div><div class="pre-nature">🍃</div><div class="pre-nature">🌸</div><div class="pre-nature">🐝</div>
+    <div class="pre-fairy">
+        <div class="pre-fairy-glow"></div>
+        <div class="pre-fairy-frame">
+            <div class="pre-ring"><span class="rdot"></span></div>
+            <div class="pre-ring"><span class="rdot"></span></div>
+            <div class="pre-ring"><span class="rdot"></span></div>
+            <div class="pre-sparkle">✦</div><div class="pre-sparkle">✧</div><div class="pre-sparkle">⋆</div><div class="pre-sparkle">✦</div><div class="pre-sparkle">✧</div>
+            <img class="pre-fairy-img" src="https://i.ibb.co/JRJN07PX/image.png" alt="Lab Spa">
         </div>
     </div>
+    <div class="pre-text">Lab Spa</div>
+    <div class="pre-sub">Виктория Богуш • Борисов</div>
+    <div class="pre-bar"><div class="pre-bar-fill"></div></div>
+</div>
 
-    <!-- ПРОДУКТЫ -->
-    <section class="section products" id="products">
-        <div class="section-header reveal">
-            <div class="section-label">✦ коллекция ✦</div>
-            <h2 class="section-title">Дары лесной мастерской</h2>
+<div class="fireflies"><div class="fly"></div><div class="fly"></div><div class="fly"></div><div class="fly"></div><div class="fly"></div><div class="fly"></div></div>
+<div class="cursor-wand" id="cW">🪄</div>
+<div class="cursor-glow" id="cG"></div>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+    <a href="#" class="nav-logo" onclick="showPage('home');return false">Lab Spa ✦</a>
+    <ul class="nav-links" id="navLinks">
+        <li><a href="#" data-page="home" class="active" onclick="showPage('home');return false">Главная</a></li>
+        <li><a href="#" data-page="products" onclick="showPage('products');return false">Продукты</a></li>
+        <li><a href="#" data-page="about" onclick="showPage('about');return false">О нас</a></li>
+        <li><a href="#" data-page="reviews" onclick="showPage('reviews');return false">Отзывы</a></li>
+        <li><a href="#" data-page="contact" onclick="showPage('contact');return false">Контакты</a></li>
+    </ul>
+    <div class="nav-right">
+        <div class="upill" id="upill"><span class="ud"></span><span id="uName"></span></div>
+        <a href="https://instagram.com/lab_spa_" target="_blank" class="nav-social" title="Instagram">📷</a>
+        <a href="https://t.me/lab_spa" target="_blank" class="nav-social" title="Telegram">💬</a>
+        <button class="nav-cart" onclick="toggleCart()">🛒<span class="cbdg" id="cBdg">0</span></button>
+        <button class="menu-toggle" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+    </div>
+</nav>
+
+<!-- CART -->
+<div class="cov" id="cOv" onclick="toggleCart()"></div>
+<div class="cpn" id="cPn">
+    <div class="cart-hd"><h3>🛒 Корзина</h3><button class="cart-close" onclick="toggleCart()">✕</button></div>
+    <div class="cart-items" id="cItems"><div class="cart-empty"><span class="ce-icon">🌿</span><p>Корзина пуста</p></div></div>
+    <div class="cart-ft"><div class="cart-total"><span class="cart-total-label">Итого</span><span class="cart-total-price" id="cTot">0 BYN</span></div><button class="cart-checkout" onclick="checkout()">✨ Оформить заказ</button></div>
+</div>
+
+<!-- AUTH -->
+<div class="auth-overlay" id="authM">
+    <div class="auth-card">
+        <h2>👩‍🔬 Авторизация</h2>
+        <p class="auth-sub">Войдите, чтобы оформить заказ</p>
+        <div class="auth-tabs" id="authTabs">
+            <button class="auth-tab active" onclick="swAuth('phone')">📱 Телефон</button>
+            <button class="auth-tab" onclick="swAuth('ig')">📷 Instagram</button>
         </div>
-
-        <!-- Первый ряд: 3 продукта -->
-        <div class="products-grid">
-            <div class="product-card reveal reveal-delay-1">
-                <div class="product-image">
-                    <div class="product-image-bg">🧼</div>
-                    <span class="product-tag">🌲 хит леса</span>
-                </div>
-                <div class="product-info">
-                    <h4>Твёрдый шампунь</h4>
-                    <p class="product-desc">Хвойный экстракт и берёзовый дёготь. Укрепляет корни, придаёт блеск. Без пластиковой упаковки — чистая экология.</p>
-                    <div class="product-bottom">
-                        <span class="product-price">1 290 ₽</span>
-                        <button class="product-btn">+</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="product-card reveal reveal-delay-2">
-                <div class="product-image">
-                    <div class="product-image-bg">🫧</div>
-                    <span class="product-tag">🤲 ручная работа</span>
-                </div>
-                <div class="product-info">
-                    <h4>Массажное мыло</h4>
-                    <p class="product-desc">Овсяное молочко и масло ши с вкраплениями лесных трав. Нежный массажный эффект при каждом использовании.</p>
-                    <div class="product-bottom">
-                        <span class="product-price">890 ₽</span>
-                        <button class="product-btn">+</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="product-card reveal reveal-delay-3">
-                <div class="product-image">
-                    <div class="product-image-bg">🫙</div>
-                    <span class="product-tag">✨ бархатный</span>
-                </div>
-                <div class="product-info">
-                    <h4>Скраб для тела</h4>
-                    <p class="product-desc">Молотый кофе, дикий мёд и кора дуба. Бархатное обновление кожи с ароматом утреннего леса после дождя.</p>
-                    <div class="product-bottom">
-                        <span class="product-price">1 590 ₽</span>
-                        <button class="product-btn">+</button>
-                    </div>
-                </div>
-            </div>
+        <div class="auth-form" id="afPhone">
+            <input class="auth-inp" id="inpPhone" type="tel" placeholder="+375 или +7 ...">
+            <input class="auth-inp" id="inpName" type="text" placeholder="Ваше имя">
+            <button class="auth-submit" onclick="sendCode()">📱 Получить SMS-код</button>
         </div>
-
-        <!-- Второй ряд: 2 продукта (центрированы) -->
-        <div class="products-grid-bottom">
-            <div class="product-card product-card-alt reveal reveal-delay-4">
-                <div class="product-image">
-                    <div class="product-image-bg" style="background: linear-gradient(160deg, #1a2a2a, #2a4a4a, #1a3a3a);">🧴</div>
-                    <span class="product-tag">🌿 нежнейший</span>
-                </div>
-                <div class="product-info">
-                    <h4>Крем для рук</h4>
-                    <p class="product-desc">Масло шиповника и ледниковая вода. Мгновенно впитывается, оставляя шёлковый защитный барьер на весь день.</p>
-                    <div class="product-bottom">
-                        <span class="product-price">990 ₽</span>
-                        <button class="product-btn">+</button>
-                    </div>
-                </div>
+        <div class="code-step" id="codeStep">
+            <p style="font-size:.74rem;color:var(--tm);margin-bottom:6px">Код отправлен на <strong id="codeDest" style="color:var(--gm)"></strong></p>
+            <div class="code-inputs">
+                <input class="code-inp" id="c1" maxlength="1" oninput="codeNext(this,'c2')">
+                <input class="code-inp" id="c2" maxlength="1" oninput="codeNext(this,'c3')">
+                <input class="code-inp" id="c3" maxlength="1" oninput="codeNext(this,'c4')">
+                <input class="code-inp" id="c4" maxlength="1" oninput="verifyCode()">
             </div>
-
-            <div class="product-card product-card-alt reveal reveal-delay-5">
-                <div class="product-image">
-                    <div class="product-image-bg" style="background: linear-gradient(160deg, #2a1a2a, #3a2a3a, #2a1a2a);">💎</div>
-                    <span class="product-tag">🌙 лунный эликсир</span>
-                </div>
-                <div class="product-info">
-                    <h4>Крем для лица</h4>
-                    <p class="product-desc">Лесные ягоды, гиалуроновая кислота и лавандовое масло. Глубокое питание, сияние и молодость кожи.</p>
-                    <div class="product-bottom">
-                        <span class="product-price">2 490 ₽</span>
-                        <button class="product-btn">+</button>
-                    </div>
-                </div>
-            </div>
+            <div class="code-timer" id="codeTimer">Повтор через <span id="timerSec">60</span>с</div>
+            <button class="code-resend" id="codeResend" disabled onclick="resendCode()">Отправить снова</button>
         </div>
-    </section>
-
-    <!-- РИТУАЛ -->
-    <section class="section ritual" id="ritual">
-        <div class="section-header reveal">
-            <div class="section-label">✦ ритуал ✦</div>
-            <h2 class="section-title">Ваш лесной ритуал красоты</h2>
+        <div class="auth-form" id="afIG" style="display:none">
+            <input class="auth-inp" id="inpIG" type="text" placeholder="@ваш_instagram">
+            <input class="auth-inp" id="inpIGName" type="text" placeholder="Ваше имя">
+            <button class="auth-ig-btn" onclick="doAuthIG()">📷 Войти через Instagram</button>
         </div>
+        <div class="auth-status" id="authSt"></div>
+        <button class="auth-close" onclick="closeAuth()">Закрыть</button>
+    </div>
+</div>
 
-        <div class="ritual-steps">
-            <div class="ritual-step reveal reveal-delay-1">
-                <div class="step-number">🫧</div>
-                <h4>Очищение</h4>
-                <p>Массажное мыло мягко очищает и пробуждает кожу ароматом леса</p>
-            </div>
-            <div class="ritual-step reveal reveal-delay-2">
-                <div class="step-number">🫙</div>
-                <h4>Обновление</h4>
-                <p>Скраб бережно убирает всё лишнее, открывая свежую бархатную кожу</p>
-            </div>
-            <div class="ritual-step reveal reveal-delay-3">
-                <div class="step-number">🧴</div>
-                <h4>Питание</h4>
-                <p>Крем для лица и рук запечатывает влагу и наполняет кожу силой леса</p>
-            </div>
-            <div class="ritual-step reveal reveal-delay-4">
-                <div class="step-number">✨</div>
-                <h4>Сияние</h4>
-                <p>Наслаждайтесь бархатной кожей с магическим лесным сиянием</p>
-            </div>
+<!-- ORDER -->
+<div class="order-overlay" id="ordM">
+    <div class="order-card">
+        <span class="order-icon">✅</span>
+        <h2>Заказ оформлен!</h2>
+        <p>Ваш номер заказа:</p>
+        <div class="order-num" id="ordNum">LS-0000</div>
+        <p>Сообщите этот номер Виктории в Telegram или Instagram:</p>
+        <a href="https://t.me/lab_spa" target="_blank" class="btn btn-tg" style="margin-bottom:8px">💬 Telegram</a>
+        <a href="https://instagram.com/lab_spa_" target="_blank" class="order-ig">📷 @lab_spa_</a>
+        <button class="order-close" onclick="closeOrd()">Закрыть</button>
+    </div>
+</div>
+
+<!-- HOME -->
+<div class="page active" id="pg-home">
+    <div class="sbg"><img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1920&q=80" alt=""><div class="sbg-ov hov"></div></div>
+    <div class="hp"><div class="mp g"></div><div class="mp gr"></div><div class="mp pk"></div><div class="mp g"></div><div class="mp gr"></div><div class="mp pk"></div></div>
+    <div class="hc"><div class="hi">
+        <div class="he"><img src="https://i.ibb.co/PGqPbYMm/image.png" alt="Lab Spa"></div>
+        <div class="hbd">👩‍🔬 Химик-технолог • Борисов • Беларусь</div>
+        <h1 class="home-title"><span class="hg">Lab Spa</span><br>Виктория <span class="hf">Богуш</span></h1>
+        <p class="hsub">Натуральная косметика и мыло с нуля</p>
+        <div class="hdetail">Избавлю от перхоти и бережно сохраню красоту 🌿<br><strong>Широкая линейка продукции</strong> • За подбором ухода — в директ</div>
+        <div class="hlux">Произведено химиком-технологом</div>
+        <div class="hbtns">
+            <a href="#" class="btn btn-p" onclick="showPage('products');return false">🧴 Каталог продукции</a>
+            <a href="https://t.me/lab_spa" target="_blank" class="btn btn-tg">💬 Telegram</a>
+            <a href="https://instagram.com/lab_spa_" target="_blank" class="btn btn-ig">📷 Instagram</a>
         </div>
-    </section>
+    </div></div>
+</div>
 
-    <!-- ОТЗЫВЫ -->
-    <section class="section testimonials" id="testimonials">
-        <div class="section-header reveal">
-            <div class="section-label">✦ отзывы ✦</div>
-            <h2 class="section-title">Голоса из зачарованного леса</h2>
-        </div>
+<!-- PRODUCTS -->
+<div class="page" id="pg-products">
+    <div class="sbg"><img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1920&q=80" alt=""><div class="sbg-ov pov"></div></div>
+    <div class="sc">
+        <div class="sh reveal"><div class="sl">✦ каталог ✦</div><h2 class="stitle">Продукция Lab Spa</h2></div>
+        <div class="pgrid" id="prodGrid"></div>
+    </div>
+</div>
 
-        <div class="testimonials-slider reveal">
-            <div class="testimonial-card active">
-                <div class="testimonial-quote">❝</div>
-                <div class="testimonial-stars">★★★★★</div>
-                <p class="testimonial-text">Твёрдый шампунь — это открытие года! Волосы стали густыми и блестящими, а запах хвои держится весь день. Плюс никакого пластика!</p>
-                <div class="testimonial-author">— Анастасия, 28 лет</div>
-            </div>
-            <div class="testimonial-card">
-                <div class="testimonial-quote">❝</div>
-                <div class="testimonial-stars">★★★★★</div>
-                <p class="testimonial-text">Скраб с мёдом и корой дуба — это что-то невероятное. Кожа после него как шёлк, а аромат... словно гуляешь по утреннему лесу.</p>
-                <div class="testimonial-author">— Мария, 34 года</div>
-            </div>
-            <div class="testimonial-card">
-                <div class="testimonial-quote">❝</div>
-                <div class="testimonial-stars">★★★★★</div>
-                <p class="testimonial-text">Крем для рук не снимаю с тумбочки. Впитывается мгновенно, руки мягкие весь день. А массажное мыло — отдельный ритуал наслаждения!</p>
-                <div class="testimonial-author">— Екатерина, 26 лет</div>
-            </div>
-
-            <div class="testimonial-dots">
-                <button class="testimonial-dot active" onclick="showTestimonial(0)"></button>
-                <button class="testimonial-dot" onclick="showTestimonial(1)"></button>
-                <button class="testimonial-dot" onclick="showTestimonial(2)"></button>
+<!-- ABOUT -->
+<div class="page" id="pg-about">
+    <div class="sbg"><img src="https://images.unsplash.com/photo-1473448912268-2022ce9509d8?w=1920&q=80" alt=""><div class="sbg-ov aov"></div></div>
+    <div class="sc">
+        <div class="sh reveal"><div class="sl">✦ о нас ✦</div><h2 class="stitle">Виктория Богуш</h2></div>
+        <div class="about-hero reveal">
+            <div class="about-photo"><img src="https://i.ibb.co/PGqPbYMm/image.png" alt="Виктория Богуш"></div>
+            <div class="about-info">
+                <h3>Химик-технолог, создающий натуральную косметику с любовью</h3>
+                <p>Виктория — профессиональный химик-технолог из Борисова, Беларусь. Каждый продукт Lab Spa создаётся вручную с глубоким знанием химии и искренней заботой о вашей коже.</p>
+                <p>Специализация — мыло с нуля, средства от перхоти и бережный уход за красотой. Широкая линейка продукции для всех типов кожи и волос.</p>
+                <div><span class="atag"><span class="adot"></span>Мыло с нуля</span><span class="atag"><span class="adot"></span>Химик-технолог</span><span class="atag"><span class="adot"></span>Борисов, Беларусь</span></div>
+                <div class="about-btns">
+                    <a href="https://instagram.com/lab_spa_" target="_blank" class="btn btn-ig">📷 @lab_spa_</a>
+                    <a href="https://t.me/lab_spa" target="_blank" class="btn btn-tg">💬 Telegram</a>
+                </div>
             </div>
         </div>
-    </section>
+    </div>
+</div>
 
-    <!-- CTA -->
-    <section class="cta-section" id="contact">
-        <div class="cta-content reveal">
-            <span class="cta-emoji">🌙</span>
-            <h2>Впустите лес в свою жизнь</h2>
-            <p>Подпишитесь и получите 15% скидку на первый заказ + тайный лесной ритуал красоты от нашей феи</p>
-            <form class="cta-form" onsubmit="handleSubmit(event)">
-                <input type="email" class="cta-input" placeholder="Ваш e-mail для лесной магии..." required>
-                <button type="submit" class="btn-magic btn-primary">🌿 Войти в лес</button>
-            </form>
+<!-- REVIEWS -->
+<div class="page" id="pg-reviews">
+    <div class="sbg"><img src="https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=1920&q=80" alt=""><div class="sbg-ov rov"></div></div>
+    <div class="sc">
+        <div class="sh reveal"><div class="sl">✦ отзывы ✦</div><h2 class="stitle">Что говорят клиенты</h2></div>
+        <div class="rgrid">
+            <div class="rc reveal rd1"><div class="rav"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=80" alt=""></div><div class="rs">★★★★★</div><p class="rt">Твёрдый шампунь полностью избавил от перхоти за 2 недели! Волосы мягкие и блестящие. Спасибо Виктории!</p><div class="ra">— Анастасия</div></div>
+            <div class="rc reveal rd2"><div class="rav"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&q=80" alt=""></div><div class="rs">★★★★★</div><p class="rt">Мыло с нуля — невероятное качество! Кожа нежная, никакой сухости. Лучше любого магазинного!</p><div class="ra">— Мария</div></div>
+            <div class="rc reveal rd3"><div class="rav"><img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=200&q=80" alt=""></div><div class="rs">★★★★★</div><p class="rt">Взбитое масло для тела — чудо! Кожа бархатная весь день. Аромат потрясающий!</p><div class="ra">— Екатерина</div></div>
         </div>
-    </section>
+    </div>
+</div>
 
-    <!-- FOOTER -->
-    <footer>
-        <div class="footer-top">
-            <div class="footer-brand">
-                <h3>🧚‍♀️ Lab Spa</h3>
-                <p>Натуральная лесная косметика, созданная руками феи природы. Каждый продукт — дар леса для вашей кожи.</p>
-            </div>
-            <div class="footer-col">
-                <h4>Каталог</h4>
-                <a href="#">Твёрдый шампунь</a>
-                <a href="#">Массажное мыло</a>
-                <a href="#">Скраб для тела</a>
-                <a href="#">Крем для рук</a>
-                <a href="#">Крем для лица</a>
-            </div>
-            <div class="footer-col">
-                <h4>Информация</h4>
-                <a href="#">О нас</a>
-                <a href="#">Ингредиенты</a>
-                <a href="#">Доставка</a>
-                <a href="#">Возврат</a>
-            </div>
-            <div class="footer-col">
-                <h4>Контакты</h4>
-                <a href="#">hello@labspa.ru</a>
-                <a href="#">+7 (999) 123-45-67</a>
-                <a href="#">Где-то в лесу 🌲</a>
-            </div>
-        </div>
+<!-- CONTACT -->
+<div class="page" id="pg-contact">
+    <div class="sbg"><img src="https://images.unsplash.com/photo-1476231682828-37e571bc172f?w=1920&q=80" alt=""><div class="sbg-ov cont-ov"></div></div>
+    <div class="sc" style="display:flex;align-items:center;justify-content:center;min-height:100vh">
+        <div><div class="sh reveal"><div class="sl">✦ контакты ✦</div><h2 class="stitle">Свяжитесь с Викторией</h2></div>
+        <div class="cc reveal"><span class="cem">👩‍🔬</span><p>Для подбора ухода, заказа продукции или консультации — пишите в Telegram или Instagram</p>
+        <div class="cl">
+            <a href="https://t.me/lab_spa" target="_blank" class="btn btn-tg">💬 t.me/lab_spa</a>
+            <a href="https://instagram.com/lab_spa_" target="_blank" class="btn btn-ig">📷 @lab_spa_</a>
+        </div></div></div>
+    </div>
+</div>
 
-        <div class="footer-bottom">
-            <span>© 2025 Lab Spa. Вся магия леса защищена ✦</span>
-            <div class="footer-socials">
-                <a href="#">🌿</a>
-                <a href="#">📷</a>
-                <a href="#">💬</a>
-            </div>
-        </div>
-    </footer>
+<footer class="footer">
+    <div class="ft-grid">
+        <div class="ft-brand"><h3>👩‍🔬 Lab Spa</h3><p>Виктория Богуш • Химик-технолог<br>Натуральная косметика и мыло с нуля<br>Борисов, Беларусь 🇧🇾</p></div>
+        <div class="ft-col"><h4>Каталог</h4><a href="#" onclick="showPage('products');return false">Все продукты</a><a href="#" onclick="showPage('about');return false">О нас</a><a href="#" onclick="showPage('reviews');return false">Отзывы</a></div>
+        <div class="ft-col"><h4>Связь</h4><a href="https://t.me/lab_spa" target="_blank">💬 t.me/lab_spa</a><a href="https://instagram.com/lab_spa_" target="_blank">📷 @lab_spa_</a></div>
+    </div>
+    <div class="ft-bottom"><span>© 2025 Lab Spa • Виктория Богуш ✦</span><div class="ft-soc"><a href="https://instagram.com/lab_spa_" target="_blank">📷</a><a href="https://t.me/lab_spa" target="_blank">💬</a></div></div>
+</footer>
 
-    <script>
-        // ===== ПРЕЛОАДЕР =====
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                document.getElementById('preloader').classList.add('hidden');
-            }, 2500);
-        });
+<script>
+const TG_TOKEN='ВАШ_ТОКЕН_БОТА',TG_CHAT='ВАШ_CHAT_ID';
 
-        // ===== МАГИЧЕСКИЙ КУРСОР =====
-        const cursorWand = document.getElementById('cursorWand');
-        const cursorGlow = document.getElementById('cursorGlow');
-        let sparkleCount = 0;
+// === PRODUCTS DATA ===
+const products=[
+{id:'tonic',name:'Тоник для лица',vol:'120 мл',price:19,img:'https://i.ibb.co/m5zxc48w/image.png',tag:'🧴 уход'},
+{id:'balsam40',name:'Твёрдый бальзам',vol:'40 г',price:29,img:'https://i.ibb.co/ch554qTq/image.png',tag:'✨ уход'},
+{id:'balsam20',name:'Твёрдый бальзам',vol:'20 г',price:16,img:'https://i.ibb.co/ch554qTq/image.png',tag:'✨ мини'},
+{id:'shampoo60',name:'Твёрдый шампунь',vol:'60 г',price:29,img:'https://i.ibb.co/FLdvSRhM/image.png',tag:'🌲 хит'},
+{id:'shampoo30',name:'Твёрдый шампунь',vol:'30 г',price:16,img:'https://i.ibb.co/FLdvSRhM/image.png',tag:'🌲 мини'},
+{id:'bathfoam_solid',name:'Твёрдая пена для ванн',vol:'30 г',price:6,img:'https://i.ibb.co/998sSkz6/image.png',tag:'🫧 ванна'},
+{id:'spray',name:'Спрей для волос',vol:'100 мл',price:15,img:'https://i.ibb.co/Q7f60fBg/image.png',tag:'💆 волосы'},
+{id:'scrub',name:'Солевой скраб',vol:'250 мл',price:18,img:'https://i.ibb.co/jZb3Y2ZB/image.png',tag:'✨ скраб'},
+{id:'bathfoam',name:'Пена для ванн',vol:'120 мл',price:11,img:'https://i.ibb.co/TJ6SXFh/image.png',tag:'🫧 ванна'},
+{id:'cuticle',name:'Масло для кутикулы',vol:'10 мл',price:9,img:'https://i.ibb.co/84nSpvmH/image.png',tag:'💅 ногти'},
+{id:'soap',name:'Мыло с нуля',vol:'110± г',price:14,img:'https://i.ibb.co/JjMVnTZG/image.png',tag:'🤲 мыло'},
+{id:'aftershave',name:'Лосьон после бритья',vol:'100 мл',price:13,img:'https://i.ibb.co/ymcTKcWP/image.png',tag:'🧔 для него'},
+{id:'hairmask',name:'Маска для волос',vol:'150 мл',price:17,img:'https://i.ibb.co/HTx6yHRB/image.png',tag:'💆 волосы'},
+{id:'sachet_big',name:'Аромасаше (большое)',vol:'',price:10,img:'https://i.ibb.co/G39DMc14/image.png',tag:'🌸 аромат'},
+{id:'sachet_small',name:'Аромасаше (малое)',vol:'',price:6,img:'https://i.ibb.co/G39DMc14/image.png',tag:'🌸 мини'},
+{id:'hydro_oil',name:'Гидрофильное масло',vol:'50 мл',price:12,img:'https://i.ibb.co/Z1K8mRN5/image.png',tag:'🧴 очищение'},
+{id:'diffuser100',name:'Диффузор',vol:'100 мл',price:50,img:'https://i.ibb.co/S4jf48Ns/image.png',tag:'🏠 аромат'},
+{id:'diffuser50',name:'Диффузор',vol:'50 мл',price:35,img:'https://i.ibb.co/S4jf48Ns/image.png',tag:'🏠 мини'},
+{id:'deo',name:'Дезодорант',vol:'15 мл',price:16,img:'https://i.ibb.co/gbRt58N4/image.png',tag:'🌿 натур'},
+{id:'body_butter',name:'Взбитое масло для тела',vol:'150 мл',price:18,img:'https://i.ibb.co/X6SCjxP/image.png',tag:'✨ тело'}
+];
 
-        document.addEventListener('mousemove', (e) => {
-            cursorWand.style.left = e.clientX + 'px';
-            cursorWand.style.top = e.clientY + 'px';
-            cursorGlow.style.left = e.clientX + 'px';
-            cursorGlow.style.top = e.clientY + 'px';
+// Render products
+function renderProducts(){
+    const g=document.getElementById('prodGrid');
+    let h='';
+    products.forEach((p,i)=>{
+        const volText=p.vol?`<div class="pvol">${p.vol}</div>`:'';
+        const delay=i%4;
+        h+=`<div class="pc reveal rd${delay+1}">
+            <div class="pimg"><img src="${p.img}" alt="${p.name}" loading="lazy"><span class="ptag">${p.tag}</span></div>
+            <div class="pi"><h4>${p.name}</h4>${volText}
+            <div class="pb"><span class="pp">${p.price} <span class="cu">BYN</span></span>
+            <button class="ab" onclick="addCart(this,'${p.id}','${p.name}${p.vol?' ('+p.vol+')':''}',${p.price},'${p.img}')">+ В корзину</button></div></div></div>`;
+    });
+    g.innerHTML=h;
+}
+renderProducts();
 
-            sparkleCount++;
-            if (sparkleCount % 5 === 0) {
-                createSparkle(e.clientX, e.clientY);
-            }
-        });
+// Preloader
+let pI=0;const pImgs=document.querySelectorAll('.pre-bg-img');
+setInterval(()=>{pImgs.forEach(i=>i.classList.remove('active'));pI=(pI+1)%pImgs.length;pImgs[pI].classList.add('active')},2500);
+window.addEventListener('load',()=>{setTimeout(()=>document.getElementById('preloader').classList.add('hidden'),3800)});
 
-        document.querySelectorAll('a, button, .product-card, .phil-card').forEach(el => {
-            el.addEventListener('mouseenter', () => cursorGlow.classList.add('hover'));
-            el.addEventListener('mouseleave', () => cursorGlow.classList.remove('hover'));
-        });
+// Cursor
+const cWe=document.getElementById('cW'),cGe=document.getElementById('cG');let sN=0;
+document.addEventListener('mousemove',e=>{cWe.style.left=e.clientX+'px';cWe.style.top=e.clientY+'px';cGe.style.left=e.clientX+'px';cGe.style.top=e.clientY+'px';if(++sN%5===0)mkS(e.clientX,e.clientY)});
+document.addEventListener('mouseover',e=>{const t=e.target.closest('a,button,.pc,.rc');if(t)cGe.classList.add('hover');else cGe.classList.remove('hover')});
+function mkS(x,y){const s=document.createElement('div');s.className='sparkle';const e=['✦','✧','⋆','˚','✨'];s.textContent=e[Math.floor(Math.random()*e.length)];s.style.left=x+'px';s.style.top=y+'px';s.style.setProperty('--tx',(Math.random()-.5)*100+'px');s.style.setProperty('--ty',-(Math.random()*80+20)+'px');const c=['#c9a84c','#7cb87c','#e491bf','#e8d18c'];s.style.color=c[Math.floor(Math.random()*c.length)];document.body.appendChild(s);setTimeout(()=>s.remove(),1400)}
+document.addEventListener('click',e=>{for(let i=0;i<10;i++)setTimeout(()=>mkS(e.clientX,e.clientY),i*20)});
 
-        function createSparkle(x, y) {
-            const sparkle = document.createElement('div');
-            sparkle.className = 'sparkle';
+// Pages
+function showPage(n){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));const pg=document.getElementById('pg-'+n);if(pg)pg.classList.add('active');document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));const l=document.querySelector(`.nav-links a[data-page="${n}"]`);if(l)l.classList.add('active');document.getElementById('navLinks').classList.remove('open');window.scrollTo(0,0);setTimeout(()=>{document.querySelectorAll('.reveal').forEach(el=>{if(el.getBoundingClientRect().top<window.innerHeight)el.classList.add('visible')})},100)}
+function toggleMenu(){document.getElementById('navLinks').classList.toggle('open')}
+window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50)});
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.05});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 
-            const emojis = ['✦', '✧', '⋆', '˚', '·', '°', '✨'];
-            sparkle.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+// Cart
+let cart={},user=null,genCode='',codeTimer=null;
+function addCart(btn,id,name,price,img){if(cart[id])cart[id].qty++;else cart[id]={name,price,img,qty:1};updCart();const b=document.getElementById('cBdg');b.classList.remove('bump');void b.offsetWidth;b.classList.add('bump');btn.textContent='✓';btn.classList.add('added');setTimeout(()=>{btn.textContent='+ В корзину';btn.classList.remove('added')},1000)}
+function rmI(id){delete cart[id];updCart()}
+function chQ(id,d){if(cart[id]){cart[id].qty+=d;if(cart[id].qty<=0)delete cart[id];updCart()}}
+function updCart(){const w=document.getElementById('cItems'),keys=Object.keys(cart);let tq=0,tp=0;keys.forEach(k=>{tq+=cart[k].qty;tp+=cart[k].price*cart[k].qty});document.getElementById('cBdg').textContent=tq;document.getElementById('cTot').textContent=tp+' BYN';if(!keys.length){w.innerHTML='<div class="cart-empty"><span class="ce-icon">🌿</span><p>Корзина пуста</p></div>'}else{let h='';keys.forEach(k=>{const i=cart[k];h+=`<div class="ci"><div class="ci-img"><img src="${i.img}" alt=""></div><div class="ci-info"><h4>${i.name}</h4><span class="ci-price">${i.price} BYN</span></div><div class="ci-qty"><button class="qb" onclick="chQ('${k}',-1)">−</button><span class="qn">${i.qty}</span><button class="qb" onclick="chQ('${k}',1)">+</button></div><button class="ci-rm" onclick="rmI('${k}')">✕</button></div>`});w.innerHTML=h}document.querySelectorAll('.ab').forEach(b=>{b.textContent='+ В корзину';b.classList.remove('added')})}
+function toggleCart(){document.getElementById('cPn').classList.toggle('open');document.getElementById('cOv').classList.toggle('open')}
 
-            const tx = (Math.random() - 0.5) * 90;
-            const ty = -(Math.random() * 70 + 20);
-            sparkle.style.left = x + 'px';
-            sparkle.style.top = y + 'px';
-            sparkle.style.setProperty('--tx', tx + 'px');
-            sparkle.style.setProperty('--ty', ty + 'px');
+// Auth
+function swAuth(t){document.querySelectorAll('.auth-tab').forEach(b=>b.classList.remove('active'));document.getElementById('codeStep').classList.remove('show');document.getElementById('authSt').classList.remove('show');if(t==='phone'){document.getElementById('afPhone').style.display='flex';document.getElementById('afIG').style.display='none';document.querySelectorAll('.auth-tab')[0].classList.add('active')}else{document.getElementById('afPhone').style.display='none';document.getElementById('afIG').style.display='flex';document.querySelectorAll('.auth-tab')[1].classList.add('active')}}
+function sendCode(){const ph=document.getElementById('inpPhone').value.trim(),nm=document.getElementById('inpName').value.trim();if(!ph||ph.length<10){showAS('Введите корректный номер','err');return}if(!nm){showAS('Введите имя','err');return};genCode=String(Math.floor(1000+Math.random()*9000));console.log('📱 Код:',genCode);sendTG(`📱 *Верификация*\n👤 ${nm}\n📞 ${ph}\n🔑 Код: \`${genCode}\``);document.getElementById('codeDest').textContent=ph;document.getElementById('afPhone').style.display='none';document.getElementById('authTabs').style.display='none';document.getElementById('codeStep').classList.add('show');showAS('Код отправлен!','ok');startTimer();user={type:'phone',contact:ph,name:nm,verified:false};document.getElementById('c1').focus()}
+function codeNext(el,next){if(el.value.length===1){const n=document.getElementById(next);if(n)n.focus()}}
+function verifyCode(){const entered=['c1','c2','c3','c4'].map(id=>document.getElementById(id).value).join('');if(entered.length<4)return;if(entered===genCode){user.verified=true;showAS('✅ Успешно!','ok');document.getElementById('uName').textContent=user.name;document.getElementById('upill').classList.add('show');setTimeout(()=>{closeAuth();resetAuth()},1200)}else{showAS('❌ Неверный код','err');['c1','c2','c3','c4'].forEach(id=>{document.getElementById(id).value=''});document.getElementById('c1').focus()}}
+function startTimer(){let s=60;document.getElementById('timerSec').textContent=s;document.getElementById('codeResend').disabled=true;if(codeTimer)clearInterval(codeTimer);codeTimer=setInterval(()=>{s--;document.getElementById('timerSec').textContent=s;if(s<=0){clearInterval(codeTimer);document.getElementById('codeResend').disabled=false;document.getElementById('codeTimer').textContent='Можно отправить снова'}},1000)}
+function resendCode(){genCode=String(Math.floor(1000+Math.random()*9000));console.log('📱 Новый:',genCode);sendTG(`📱 *Повтор*\n📞 ${user.contact}\n🔑 \`${genCode}\``);showAS('Новый код отправлен!','ok');startTimer();['c1','c2','c3','c4'].forEach(id=>{document.getElementById(id).value=''});document.getElementById('c1').focus()}
+function doAuthIG(){const ig=document.getElementById('inpIG').value.trim(),nm=document.getElementById('inpIGName').value.trim();if(!ig){showAS('Введите Instagram','err');return}if(!nm){showAS('Введите имя','err');return};user={type:'instagram',contact:ig,name:nm,verified:true};showAS('✅ Добро пожаловать!','ok');document.getElementById('uName').textContent=nm;document.getElementById('upill').classList.add('show');setTimeout(()=>{closeAuth();resetAuth()},1200)}
+function showAS(msg,type){const s=document.getElementById('authSt');s.textContent=msg;s.className='auth-status show '+(type==='err'?'err':'ok')}
+function openAuth(){document.getElementById('authM').classList.add('open')}
+function closeAuth(){document.getElementById('authM').classList.remove('open')}
+function resetAuth(){document.getElementById('codeStep').classList.remove('show');document.getElementById('afPhone').style.display='flex';document.getElementById('authTabs').style.display='flex';document.getElementById('authSt').classList.remove('show');['inpPhone','inpName','inpIG','inpIGName','c1','c2','c3','c4'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=''})}
 
-            const colors = ['#c9a84c', '#7cb87c', '#e491bf', '#e8d18c', '#8fb88a'];
-            sparkle.style.color = colors[Math.floor(Math.random() * colors.length)];
-
-            document.body.appendChild(sparkle);
-            setTimeout(() => sparkle.remove(), 1400);
-        }
-
-        document.addEventListener('click', (e) => {
-            for (let i = 0; i < 15; i++) {
-                setTimeout(() => createSparkle(e.clientX, e.clientY), i * 25);
-            }
-        });
-
-        // ===== НАВИГАЦИЯ =====
-        const navbar = document.getElementById('navbar');
-        window.addEventListener('scroll', () => {
-            navbar.classList.toggle('scrolled', window.scrollY > 60);
-        });
-
-        function toggleMenu() {
-            document.getElementById('navLinks').classList.toggle('open');
-        }
-
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                document.getElementById('navLinks').classList.remove('open');
-            });
-        });
-
-        // ===== REVEAL =====
-        const observerOptions = { threshold: 0.12, rootMargin: '0px 0px -60px 0px' };
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-        // ===== ОТЗЫВЫ =====
-        let currentTestimonial = 0;
-        const testimonials = document.querySelectorAll('.testimonial-card');
-        const dots = document.querySelectorAll('.testimonial-dot');
-
-        function showTestimonial(index) {
-            testimonials.forEach(t => t.classList.remove('active'));
-            dots.forEach(d => d.classList.remove('active'));
-            testimonials[index].classList.add('active');
-            dots[index].classList.add('active');
-            currentTestimonial = index;
-        }
-
-        setInterval(() => {
-            showTestimonial((currentTestimonial + 1) % testimonials.length);
-        }, 5500);
-
-        // ===== ФОРМА =====
-        function handleSubmit(e) {
-            e.preventDefault();
-            const input = e.target.querySelector('input');
-            const btn = e.target.querySelector('button');
-            btn.innerHTML = '✅ Лес принял вас!';
-            btn.style.background = 'linear-gradient(135deg, #2d4a2d, #3d6b3d)';
-            input.value = '';
-
-            setTimeout(() => {
-                btn.innerHTML = '🌿 Войти в лес';
-                btn.style.background = '';
-            }, 3500);
-        }
-
-        // ===== ПАРАЛЛАКС =====
-        window.addEventListener('scroll', () => {
-            const scrolled = window.scrollY;
-            const heroContent = document.querySelector('.hero-content');
-            if (heroContent && scrolled < window.innerHeight) {
-                heroContent.style.transform = `translateY(${scrolled * 0.35}px)`;
-                heroContent.style.opacity = 1 - (scrolled / (window.innerHeight * 0.75));
-            }
-        });
-    </script>
-
+// Checkout
+function checkout(){if(!Object.keys(cart).length)return;if(!user||!user.verified){openAuth();return};const on='LS-'+Math.floor(1000+Math.random()*9000);let tp=0,txt=`👩‍🔬 *НОВЫЙ ЗАКАЗ Lab Spa*\n\n📋 *Номер:* \`${on}\`\n👤 *Клиент:* ${user.name}\n📞 *Контакт:* ${user.contact} (${user.type})\n\n🛒 *Состав:*\n`;Object.keys(cart).forEach(k=>{const i=cart[k],s=i.price*i.qty;tp+=s;txt+=`  • ${i.name} × ${i.qty} = ${s} BYN\n`});txt+=`\n💰 *Итого: ${tp} BYN*\n⏰ ${new Date().toLocaleString('ru-RU')}`;sendTG(txt);document.getElementById('ordNum').textContent=on;document.getElementById('ordM').classList.add('open');toggleCart();cart={};updCart()}
+function sendTG(t){if(TG_TOKEN==='ВАШ_ТОКЕН_БОТА'){console.log('📨',t);return}fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:TG_CHAT,text:t,parse_mode:'Markdown'})}).then(r=>r.json()).then(d=>console.log('✅',d)).catch(e=>console.error('❌',e))}
+function closeOrd(){document.getElementById('ordM').classList.remove('open')}
+</script>
 </body>
 </html>
