@@ -6,11 +6,10 @@
     <title>Lab Spa — Натуральная косметика | Виктория Богуш</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Montserrat:wght@200;300;400;500&display=swap');
-        *{margin:0;padding:0;box-sizing:border-box;cursor:none}
+        *{margin:0;padding:0;box-sizing:border-box}
         :root{--fd:#1a2e1a;--fm:#3d6b3d;--fg:#7cb87c;--ml:#8fb88a;--bl:#c75b9b;--gm:#c9a84c;--gl:#e8d18c;--mn:#0d1a0d;--tl:#e8e0d4;--tm:#a09880;--bd:#a02d6b}
         html{scroll-behavior:smooth}
-        body{font-family:'Montserrat',sans-serif;background:var(--mn);color:var(--tl);overflow-x:hidden}
-
+        body{font-family:'Montserrat',sans-serif;background:var(--mn);color:var(--tl);overflow-x:hidden;cursor:none}
         .cursor-wand{position:fixed;width:28px;height:28px;pointer-events:none;z-index:100000;transform:translate(-50%,-50%);font-size:24px;filter:drop-shadow(0 0 12px rgba(201,168,76,.8))}
         .cursor-glow{position:fixed;width:44px;height:44px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,.3)0%,transparent 70%);pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:.3s}
         .cursor-glow.hover{width:65px;height:65px;background:radial-gradient(circle,rgba(124,184,124,.4)0%,rgba(201,168,76,.2)50%,transparent 70%)}
@@ -60,7 +59,6 @@
         .pre-bar-fill{height:100%;background:linear-gradient(90deg,var(--gm),var(--fg),var(--bl));border-radius:2px;animation:bf 3.5s ease-in-out forwards}
         @keyframes bf{0%{width:0}100%{width:100%}}
 
-        /* FIREFLIES */
         .fireflies{position:fixed;inset:0;pointer-events:none;z-index:1}
         .fly{position:absolute;width:4px;height:4px;border-radius:50%;background:var(--gm);box-shadow:0 0 10px var(--gm);animation:flym 15s ease-in-out infinite}
         .fly:nth-child(1){top:15%;left:10%;animation-duration:18s}
@@ -71,7 +69,6 @@
         .fly:nth-child(6){top:55%;left:15%;animation-duration:24s;animation-delay:-2s}
         @keyframes flym{0%{transform:translate(0,0);opacity:0}10%{opacity:1}50%{transform:translate(-40px,-120px)}90%{opacity:0}100%{transform:translate(20px,-40px);opacity:0}}
 
-        /* NAVBAR */
         .navbar{position:fixed;top:0;left:0;width:100%;z-index:10000;padding:14px 40px;display:flex;justify-content:space-between;align-items:center;transition:.5s;background:rgba(13,26,13,.9);backdrop-filter:blur(25px);border-bottom:1px solid rgba(201,168,76,.04)}
         .navbar.scrolled{padding:10px 40px;box-shadow:0 4px 30px rgba(0,0,0,.3)}
         .nav-logo{font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:600;background:linear-gradient(135deg,var(--gm),var(--fg),var(--gl));background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-decoration:none;animation:lsh 4s ease-in-out infinite}
@@ -83,6 +80,8 @@
         .nav-links a:hover::after,.nav-links a.active::after{width:100%}
         .nav-links a.active{color:var(--gm)}
         .nav-right{display:flex;align-items:center;gap:12px}
+        .nav-auth{background:linear-gradient(135deg,var(--fm),#2d4a2d);color:var(--gl);border:1px solid rgba(124,184,124,.15);padding:6px 14px;border-radius:50px;font-size:.68rem;letter-spacing:1px;transition:.3s;display:inline-flex;align-items:center;gap:5px;font-family:'Montserrat',sans-serif}
+        .nav-auth:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(45,74,45,.4)}
         .nav-cart{position:relative;background:none;border:1.5px solid rgba(201,168,76,.18);border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;font-size:1rem;transition:.3s;color:var(--gm)}
         .nav-cart:hover{background:rgba(201,168,76,.08);border-color:var(--gm)}
         .cbdg{position:absolute;top:-3px;right:-3px;background:var(--bd);color:#fff;font-size:.52rem;width:15px;height:15px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:500;transition:.3s}
@@ -96,7 +95,6 @@
         .menu-toggle{display:none;flex-direction:column;gap:5px;background:none;border:none;padding:5px}
         .menu-toggle span{width:24px;height:1.5px;background:var(--gm);border-radius:2px}
 
-        /* PAGES */
         .page{min-height:100vh;position:relative;display:none;flex-direction:column}
         .page.active{display:flex}
         .sbg{position:absolute;inset:0;z-index:0}
@@ -109,25 +107,22 @@
         .sl::after{background:linear-gradient(90deg,rgba(201,168,76,.4),transparent)}
         .stitle{font-family:'Cormorant Garamond',serif;font-size:2.6rem;font-weight:300;line-height:1.2}
 
-        /* HOME */
+        /* HOME — увеличенные шрифты */
         .hov{background:radial-gradient(ellipse at 20% 50%,rgba(45,74,45,.6)0%,transparent 60%),radial-gradient(ellipse at 80% 30%,rgba(139,34,82,.12)0%,transparent 50%),linear-gradient(180deg,rgba(13,26,13,.35),rgba(13,26,13,.15)50%,rgba(13,26,13,.7))}
         .hc{display:flex;align-items:center;justify-content:center;min-height:100vh;text-align:center;position:relative;z-index:5}
-        .hi{max-width:800px;padding:0 20px}
-        .he{width:90px;height:90px;margin:0 auto 18px;border-radius:50%;overflow:hidden;border:2px solid rgba(201,168,76,.15);box-shadow:0 0 30px rgba(201,168,76,.15);animation:ei 2s ease-out}
-        .he img{width:100%;height:100%;object-fit:cover}
-        @keyframes ei{0%{transform:scale(0)rotate(-180deg);opacity:0}60%{transform:scale(1.1)rotate(10deg)}100%{transform:scale(1)rotate(0);opacity:1}}
-        .hbd{display:inline-block;padding:7px 20px;background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.12);border-radius:50px;font-size:.62rem;letter-spacing:3px;text-transform:uppercase;color:var(--gm);margin-bottom:20px;animation:fiu 1s ease-out .5s both}
-        .home-title{font-family:'Cormorant Garamond',serif;font-size:3.5rem;font-weight:300;line-height:1.1;margin-bottom:14px;animation:fiu 1s ease-out .7s both;text-shadow:0 4px 30px rgba(0,0,0,.5)}
+        .hi{max-width:850px;padding:0 20px}
+        .hbd{display:inline-block;padding:10px 26px;background:rgba(201,168,76,.05);border:1px solid rgba(201,168,76,.12);border-radius:50px;font-size:.78rem;letter-spacing:3px;text-transform:uppercase;color:var(--gm);margin-bottom:24px;animation:fiu 1s ease-out .3s both}
+        .home-title{font-family:'Cormorant Garamond',serif;font-size:4.5rem;font-weight:300;line-height:1.05;margin-bottom:18px;animation:fiu 1s ease-out .5s both;text-shadow:0 4px 30px rgba(0,0,0,.5)}
         .home-title .hg{background:linear-gradient(135deg,var(--gm),var(--gl),var(--gm));background-size:200% 200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:700;animation:gs 3s ease-in-out infinite}
         @keyframes gs{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
         .home-title .hf{background:linear-gradient(135deg,var(--fg),var(--ml));-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:600}
-        .hsub{font-family:'Cormorant Garamond',serif;font-size:1.15rem;font-style:italic;color:var(--tm);margin-bottom:6px;animation:fiu 1s ease-out .9s both}
-        .hdetail{font-size:.72rem;color:var(--tm);margin-bottom:8px;animation:fiu 1s ease-out 1s both;line-height:1.7;font-weight:300}
+        .hsub{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-style:italic;color:var(--tm);margin-bottom:10px;animation:fiu 1s ease-out .7s both}
+        .hdetail{font-size:.88rem;color:var(--tm);margin-bottom:12px;animation:fiu 1s ease-out .8s both;line-height:1.8;font-weight:300}
         .hdetail strong{color:var(--fg)}
-        .hlux{font-size:.58rem;letter-spacing:4px;text-transform:uppercase;color:var(--bl);margin-bottom:28px;animation:fiu 1s ease-out 1.1s both;display:flex;align-items:center;justify-content:center;gap:10px}
-        .hlux::before,.hlux::after{content:'';width:22px;height:1px;background:var(--bl);opacity:.4}
+        .hlux{font-size:.7rem;letter-spacing:5px;text-transform:uppercase;color:var(--bl);margin-bottom:35px;animation:fiu 1s ease-out .9s both;display:flex;align-items:center;justify-content:center;gap:12px}
+        .hlux::before,.hlux::after{content:'';width:28px;height:1px;background:var(--bl);opacity:.4}
         @keyframes fiu{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
-        .hbtns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;animation:fiu 1s ease-out 1.2s both}
+        .hbtns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;animation:fiu 1s ease-out 1s both}
         .hp{position:absolute;width:100%;height:100%;z-index:2;top:0;left:0}
         .mp{position:absolute;border-radius:50%;animation:pr 8s ease-in-out infinite}
         .mp.g{background:radial-gradient(circle,var(--gm),transparent);box-shadow:0 0 10px var(--gm)}
@@ -141,7 +136,7 @@
         .mp:nth-child(6){width:4px;height:4px;left:88%;bottom:0;animation-delay:-3s;animation-duration:7.5s}
         @keyframes pr{0%{transform:translateY(0)scale(0);opacity:0}10%{opacity:1;transform:translateY(-10vh)scale(1)}90%{opacity:0}100%{transform:translateY(-100vh)scale(.3);opacity:0}}
 
-        .btn{padding:12px 30px;border:none;border-radius:50px;font-family:'Montserrat',sans-serif;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none;position:relative;overflow:hidden;transition:.4s;display:inline-flex;align-items:center;gap:7px}
+        .btn{padding:13px 32px;border:none;border-radius:50px;font-family:'Montserrat',sans-serif;font-size:.74rem;letter-spacing:2px;text-transform:uppercase;text-decoration:none;position:relative;overflow:hidden;transition:.4s;display:inline-flex;align-items:center;gap:7px}
         .btn-p{background:linear-gradient(135deg,var(--fm),#2d4a2d);color:var(--gl);box-shadow:0 8px 22px rgba(45,74,45,.4);border:1px solid rgba(124,184,124,.15)}
         .btn-p:hover{transform:translateY(-3px);box-shadow:0 12px 35px rgba(45,74,45,.5)}
         .btn-s{background:transparent;color:var(--gm);border:1.5px solid rgba(201,168,76,.18)}
@@ -172,12 +167,6 @@
         .ab:hover{background:var(--fm);border-color:var(--fg);color:var(--gl)}
         .ab.added{background:var(--fm);border-color:var(--fg);color:var(--gl)}
 
-        /* Variant selector */
-        .pvars{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
-        .pvar{padding:4px 10px;border:1px solid rgba(124,184,124,.15);border-radius:50px;font-size:.58rem;color:var(--tm);background:none;transition:.3s;font-family:'Montserrat',sans-serif}
-        .pvar.active{border-color:var(--gm);color:var(--gm);background:rgba(201,168,76,.08)}
-        .pvar:hover{border-color:var(--gm);color:var(--gl)}
-
         /* ABOUT */
         .aov{background:radial-gradient(ellipse at 30% 50%,rgba(45,74,45,.18)0%,transparent 60%),linear-gradient(180deg,rgba(13,26,13,.4),rgba(13,26,13,.2)50%,rgba(13,26,13,.65))}
         .about-hero{display:flex;align-items:center;gap:60px;max-width:1000px;margin:0 auto}
@@ -192,19 +181,21 @@
         /* REVIEWS */
         .rov{background:radial-gradient(ellipse at 50% 50%,rgba(201,168,76,.03)0%,transparent 50%),linear-gradient(180deg,rgba(13,26,13,.4),rgba(13,26,13,.2)50%,rgba(13,26,13,.65))}
         .rgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-        .rc{background:rgba(26,46,26,.5);backdrop-filter:blur(12px);border:1px solid rgba(124,184,124,.05);border-radius:18px;padding:28px 20px;text-align:center;transition:.5s}
+        .rc{background:rgba(26,46,26,.5);backdrop-filter:blur(12px);border:1px solid rgba(124,184,124,.05);border-radius:18px;overflow:hidden;transition:.5s}
         .rc:hover{transform:translateY(-5px);border-color:rgba(201,168,76,.08);box-shadow:0 16px 38px rgba(0,0,0,.3)}
-        .rav{width:48px;height:48px;border-radius:50%;overflow:hidden;margin:0 auto 10px;border:2px solid rgba(201,168,76,.08)}
-        .rav img{width:100%;height:100%;object-fit:cover}
+        .rc-img{width:100%;height:220px;overflow:hidden}
+        .rc-img img{width:100%;height:100%;object-fit:cover;transition:.5s}
+        .rc:hover .rc-img img{transform:scale(1.05)}
+        .rc-body{padding:22px 18px;text-align:center}
         .rs{color:var(--gm);font-size:.78rem;margin-bottom:8px}
         .rt{font-family:'Cormorant Garamond',serif;font-size:1rem;font-style:italic;line-height:1.65;margin-bottom:12px}
         .ra{font-size:.62rem;letter-spacing:2px;text-transform:uppercase;color:var(--tm)}
 
         /* CONTACT */
         .cont-ov{background:radial-gradient(ellipse at 40% 50%,rgba(45,74,45,.2)0%,transparent 60%),linear-gradient(180deg,rgba(13,26,13,.4),rgba(13,26,13,.2)50%,rgba(13,26,13,.65))}
-        .cc{text-align:center;max-width:500px;margin:0 auto}
-        .cc .cem{font-size:3rem;display:block;margin-bottom:14px;filter:drop-shadow(0 0 14px rgba(201,168,76,.3))}
-        .cc p{font-weight:300;color:var(--tm);margin-bottom:22px;font-size:.85rem;line-height:1.8}
+        .cc{text-align:center;max-width:550px;margin:0 auto}
+        .contact-photo{width:120px;height:120px;border-radius:50%;object-fit:cover;border:3px solid rgba(201,168,76,.15);box-shadow:0 0 30px rgba(201,168,76,.15);margin:0 auto 20px;display:block}
+        .cc p{font-weight:300;color:var(--tm);margin-bottom:22px;font-size:.88rem;line-height:1.8}
         .cl{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 
         /* CART */
@@ -240,7 +231,7 @@
         .cart-checkout{width:100%;padding:12px;border:none;border-radius:50px;background:linear-gradient(135deg,var(--fm),#2d4a2d);color:var(--gl);font-family:'Montserrat',sans-serif;font-size:.72rem;letter-spacing:2px;text-transform:uppercase;transition:.4s;box-shadow:0 6px 18px rgba(45,74,45,.4);border:1px solid rgba(124,184,124,.1)}
         .cart-checkout:hover{transform:translateY(-2px)}
 
-        /* AUTH */
+        /* AUTH + ORDER — same as before */
         .auth-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(10px);z-index:99995;display:none;align-items:center;justify-content:center}
         .auth-overlay.open{display:flex}
         .auth-card{background:linear-gradient(135deg,#0f200f,#1a2e1a);border:1px solid rgba(201,168,76,.08);border-radius:22px;padding:32px 28px;max-width:380px;width:90%;text-align:center;animation:fiu .5s ease}
@@ -263,16 +254,13 @@
         .auth-status.err{color:#e74c3c;background:rgba(231,76,60,.08)}
         .auth-close{background:none;border:none;color:var(--tm);font-size:.66rem;margin-top:10px;text-decoration:underline;transition:.3s}
         .auth-close:hover{color:var(--tl)}
-        .code-step{display:none}
-        .code-step.show{display:flex;flex-direction:column;gap:8px}
+        .code-step{display:none}.code-step.show{display:flex;flex-direction:column;gap:8px}
         .code-inputs{display:flex;gap:6px;justify-content:center}
         .code-inp{width:40px;height:46px;border-radius:10px;border:1.5px solid rgba(124,184,124,.1);background:rgba(26,46,26,.5);font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--gm);text-align:center;outline:none;transition:.3s}
         .code-inp:focus{border-color:var(--gm);box-shadow:0 0 10px rgba(201,168,76,.12)}
-        .code-timer{font-size:.64rem;color:var(--tm)}
-        .code-resend{background:none;border:none;color:var(--gm);font-size:.64rem;text-decoration:underline;transition:.3s}
-        .code-resend:disabled{opacity:.4;color:var(--tm)}
-
-        /* ORDER */
+        .code-timer{font-size:.64rem;color:var(--tm)}.code-resend{background:none;border:none;color:var(--gm);font-size:.64rem;text-decoration:underline;transition:.3s;margin-bottom:8px}.code-resend:disabled{opacity:.4;color:var(--tm)}
+        .auth-cancel{background:transparent;border:1px solid rgba(201,168,76,.15);color:var(--gm);padding:8px 16px;border-radius:8px;font-size:.68rem;transition:.3s;font-family:'Montserrat',sans-serif}
+        .auth-cancel:hover{background:rgba(201,168,76,.05);border-color:var(--gm)}
         .order-overlay{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(10px);z-index:99996;display:none;align-items:center;justify-content:center}
         .order-overlay.open{display:flex}
         .order-card{background:linear-gradient(135deg,#0f200f,#1a2e1a);border:1px solid rgba(201,168,76,.08);border-radius:22px;padding:32px 28px;max-width:420px;width:90%;text-align:center;animation:fiu .5s ease}
@@ -285,7 +273,6 @@
         .order-close{display:block;background:none;border:none;color:var(--tm);font-size:.66rem;margin-top:8px;text-decoration:underline;transition:.3s}
         .order-close:hover{color:var(--tl)}
 
-        /* FOOTER */
         .footer{background:linear-gradient(180deg,var(--mn),#080f08);padding:40px 40px 20px;border-top:1px solid rgba(124,184,124,.04)}
         .ft-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:35px;margin-bottom:30px}
         .ft-brand h3{font-family:'Cormorant Garamond',serif;font-size:1.3rem;background:linear-gradient(135deg,var(--gm),var(--fg));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px}
@@ -302,23 +289,22 @@
         .reveal.visible{opacity:1;transform:translateY(0)}
         .rd1{transition-delay:.05s}.rd2{transition-delay:.1s}.rd3{transition-delay:.15s}.rd4{transition-delay:.2s}
 
-        @media(max-width:1024px){.home-title{font-size:2.8rem}.sc{padding:70px 25px}.ft-grid{grid-template-columns:1fr 1fr}.pgrid{grid-template-columns:repeat(3,1fr)}}
+        @media(max-width:1024px){.home-title{font-size:3.2rem}.sc{padding:70px 25px}.ft-grid{grid-template-columns:1fr 1fr}.pgrid{grid-template-columns:repeat(3,1fr)}}
         @media(max-width:768px){.navbar{padding:10px 14px}.nav-links{display:none}.menu-toggle{display:flex}
         .nav-links.open{display:flex;flex-direction:column;position:absolute;top:100%;left:0;width:100%;background:rgba(13,26,13,.95);backdrop-filter:blur(25px);padding:18px;gap:14px;border-bottom:1px solid rgba(124,184,124,.04)}
-        .home-title{font-size:1.9rem}.he{width:60px;height:60px}.sc{padding:45px 14px}.stitle{font-size:1.7rem}
+        .home-title{font-size:2.2rem}.sc{padding:45px 14px}.stitle{font-size:1.7rem}
         .about-hero{flex-direction:column;gap:30px;text-align:center}.about-photo{width:200px;height:250px;margin:0 auto}
-        .pgrid{grid-template-columns:repeat(2,1fr);gap:12px}.rgrid{grid-template-columns:1fr;max-width:380px;margin-left:auto;margin-right:auto}
+        .pgrid{grid-template-columns:repeat(2,1fr);gap:12px}.rgrid{grid-template-columns:1fr;max-width:400px;margin-left:auto;margin-right:auto}
         .ft-grid{grid-template-columns:1fr;gap:16px}.ft-bottom{flex-direction:column;gap:8px;text-align:center}
         .cpn{width:100%;right:-100%}
         .cursor-wand,.cursor-glow,.fireflies{display:none}*{cursor:auto}
         .pre-fairy-img{width:180px;height:180px}.pre-fairy-frame{width:220px;height:220px}
         }
-        @media(max-width:480px){.pgrid{grid-template-columns:1fr;max-width:320px;margin-left:auto;margin-right:auto}}
+        @media(max-width:480px){.pgrid{grid-template-columns:1fr;max-width:320px;margin-left:auto;margin-right:auto}.home-title{font-size:1.8rem}.hsub{font-size:1.1rem}}
     </style>
 </head>
 <body>
 
-<!-- PRELOADER -->
 <div class="preloader" id="preloader">
     <div class="pre-bg">
         <img class="pre-bg-img active" src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1920&q=80" alt="">
@@ -328,45 +314,37 @@
         <div class="pre-bg-ov"></div>
     </div>
     <div class="pre-nature">🌿</div><div class="pre-nature">🦋</div><div class="pre-nature">🍃</div><div class="pre-nature">🌸</div><div class="pre-nature">🐝</div>
-    <div class="pre-fairy">
-        <div class="pre-fairy-glow"></div>
+    <div class="pre-fairy"><div class="pre-fairy-glow"></div>
         <div class="pre-fairy-frame">
-            <div class="pre-ring"><span class="rdot"></span></div>
-            <div class="pre-ring"><span class="rdot"></span></div>
-            <div class="pre-ring"><span class="rdot"></span></div>
+            <div class="pre-ring"><span class="rdot"></span></div><div class="pre-ring"><span class="rdot"></span></div><div class="pre-ring"><span class="rdot"></span></div>
             <div class="pre-sparkle">✦</div><div class="pre-sparkle">✧</div><div class="pre-sparkle">⋆</div><div class="pre-sparkle">✦</div><div class="pre-sparkle">✧</div>
             <img class="pre-fairy-img" src="https://i.ibb.co/JRJN07PX/image.png" alt="Lab Spa">
         </div>
     </div>
     <div class="pre-text">Lab Spa</div>
-    <div class="pre-sub">Виктория Богуш • Борисов</div>
+    <div class="pre-sub">Виктория Богуш</div>
     <div class="pre-bar"><div class="pre-bar-fill"></div></div>
 </div>
 
 <div class="fireflies"><div class="fly"></div><div class="fly"></div><div class="fly"></div><div class="fly"></div><div class="fly"></div><div class="fly"></div></div>
-<div class="cursor-wand" id="cW">🪄</div>
-<div class="cursor-glow" id="cG"></div>
+<div class="cursor-wand" id="cW">🪄</div><div class="cursor-glow" id="cG"></div>
 
-<!-- NAVBAR -->
 <nav class="navbar" id="navbar">
     <a href="#" class="nav-logo" onclick="showPage('home');return false">Lab Spa ✦</a>
     <ul class="nav-links" id="navLinks">
         <li><a href="#" data-page="home" class="active" onclick="showPage('home');return false">Главная</a></li>
         <li><a href="#" data-page="products" onclick="showPage('products');return false">Продукты</a></li>
-        <li><a href="#" data-page="about" onclick="showPage('about');return false">О нас</a></li>
+        <li><a href="#" data-page="about" onclick="showPage('about');return false">О НЕЙ</a></li>
         <li><a href="#" data-page="reviews" onclick="showPage('reviews');return false">Отзывы</a></li>
-        <li><a href="#" data-page="contact" onclick="showPage('contact');return false">Контакты</a></li>
     </ul>
     <div class="nav-right">
+        <button class="nav-auth" id="navAuth" onclick="openAuth()" style="display:inline-flex">👤 Войти</button>
         <div class="upill" id="upill"><span class="ud"></span><span id="uName"></span></div>
-        <a href="https://instagram.com/lab_spa_" target="_blank" class="nav-social" title="Instagram">📷</a>
-        <a href="https://t.me/lab_spa" target="_blank" class="nav-social" title="Telegram">💬</a>
         <button class="nav-cart" onclick="toggleCart()">🛒<span class="cbdg" id="cBdg">0</span></button>
         <button class="menu-toggle" onclick="toggleMenu()"><span></span><span></span><span></span></button>
     </div>
 </nav>
 
-<!-- CART -->
 <div class="cov" id="cOv" onclick="toggleCart()"></div>
 <div class="cpn" id="cPn">
     <div class="cart-hd"><h3>🛒 Корзина</h3><button class="cart-close" onclick="toggleCart()">✕</button></div>
@@ -374,7 +352,6 @@
     <div class="cart-ft"><div class="cart-total"><span class="cart-total-label">Итого</span><span class="cart-total-price" id="cTot">0 BYN</span></div><button class="cart-checkout" onclick="checkout()">✨ Оформить заказ</button></div>
 </div>
 
-<!-- AUTH -->
 <div class="auth-overlay" id="authM">
     <div class="auth-card">
         <h2>👩‍🔬 Авторизация</h2>
@@ -398,6 +375,7 @@
             </div>
             <div class="code-timer" id="codeTimer">Повтор через <span id="timerSec">60</span>с</div>
             <button class="code-resend" id="codeResend" disabled onclick="resendCode()">Отправить снова</button>
+            <button class="auth-cancel" onclick="cancelAuth()">← Изменить способ входа</button>
         </div>
         <div class="auth-form" id="afIG" style="display:none">
             <input class="auth-inp" id="inpIG" type="text" placeholder="@ваш_instagram">
@@ -409,31 +387,28 @@
     </div>
 </div>
 
-<!-- ORDER -->
 <div class="order-overlay" id="ordM">
     <div class="order-card">
         <span class="order-icon">✅</span>
         <h2>Заказ оформлен!</h2>
         <p>Ваш номер заказа:</p>
         <div class="order-num" id="ordNum">LS-0000</div>
-        <p>Сообщите этот номер Виктории в Telegram или Instagram:</p>
+        <p>Сообщите номер Виктории:</p>
         <a href="https://t.me/lab_spa" target="_blank" class="btn btn-tg" style="margin-bottom:8px">💬 Telegram</a>
         <a href="https://instagram.com/lab_spa_" target="_blank" class="order-ig">📷 @lab_spa_</a>
         <button class="order-close" onclick="closeOrd()">Закрыть</button>
     </div>
 </div>
 
-<!-- HOME -->
+<!-- HOME — без кружочка, увеличенные шрифты -->
 <div class="page active" id="pg-home">
     <div class="sbg"><img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1920&q=80" alt=""><div class="sbg-ov hov"></div></div>
     <div class="hp"><div class="mp g"></div><div class="mp gr"></div><div class="mp pk"></div><div class="mp g"></div><div class="mp gr"></div><div class="mp pk"></div></div>
     <div class="hc"><div class="hi">
-        <div class="he"><img src="https://i.ibb.co/PGqPbYMm/image.png" alt="Lab Spa"></div>
-        <div class="hbd">👩‍🔬 Химик-технолог • Борисов • Беларусь</div>
+        <div class="hbd">👩‍🔬 Произведено химиком-технологом</div>
         <h1 class="home-title"><span class="hg">Lab Spa</span><br>Виктория <span class="hf">Богуш</span></h1>
         <p class="hsub">Натуральная косметика и мыло с нуля</p>
         <div class="hdetail">Избавлю от перхоти и бережно сохраню красоту 🌿<br><strong>Широкая линейка продукции</strong> • За подбором ухода — в директ</div>
-        <div class="hlux">Произведено химиком-технологом</div>
         <div class="hbtns">
             <a href="#" class="btn btn-p" onclick="showPage('products');return false">🧴 Каталог продукции</a>
             <a href="https://t.me/lab_spa" target="_blank" class="btn btn-tg">💬 Telegram</a>
@@ -451,18 +426,18 @@
     </div>
 </div>
 
-<!-- ABOUT -->
+<!-- ABOUT — новое фото -->
 <div class="page" id="pg-about">
     <div class="sbg"><img src="https://images.unsplash.com/photo-1473448912268-2022ce9509d8?w=1920&q=80" alt=""><div class="sbg-ov aov"></div></div>
     <div class="sc">
-        <div class="sh reveal"><div class="sl">✦ о нас ✦</div><h2 class="stitle">Виктория Богуш</h2></div>
+        <div class="sh reveal"><div class="sl">✦ о ней ✦</div><h2 class="stitle">Виктория Богуш</h2></div>
         <div class="about-hero reveal">
-            <div class="about-photo"><img src="https://i.ibb.co/PGqPbYMm/image.png" alt="Виктория Богуш"></div>
+            <div class="about-photo"><img src="https://i.ibb.co/gM4f9YH1/vika-o-sebe.png" alt="Виктория Богуш"></div>
             <div class="about-info">
                 <h3>Химик-технолог, создающий натуральную косметику с любовью</h3>
-                <p>Виктория — профессиональный химик-технолог из Борисова, Беларусь. Каждый продукт Lab Spa создаётся вручную с глубоким знанием химии и искренней заботой о вашей коже.</p>
+                <p>Виктория — профессиональный химик-технолог из Беларуси. Каждый продукт Lab Spa создаётся вручную с глубоким знанием химии и искренней заботой о вашей коже.</p>
                 <p>Специализация — мыло с нуля, средства от перхоти и бережный уход за красотой. Широкая линейка продукции для всех типов кожи и волос.</p>
-                <div><span class="atag"><span class="adot"></span>Мыло с нуля</span><span class="atag"><span class="adot"></span>Химик-технолог</span><span class="atag"><span class="adot"></span>Борисов, Беларусь</span></div>
+                <div><span class="atag"><span class="adot"></span>Мыло с нуля</span><span class="atag"><span class="adot"></span>Химик-технолог</span><span class="atag"><span class="adot"></span>Беларусь</span></div>
                 <div class="about-btns">
                     <a href="https://instagram.com/lab_spa_" target="_blank" class="btn btn-ig">📷 @lab_spa_</a>
                     <a href="https://t.me/lab_spa" target="_blank" class="btn btn-tg">💬 Telegram</a>
@@ -472,46 +447,44 @@
     </div>
 </div>
 
-<!-- REVIEWS -->
+<!-- REVIEWS — реальные фото отзывов -->
 <div class="page" id="pg-reviews">
     <div class="sbg"><img src="https://images.unsplash.com/photo-1509316975850-ff9c5deb0cd9?w=1920&q=80" alt=""><div class="sbg-ov rov"></div></div>
     <div class="sc">
-        <div class="sh reveal"><div class="sl">✦ отзывы ✦</div><h2 class="stitle">Что говорят клиенты</h2></div>
+        <div class="sh reveal"><div class="sl">✦ отзывы ✦</div><h2 class="stitle">Отзывы наших клиентов</h2></div>
         <div class="rgrid">
-            <div class="rc reveal rd1"><div class="rav"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=80" alt=""></div><div class="rs">★★★★★</div><p class="rt">Твёрдый шампунь полностью избавил от перхоти за 2 недели! Волосы мягкие и блестящие. Спасибо Виктории!</p><div class="ra">— Анастасия</div></div>
-            <div class="rc reveal rd2"><div class="rav"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&q=80" alt=""></div><div class="rs">★★★★★</div><p class="rt">Мыло с нуля — невероятное качество! Кожа нежная, никакой сухости. Лучше любого магазинного!</p><div class="ra">— Мария</div></div>
-            <div class="rc reveal rd3"><div class="rav"><img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=200&q=80" alt=""></div><div class="rs">★★★★★</div><p class="rt">Взбитое масло для тела — чудо! Кожа бархатная весь день. Аромат потрясающий!</p><div class="ra">— Екатерина</div></div>
+            <div class="rc reveal rd1">
+                <div class="rc-img"><img src="https://i.ibb.co/WWcr7Ww2/1.png" alt="Отзыв" loading="lazy"></div>
+                <div class="rc-body"><div class="rs">★★★★★</div><p class="rt">Реальный отзыв от клиента Lab Spa</p></div>
+            </div>
+            <div class="rc reveal rd2">
+                <div class="rc-img"><img src="https://i.ibb.co/yFG5gJ5Q/2.png" alt="Отзыв" loading="lazy"></div>
+                <div class="rc-body"><div class="rs">★★★★★</div><p class="rt">Реальный отзыв от клиента Lab Spa</p></div>
+            </div>
         </div>
     </div>
 </div>
 
-<!-- CONTACT -->
-<div class="page" id="pg-contact">
-    <div class="sbg"><img src="https://images.unsplash.com/photo-1476231682828-37e571bc172f?w=1920&q=80" alt=""><div class="sbg-ov cont-ov"></div></div>
-    <div class="sc" style="display:flex;align-items:center;justify-content:center;min-height:100vh">
-        <div><div class="sh reveal"><div class="sl">✦ контакты ✦</div><h2 class="stitle">Свяжитесь с Викторией</h2></div>
-        <div class="cc reveal"><span class="cem">👩‍🔬</span><p>Для подбора ухода, заказа продукции или консультации — пишите в Telegram или Instagram</p>
-        <div class="cl">
-            <a href="https://t.me/lab_spa" target="_blank" class="btn btn-tg">💬 t.me/lab_spa</a>
-            <a href="https://instagram.com/lab_spa_" target="_blank" class="btn btn-ig">📷 @lab_spa_</a>
-        </div></div></div>
-    </div>
-</div>
+<!-- CONTACT — реальное фото вместо эмодзи -->
 
 <footer class="footer">
     <div class="ft-grid">
-        <div class="ft-brand"><h3>👩‍🔬 Lab Spa</h3><p>Виктория Богуш • Химик-технолог<br>Натуральная косметика и мыло с нуля<br>Борисов, Беларусь 🇧🇾</p></div>
-        <div class="ft-col"><h4>Каталог</h4><a href="#" onclick="showPage('products');return false">Все продукты</a><a href="#" onclick="showPage('about');return false">О нас</a><a href="#" onclick="showPage('reviews');return false">Отзывы</a></div>
+        <div class="ft-brand"><h3>👩‍🔬 Lab Spa</h3><p>Виктория Богуш • Химик-технолог<br>Натуральная косметика и мыло с нуля<br>Беларусь 🇧🇾</p></div>
+        <div class="ft-col"><h4>Навигация</h4><a href="#" onclick="showPage('products');return false">Продукты</a><a href="#" onclick="showPage('about');return false">О НЕЙ</a><a href="#" onclick="showPage('reviews');return false">Отзывы</a></div>
         <div class="ft-col"><h4>Связь</h4><a href="https://t.me/lab_spa" target="_blank">💬 t.me/lab_spa</a><a href="https://instagram.com/lab_spa_" target="_blank">📷 @lab_spa_</a></div>
     </div>
-    <div class="ft-bottom"><span>© 2025 Lab Spa • Виктория Богуш ✦</span><div class="ft-soc"><a href="https://instagram.com/lab_spa_" target="_blank">📷</a><a href="https://t.me/lab_spa" target="_blank">💬</a></div></div>
+    <div class="ft-bottom"><span>© 2026 Lab Spa • Виктория Богуш ✦</span><div class="ft-soc"><a href="https://instagram.com/lab_spa_" target="_blank">📷</a><a href="https://t.me/lab_spa" target="_blank">💬</a></div></div>
 </footer>
 
 <script>
 const TG_TOKEN='ВАШ_ТОКЕН_БОТА',TG_CHAT='ВАШ_CHAT_ID';
-
-// === PRODUCTS DATA ===
 const products=[
+{id:'sachet_big',name:'Аромасаше (большое)',vol:'',price:10,img:'https://i.ibb.co/Cs02tG08/image.png',tag:'🌸 аромат'},
+{id:'sachet_small',name:'Аромасаше (малое)',vol:'',price:6,img:'https://i.ibb.co/Cs02tG08/image.png',tag:'🌸 мини'},
+{id:'hydro_oil',name:'Гидрофильное масло',vol:'50 мл',price:12,img:'https://i.ibb.co/QjHc8QF5/image.png',tag:'🧴 очищение'},
+{id:'diffuser100',name:'Диффузор',vol:'100 мл',price:50,img:'https://i.ibb.co/G3NFv4Wn/image.png',tag:'🏠 аромат'},
+{id:'diffuser50',name:'Диффузор',vol:'50 мл',price:35,img:'https://i.ibb.co/G3NFv4Wn/image.png',tag:'🏠 мини'},
+{id:'body_butter',name:'Взбитое масло для тела',vol:'150 мл',price:18,img:'https://i.ibb.co/G3VyF0ds/image.png',tag:'✨ тело'},
 {id:'tonic',name:'Тоник для лица',vol:'120 мл',price:19,img:'https://i.ibb.co/m5zxc48w/image.png',tag:'🧴 уход'},
 {id:'balsam40',name:'Твёрдый бальзам',vol:'40 г',price:29,img:'https://i.ibb.co/ch554qTq/image.png',tag:'✨ уход'},
 {id:'balsam20',name:'Твёрдый бальзам',vol:'20 г',price:16,img:'https://i.ibb.co/ch554qTq/image.png',tag:'✨ мини'},
@@ -525,52 +498,28 @@ const products=[
 {id:'soap',name:'Мыло с нуля',vol:'110± г',price:14,img:'https://i.ibb.co/JjMVnTZG/image.png',tag:'🤲 мыло'},
 {id:'aftershave',name:'Лосьон после бритья',vol:'100 мл',price:13,img:'https://i.ibb.co/ymcTKcWP/image.png',tag:'🧔 для него'},
 {id:'hairmask',name:'Маска для волос',vol:'150 мл',price:17,img:'https://i.ibb.co/HTx6yHRB/image.png',tag:'💆 волосы'},
-{id:'sachet_big',name:'Аромасаше (большое)',vol:'',price:10,img:'https://i.ibb.co/G39DMc14/image.png',tag:'🌸 аромат'},
-{id:'sachet_small',name:'Аромасаше (малое)',vol:'',price:6,img:'https://i.ibb.co/G39DMc14/image.png',tag:'🌸 мини'},
-{id:'hydro_oil',name:'Гидрофильное масло',vol:'50 мл',price:12,img:'https://i.ibb.co/Z1K8mRN5/image.png',tag:'🧴 очищение'},
-{id:'diffuser100',name:'Диффузор',vol:'100 мл',price:50,img:'https://i.ibb.co/S4jf48Ns/image.png',tag:'🏠 аромат'},
-{id:'diffuser50',name:'Диффузор',vol:'50 мл',price:35,img:'https://i.ibb.co/S4jf48Ns/image.png',tag:'🏠 мини'},
-{id:'deo',name:'Дезодорант',vol:'15 мл',price:16,img:'https://i.ibb.co/gbRt58N4/image.png',tag:'🌿 натур'},
-{id:'body_butter',name:'Взбитое масло для тела',vol:'150 мл',price:18,img:'https://i.ibb.co/X6SCjxP/image.png',tag:'✨ тело'}
+{id:'deo',name:'Дезодорант',vol:'15 мл',price:16,img:'https://i.ibb.co/gbRt58N4/image.png',tag:'🌿 натур'}
 ];
 
-// Render products
-function renderProducts(){
-    const g=document.getElementById('prodGrid');
-    let h='';
-    products.forEach((p,i)=>{
-        const volText=p.vol?`<div class="pvol">${p.vol}</div>`:'';
-        const delay=i%4;
-        h+=`<div class="pc reveal rd${delay+1}">
-            <div class="pimg"><img src="${p.img}" alt="${p.name}" loading="lazy"><span class="ptag">${p.tag}</span></div>
-            <div class="pi"><h4>${p.name}</h4>${volText}
-            <div class="pb"><span class="pp">${p.price} <span class="cu">BYN</span></span>
-            <button class="ab" onclick="addCart(this,'${p.id}','${p.name}${p.vol?' ('+p.vol+')':''}',${p.price},'${p.img}')">+ В корзину</button></div></div></div>`;
-    });
-    g.innerHTML=h;
-}
+function renderProducts(){const g=document.getElementById('prodGrid');let h='';products.forEach((p,i)=>{const v=p.vol?`<div class="pvol">${p.vol}</div>`:'';const d=i%4;h+=`<div class="pc reveal rd${d+1}"><div class="pimg"><img src="${p.img}" alt="${p.name}" loading="lazy"><span class="ptag">${p.tag}</span></div><div class="pi"><h4>${p.name}</h4>${v}<div class="pb"><span class="pp">${p.price} <span class="cu">BYN</span></span><button class="ab" onclick="addCart(this,'${p.id}','${p.name}${p.vol?' ('+p.vol+')':''}',${p.price},'${p.img}')">+ В корзину</button></div></div></div>`});g.innerHTML=h}
 renderProducts();
 
-// Preloader
 let pI=0;const pImgs=document.querySelectorAll('.pre-bg-img');
 setInterval(()=>{pImgs.forEach(i=>i.classList.remove('active'));pI=(pI+1)%pImgs.length;pImgs[pI].classList.add('active')},2500);
 window.addEventListener('load',()=>{setTimeout(()=>document.getElementById('preloader').classList.add('hidden'),3800)});
 
-// Cursor
 const cWe=document.getElementById('cW'),cGe=document.getElementById('cG');let sN=0;
 document.addEventListener('mousemove',e=>{cWe.style.left=e.clientX+'px';cWe.style.top=e.clientY+'px';cGe.style.left=e.clientX+'px';cGe.style.top=e.clientY+'px';if(++sN%5===0)mkS(e.clientX,e.clientY)});
 document.addEventListener('mouseover',e=>{const t=e.target.closest('a,button,.pc,.rc');if(t)cGe.classList.add('hover');else cGe.classList.remove('hover')});
 function mkS(x,y){const s=document.createElement('div');s.className='sparkle';const e=['✦','✧','⋆','˚','✨'];s.textContent=e[Math.floor(Math.random()*e.length)];s.style.left=x+'px';s.style.top=y+'px';s.style.setProperty('--tx',(Math.random()-.5)*100+'px');s.style.setProperty('--ty',-(Math.random()*80+20)+'px');const c=['#c9a84c','#7cb87c','#e491bf','#e8d18c'];s.style.color=c[Math.floor(Math.random()*c.length)];document.body.appendChild(s);setTimeout(()=>s.remove(),1400)}
 document.addEventListener('click',e=>{for(let i=0;i<10;i++)setTimeout(()=>mkS(e.clientX,e.clientY),i*20)});
 
-// Pages
 function showPage(n){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));const pg=document.getElementById('pg-'+n);if(pg)pg.classList.add('active');document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));const l=document.querySelector(`.nav-links a[data-page="${n}"]`);if(l)l.classList.add('active');document.getElementById('navLinks').classList.remove('open');window.scrollTo(0,0);setTimeout(()=>{document.querySelectorAll('.reveal').forEach(el=>{if(el.getBoundingClientRect().top<window.innerHeight)el.classList.add('visible')})},100)}
 function toggleMenu(){document.getElementById('navLinks').classList.toggle('open')}
 window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50)});
 const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:.05});
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 
-// Cart
 let cart={},user=null,genCode='',codeTimer=null;
 function addCart(btn,id,name,price,img){if(cart[id])cart[id].qty++;else cart[id]={name,price,img,qty:1};updCart();const b=document.getElementById('cBdg');b.classList.remove('bump');void b.offsetWidth;b.classList.add('bump');btn.textContent='✓';btn.classList.add('added');setTimeout(()=>{btn.textContent='+ В корзину';btn.classList.remove('added')},1000)}
 function rmI(id){delete cart[id];updCart()}
@@ -578,20 +527,18 @@ function chQ(id,d){if(cart[id]){cart[id].qty+=d;if(cart[id].qty<=0)delete cart[i
 function updCart(){const w=document.getElementById('cItems'),keys=Object.keys(cart);let tq=0,tp=0;keys.forEach(k=>{tq+=cart[k].qty;tp+=cart[k].price*cart[k].qty});document.getElementById('cBdg').textContent=tq;document.getElementById('cTot').textContent=tp+' BYN';if(!keys.length){w.innerHTML='<div class="cart-empty"><span class="ce-icon">🌿</span><p>Корзина пуста</p></div>'}else{let h='';keys.forEach(k=>{const i=cart[k];h+=`<div class="ci"><div class="ci-img"><img src="${i.img}" alt=""></div><div class="ci-info"><h4>${i.name}</h4><span class="ci-price">${i.price} BYN</span></div><div class="ci-qty"><button class="qb" onclick="chQ('${k}',-1)">−</button><span class="qn">${i.qty}</span><button class="qb" onclick="chQ('${k}',1)">+</button></div><button class="ci-rm" onclick="rmI('${k}')">✕</button></div>`});w.innerHTML=h}document.querySelectorAll('.ab').forEach(b=>{b.textContent='+ В корзину';b.classList.remove('added')})}
 function toggleCart(){document.getElementById('cPn').classList.toggle('open');document.getElementById('cOv').classList.toggle('open')}
 
-// Auth
-function swAuth(t){document.querySelectorAll('.auth-tab').forEach(b=>b.classList.remove('active'));document.getElementById('codeStep').classList.remove('show');document.getElementById('authSt').classList.remove('show');if(t==='phone'){document.getElementById('afPhone').style.display='flex';document.getElementById('afIG').style.display='none';document.querySelectorAll('.auth-tab')[0].classList.add('active')}else{document.getElementById('afPhone').style.display='none';document.getElementById('afIG').style.display='flex';document.querySelectorAll('.auth-tab')[1].classList.add('active')}}
+function swAuth(t){document.querySelectorAll('.auth-tab').forEach(b=>b.classList.remove('active'));document.getElementById('codeStep').classList.remove('show');document.getElementById('authSt').classList.remove('show');document.getElementById('authTabs').style.display='flex';if(t==='phone'){document.getElementById('afPhone').style.display='flex';document.getElementById('afIG').style.display='none';document.querySelectorAll('.auth-tab')[0].classList.add('active')}else{document.getElementById('afPhone').style.display='none';document.getElementById('afIG').style.display='flex';document.querySelectorAll('.auth-tab')[1].classList.add('active')}}
 function sendCode(){const ph=document.getElementById('inpPhone').value.trim(),nm=document.getElementById('inpName').value.trim();if(!ph||ph.length<10){showAS('Введите корректный номер','err');return}if(!nm){showAS('Введите имя','err');return};genCode=String(Math.floor(1000+Math.random()*9000));console.log('📱 Код:',genCode);sendTG(`📱 *Верификация*\n👤 ${nm}\n📞 ${ph}\n🔑 Код: \`${genCode}\``);document.getElementById('codeDest').textContent=ph;document.getElementById('afPhone').style.display='none';document.getElementById('authTabs').style.display='none';document.getElementById('codeStep').classList.add('show');showAS('Код отправлен!','ok');startTimer();user={type:'phone',contact:ph,name:nm,verified:false};document.getElementById('c1').focus()}
 function codeNext(el,next){if(el.value.length===1){const n=document.getElementById(next);if(n)n.focus()}}
-function verifyCode(){const entered=['c1','c2','c3','c4'].map(id=>document.getElementById(id).value).join('');if(entered.length<4)return;if(entered===genCode){user.verified=true;showAS('✅ Успешно!','ok');document.getElementById('uName').textContent=user.name;document.getElementById('upill').classList.add('show');setTimeout(()=>{closeAuth();resetAuth()},1200)}else{showAS('❌ Неверный код','err');['c1','c2','c3','c4'].forEach(id=>{document.getElementById(id).value=''});document.getElementById('c1').focus()}}
+function verifyCode(){const entered=['c1','c2','c3','c4'].map(id=>document.getElementById(id).value).join('');if(entered.length<4)return;if(entered===genCode){user.verified=true;showAS('✅ Успешно!','ok');document.getElementById('uName').textContent=user.name;document.getElementById('upill').classList.add('show');document.getElementById('navAuth').style.display='none';setTimeout(()=>{closeAuth();resetAuth()},1200)}else{showAS('❌ Неверный код','err');['c1','c2','c3','c4'].forEach(id=>{document.getElementById(id).value=''});document.getElementById('c1').focus()}}
 function startTimer(){let s=60;document.getElementById('timerSec').textContent=s;document.getElementById('codeResend').disabled=true;if(codeTimer)clearInterval(codeTimer);codeTimer=setInterval(()=>{s--;document.getElementById('timerSec').textContent=s;if(s<=0){clearInterval(codeTimer);document.getElementById('codeResend').disabled=false;document.getElementById('codeTimer').textContent='Можно отправить снова'}},1000)}
-function resendCode(){genCode=String(Math.floor(1000+Math.random()*9000));console.log('📱 Новый:',genCode);sendTG(`📱 *Повтор*\n📞 ${user.contact}\n🔑 \`${genCode}\``);showAS('Новый код отправлен!','ok');startTimer();['c1','c2','c3','c4'].forEach(id=>{document.getElementById(id).value=''});document.getElementById('c1').focus()}
-function doAuthIG(){const ig=document.getElementById('inpIG').value.trim(),nm=document.getElementById('inpIGName').value.trim();if(!ig){showAS('Введите Instagram','err');return}if(!nm){showAS('Введите имя','err');return};user={type:'instagram',contact:ig,name:nm,verified:true};showAS('✅ Добро пожаловать!','ok');document.getElementById('uName').textContent=nm;document.getElementById('upill').classList.add('show');setTimeout(()=>{closeAuth();resetAuth()},1200)}
+function resendCode(){genCode=String(Math.floor(1000+Math.random()*9000));console.log('📱 Новый:',genCode);sendTG(`📱 *Повтор*\n📞 ${user.contact}\n🔑 \`${genCode}\``);showAS('Новый код!','ok');startTimer();['c1','c2','c3','c4'].forEach(id=>{document.getElementById(id).value=''});document.getElementById('c1').focus()}
+function doAuthIG(){const ig=document.getElementById('inpIG').value.trim(),nm=document.getElementById('inpIGName').value.trim();if(!ig){showAS('Введите Instagram','err');return}if(!nm){showAS('Введите имя','err');return};user={type:'instagram',contact:ig,name:nm,verified:true};showAS('✅ Добро пожаловать!','ok');document.getElementById('uName').textContent=nm;document.getElementById('upill').classList.add('show');document.getElementById('navAuth').style.display='none';setTimeout(()=>{closeAuth();resetAuth()},1200)}
 function showAS(msg,type){const s=document.getElementById('authSt');s.textContent=msg;s.className='auth-status show '+(type==='err'?'err':'ok')}
 function openAuth(){document.getElementById('authM').classList.add('open')}
 function closeAuth(){document.getElementById('authM').classList.remove('open')}
+function cancelAuth(){swAuth('phone');document.getElementById('codeStep').classList.remove('show');if(codeTimer)clearInterval(codeTimer)}
 function resetAuth(){document.getElementById('codeStep').classList.remove('show');document.getElementById('afPhone').style.display='flex';document.getElementById('authTabs').style.display='flex';document.getElementById('authSt').classList.remove('show');['inpPhone','inpName','inpIG','inpIGName','c1','c2','c3','c4'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=''})}
-
-// Checkout
 function checkout(){if(!Object.keys(cart).length)return;if(!user||!user.verified){openAuth();return};const on='LS-'+Math.floor(1000+Math.random()*9000);let tp=0,txt=`👩‍🔬 *НОВЫЙ ЗАКАЗ Lab Spa*\n\n📋 *Номер:* \`${on}\`\n👤 *Клиент:* ${user.name}\n📞 *Контакт:* ${user.contact} (${user.type})\n\n🛒 *Состав:*\n`;Object.keys(cart).forEach(k=>{const i=cart[k],s=i.price*i.qty;tp+=s;txt+=`  • ${i.name} × ${i.qty} = ${s} BYN\n`});txt+=`\n💰 *Итого: ${tp} BYN*\n⏰ ${new Date().toLocaleString('ru-RU')}`;sendTG(txt);document.getElementById('ordNum').textContent=on;document.getElementById('ordM').classList.add('open');toggleCart();cart={};updCart()}
 function sendTG(t){if(TG_TOKEN==='ВАШ_ТОКЕН_БОТА'){console.log('📨',t);return}fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({chat_id:TG_CHAT,text:t,parse_mode:'Markdown'})}).then(r=>r.json()).then(d=>console.log('✅',d)).catch(e=>console.error('❌',e))}
 function closeOrd(){document.getElementById('ordM').classList.remove('open')}
